@@ -1,0 +1,48 @@
+#login_form
+    form
+        .form-group
+        input#login_form_email.form-control(type='email' placeholder='Your email address...')
+        .form-group
+        input#login_form_password.form-control(type='password' placeholder='Your password...')
+        .text-right
+            a(href="#" onclick='toogleVisibleForm("forgotpassword_form")') Forgot password?
+        button#login_form_button.btn.btn-primary.btn-block(type='button') Login
+    br
+    .text-center.text-muted.delimiter or use a social network
+    .d-flex.justify-content-center.social-buttons
+        button.btn.btn-secondary.btn-round#azureloginbutton(type='button' data-toggle='tooltip' data-placement='top' title='Microsoft' onclick="signIn()")
+            i.fab.fa-microsoft
+        button.btn.btn-secondary.btn-round(type='button' data-toggle='tooltip' data-placement='top' title='Google' onclick="alert('Login with Google')")
+            i.fab.fa-google
+        button.btn.btn-secondary.btn-round(type='button' data-toggle='tooltip' data-placement='top' title='Twitter')
+            i.fab.fa-twitter
+        button.btn.btn-secondary.btn-round(type='button' data-toggle='tooltip' data-placement='top' title='Facebook')
+            i.fab.fa-facebook
+        button.btn.btn-secondary.btn-round(type='button' data-toggle='tooltip' data-placement='top' title='Linkedin')
+            i.fab.fa-linkedin
+    br
+    .text-center.text-muted.delimiter or 
+    button.btn.btn-block.btn-round(type='button' onclick='toogleVisibleForm("register_form")') Register new account
+
+#register_form
+    form
+        .form-group
+            input#register_form_email.form-control(type='email' placeholder='Your email address...')
+        .form-group
+            input#register_form_name.form-control(type='text' placeholder='Your name...')
+        .form-group
+            input#register_form_password.form-control(type='password' placeholder='Your password...')
+        button#register_form_button.btn.btn-primary.btn-block(type='button') Register
+    br
+    button.btn.btn-block.btn-round(type='button' onclick='toogleVisibleForm("login_form")') Open login
+
+#forgotpassword_form
+    form
+        .form-group
+            input#forgotpassword_form_email.form-control(type='email' placeholder='Your email address...')
+        button#forgotpassword_form_button.btn.btn-primary.btn-block(type='button') Send email
+    br
+    button.btn.btn-block.btn-round(type='button' onclick='toogleVisibleForm("login_form")') Open login
+
+#logout_form
+    button#logout_form_button.btn.btn-primary.btn-block(type='button') Log out

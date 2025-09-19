@@ -1,0 +1,228 @@
+body
+{
+        font-family: proxima-nova,Arial,Helvetica,sans-serif;
+}
+nav.topnavigation
+{
+    background-color: white;
+    border-bottom: 1px solid lightgrey;
+    height: 94px;
+    padding-right: 16px;
+    padding-left: 16px;
+    
+}
+footer{
+    bottom:0;
+    /* height: 94px; */
+    padding: 0px;
+    width: 100%;
+    text-align: center;
+    background-color: white;
+    border-top: 1px solid lightgrey;
+}
+
+footer li
+{
+    padding-top: 0px;
+    padding-bottom: 0px;
+
+}
+footer nav
+{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+nav h1
+{
+    margin-bottom: 0px;
+    font-family: Brush Script MT;
+    font-size: 3em;
+    font-weight: lighter;
+}
+
+nav h1 i
+{
+    font-size: .7em;
+    font-weight: lighter;
+}
+dialog 
+{
+    z-index: 9;
+}
+#cover-spin {
+    position:fixed;
+    width:100%;
+    left:0;right:0;top:0;bottom:0;
+    background-color: rgba(255,255,255,0.7);
+    z-index:888;
+    display:none;
+}
+
+@-webkit-keyframes spin {
+	from {-webkit-transform:rotate(0deg);}
+	to {-webkit-transform:rotate(360deg);}
+}
+
+@keyframes spin {
+	from {transform:rotate(0deg);}
+	to {transform:rotate(360deg);}
+}
+
+#cover-spin::after {
+    content:'';
+    display:block;
+    position:absolute;
+    left:48%;top:40%;
+    width:40px;height:40px;
+    border-style:solid;
+    border-color:black;
+    border-top-color:transparent;
+    border-width: 4px;
+    border-radius:50%;
+    -webkit-animation: spin .8s linear infinite;
+    animation: spin .8s linear infinite;
+}
+
+.logo
+{
+    height: 64px;
+    padding: 0px;
+}
+hgroup 
+{
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+body > header
+{
+    padding: 0px;
+    font-size: 0.5em;;
+}
+
+body > main
+{
+    padding: 0px;
+    padding-bottom: 100px;
+}
+
+body > footer
+{
+    padding: 0px;
+}
+
+article
+{
+    padding-top: 10px;
+}
+
+#failedlogin
+{
+    color: red;
+    visibility: hidden
+}
+
+.loggedinuser 
+{
+    width: 200px;
+    font-size: 10px;
+}
+.profileimage
+{
+    float: left;
+}
+.profileimage img
+{
+    height: 64px;
+    width: 64px;
+}
+.profileinformation
+{
+    float: left;
+    font-size: 1.3em; 
+    height: 64px;
+    padding-top: 10px;
+}
+
+
+[role="tabs"] 
+{
+    display: flex;
+    cursor: pointer;
+}
+  
+[role="tabs"] section 
+{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    
+}
+  
+[role="tabs"] figure 
+{
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+  
+[role="tabs"] [type="radio"]:checked + figure 
+{
+    display: block;
+}
+
+nav[role="tab-control"] label 
+{
+    cursor: pointer;
+}
+
+nav[role="tab-control"] label:hover 
+{
+       text-decoration: underline; 
+}
+
+nav[role="tab-control"] label.active 
+{
+    color: var(--primary);
+    font-weight: bold;
+}
+
+#refereetable
+{
+  width: 100%;
+}
+#refereetable_wrapper
+{
+  overflow-x: hidden;
+}
+#refereetable_wrapper select, input[type=search]
+{
+  width: auto;
+}
+#refereetable_wrapper .dataTables_length
+{
+  float: left;
+}
+#refereetable_wrapper .dataTables_filter
+{
+  float: right;
+}
+
+
+.topmenu {
+    /* width: 100%; */
+    max-width: 920px;
+    margin-right: auto;
+    margin-left: auto;
+    height: 40px;
+    
+}
+.topmenu a 
+{
+    color: white;
+}
+.topmenu a:hover
+{
+    text-decoration: underline;
+    
+}

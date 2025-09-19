@@ -3,8 +3,8 @@ func init judotech.api --dotnet
 
 ## Förutsättningar
 .NET core 3.1 SDK
-func installeras med: npm i -g azure-functions-core-tools@3 --unsafe-perm true
-conda install 
+func installeras med: npm install -g azure-functions-core-tools@3 --unsafe-perm true
+
 
 ## CosmosDB
 - Se ..\readme.md för att sätta upp cosmos db i azure och hämta nycklar

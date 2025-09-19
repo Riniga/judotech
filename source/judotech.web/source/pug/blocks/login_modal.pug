@@ -1,0 +1,16 @@
+dialog#modal-signin
+  article
+    a.close(href='#close' aria-label='Close' data-target='modal-signin' onclick='toggleModal(event)')
+    h2 Logga in
+    p
+      | Anv&auml;nd dina inloggningsuppgifter fr&aring;n IdrottOnline
+      br
+      |  Kontakta Rickard för att erhålla dina inloggningsuppgifter
+    section#form
+      form(name="loginForm" target="#here" method="post" )
+        input#username(type='text' name='text' placeholder='Användarnamn')
+        input#password(type='password' name='password' placeholder='Lösenord')
+        label#failedlogin Felaktigt anv&auml;ndarnamn eller l&ouml;senord
+    footer
+      a.secondary(href='#cancel' role='button' data-target='modal-signin' onclick='toggleModal(event)') Avbryt
+      a(href='#confirm' role='button' data-target='modal-example' onclick='signIn()') Logga in
