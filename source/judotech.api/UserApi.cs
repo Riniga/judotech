@@ -71,6 +71,7 @@ namespace judotech.api
             var userObject = JObject.Parse(userJson);
             var user = userObject.ToObject<DbUser>();
             user.Password = DbLogin.HashPassword(user.Password); //TODO: Should and Could the password be hashed before sending it to service?
+            Logger.Instance.Log("Try to create user: " + user.Email);
 
             var result = user.Create();
 
@@ -112,15 +113,22 @@ namespace judotech.api
 
 
         [FunctionName("UpdateUser")]
-        public static async Task<IActionResult> UpdateUser([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req, ILogger log)
+        public static async Task<IActionResult> UpdateUser([HttpTrigger(AuthorizationLevel.Function, "put", Route = null)] HttpRequest req, ILogger log)
         {
             string body = await new StreamReader(req.Body).ReadToEndAsync();
             var bodyJson = JObject.Parse(body);
-            
-            var request = bodyJson.ToObject<AuthoraizedRequest>();
+            var user = bodyJson.ToObject<DbUser>();
 
-            if(!IsAuthoraized(request.Token, "manager")) return new UnauthorizedResult();
-            var result = request.User.Update();
+            // om lösnord har ettvvärde 
+            if (!string.IsNullOrEmpty(user.Password))
+            {
+                user.Password = DbLogin.HashPassword(user.Password); 
+            }
+            
+            var result = user.Update();
+
+            // TODO : Enable adminmode!            
+            // if(!IsAuthoraized(request.Token, "manager")) return new UnauthorizedResult();
 
             return new OkObjectResult(result);
         }

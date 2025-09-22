@@ -15,7 +15,7 @@ En första applikation är klar, resten är under utveckling
 ✅ API - REST API for application shared access to data
 🔄 Judotech.Web - The main website, loads submodules from Judotech.Web.*
 🔄 Judotech.Web.Login - Manages user logins and access
-🔄 Judotech.Web.Athlete - Athlete personal pages. Track progress, view training, news etc
+🔄 Judotech.Web.Club - Athlete goto portal for personal pages, track progress, view training, news etc
 🔄 Judotech.Web.Coach - A Website for the coach to plan and execute training sessions
 ⬜ Judotech.Web.Referee - A Website for referees to view there progress, scoring and competition to referee
 ⬜ Judotech.Web.Calendar - Display events in all divisions, enable registration

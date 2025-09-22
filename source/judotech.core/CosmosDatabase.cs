@@ -52,6 +52,9 @@ public class CosmosDatabase : DatabaseBase
     }
     public async override Task<bool> UpdateUser(DbUser user)
     {
+        Console.WriteLine("Update user: " + user.Email);
+        Console.WriteLine("Update user: " + user.FullName);
+
         var container = await GetContainer(DbUser.ContainerName);
         try
         {

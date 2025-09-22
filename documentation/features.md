@@ -5,11 +5,11 @@
 
 ### 2. Judotech API - REST API for application shared access to data
 
-
 ### 3. Judotech.Web - The main website, loads submodules from Judotech.Web.*
-A basic website to with a basic welcome page
+The base for webpages in the platform, should contain templates and functionality to be imported and used in other webprojects.
+NOT yet implmented, is under development. Functionality is listed here but will be implmented in each project, if not stated otherwise
 
-### 4. Judotech.Web.Login - Manages user logins and access
+#### 3.1. Judotech.Web -Login: Manages user logins and access
 - A nodejs module, for the login functionality
 - Includes UI for Login / Logout buttons, Display profile image, name and club
 - As a user you get access from roles, we have the following roles for now: 
@@ -18,9 +18,17 @@ A basic website to with a basic welcome page
   3. referee: can view referee pages
   4. admin: special pages for admin activities
 
-### 5. Judotech.Web.Athlete - Athlete personal pages. Track progress, view training, news etc
+### 5. Judotech.Web.Club - Athlete goto portal with personal pages, to track progress, view training, news etc
 Pages for the athlete to view
-Profilepage: Displays current grade nad date taken, goal
+* Startpage - Describe the site. Describe how to login or reset password. Links to login and reset.
+* My Club: Display a club page, with maps, news, schedule and fees 
+* Profile Page: Displays current user information, grade with date taken, goal, next level.....
+
+
+
+
+
+
 
 ### 6. Judotech.Web.Coach - A Website for the coach to plan and execute training sessions
 

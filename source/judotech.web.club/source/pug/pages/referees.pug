@@ -1,0 +1,17 @@
+﻿extends ../templates/main.pug
+block content
+    main.container
+        article#article
+            figure
+                h2 Domare i Sverige
+                table#refereetable   
+                    thead
+                        tr 
+                            th Namn 
+                            th Licens
+                            th Zon 
+                            th Klubb
+                            th Mail 
+                    tbody
+block scripts
+    script(src='/javascripts/referees.js')

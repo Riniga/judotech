@@ -101,6 +101,8 @@ I use Anaconda to create a virtual developemnt environment.
 
 ## Modules
 * Azure Cli(Not sure, I have it installed globaly): conda install azure-cli-core
+* Install in machine: winget install --exact --id Microsoft.AzureCLI
+
 
 ## Azure
 ### Azure Cli
@@ -128,3 +130,4 @@ I use Anaconda to create a virtual developemnt environment.
 ### Cosmos DB
 - az cosmosdb create --name judokacosmosdb --resource-group Judoka
 - az cosmosdb keys list --name judokacosmosdb --resource-group Judoka
+- az cosmosdb show --name judokacosmosdb --resource-group Judoka
