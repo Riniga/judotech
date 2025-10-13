@@ -1,0 +1,180 @@
+﻿{
+	"events": [
+		{
+			"id": "1",
+			"start": "2022-12-10 10:00",
+			"end": "2022-12-10 17:00",
+			"club": "IK Södra",
+			"type": "Gradering",
+			"name": "Zongradering, Stockholm",
+			"district": "Stockholms Judoförbund",
+			"location": "IK Södras Dojo Skarpnäcks Gårdsväg 10, Skarpnäck",
+			"cost": "1500"
+		},
+		{
+			"id": "2",
+			"start": "2022-12-11 10:00",
+			"end": "2022-12-11 17:00",
+			"club": "IK Södra",
+			"type": "Gradering",
+			"name": "Riksgradering, Stockholm",
+			"district": "Stockholms Judoförbund",
+			"location": "IK Södras Dojo Skarpnäcks Gårdsväg 10, Skarpnäck",
+			"cost": "1500"
+		},
+		{
+			"id": "3",
+			"start": "2022-12-17 10:00",
+			"end": "2022-12-17 17:00",
+			"club": "Staffanstorps Judoklubb",
+			"district": "Skåne-Blekinge Judoförbund",
+			"type": "Gradering",
+			"name": "Riksgradering, Staffanstorp",
+			"location": "Staffanstorps Judoklubb Hagalidvägen 4, Staffanstorp",
+			"cost": "1500"
+		},
+		{
+			"id": "4",
+			"start": "2022-12-18 10:00",
+			"end": "2022-12-18 17:00",
+			"club": "JK Aktiv",
+			"district": "Göteborgs Judoförbund",
+			"type": "Gradering",
+			"name": "Zongradering, Kungsbacka",
+			"location": "JK Aktiv Kungsbacka Sporthall, Kungsbacka, Läraregatan 2",
+			"cost": "1500"
+		},
+		{
+			"id": "11",
+			"start": "2023-02-11 00:00",
+			"end": "2022-02-12 24:00",
+			"club": "Svenska Judoförbundet",
+			"type": "Läger",
+			"name": "Omstart-Nystart läger, Linköping",
+			"district": "Södermanland-Östergötlands Judoförbund",
+			"description": "Mer info kommer."
+		},
+		{
+			"id": "12",
+			"start": "2023-02-25 00:00",
+			"end": "2022-02-26 24:00",
+			"club": "Skåne Blekinges Judoförbund",
+			"district": "Skåne-Blekinge Judoförbund",
+			"type": "Läger",
+			"name": "Omstart-Nystart läger, Vemmenhög",
+			"description": "Mer information kommer."
+		},
+		{
+			"id": "12",
+			"start": "2023-04-02 00:00",
+			"end": "2022-04-02 24:00",
+			"club": "Skåne Blekinges Judoförbund",
+			"district": "Skåne-Blekinge Judoförbund",
+			"type": "Läger",
+			"name": "Landslagets utvecklingsläger, öst",
+			"location": "Medley Ramdalen Sportcenter Torpsvägen 1C, Oxelösund",
+			"description": "Mer information om lägret kommer att publiceras här senare. Observera att landslagets utvecklingstävling, som går på lördagen, är sammanslagen med Sörmlandsträffen. För att anmäla sig gör du bara en vanlig..."
+		},
+		{
+			"id": "21",
+			"type": "Tävling",
+			"start": "2022-11-19 00:00",
+			"end": "2022-11-19 24:00",
+			"name": "Trollträffen 2, 2022",
+			"district": "Göteborgs Judoförbund",
+			"location": "Arena Älvhögsborgs, Trollhättan Storgatan 1, Trollhättan",
+			"description": "Inbjudan kommer att publiceras i Smoothcomp. Nivå: B."
+		},
+		{
+			"id": "22",
+			"type": "Tävling",
+			"start": "2022-11-26 00:00",
+			"end": "2022-11-26 24:00",
+			"club": "JK Södra",
+			"name": "Södra Judo Open 4",
+			"district": "Stockholms Judoförbund",
+			"location": "Torvalla Sporthall Dalarövägen 66, Haninge",
+			"description": "Inbjudan publiceras i Smoothcomp. Nivå B."
+		},
+		{
+			"id": "23",
+			"type": "Tävling",
+			"start": "2022-11-27 00:00",
+			"end": "2022-11-27 24:00",
+			"name": "Västgötaserien 3 2022 Borås",
+			"district": "Göteborgs Judoförbund",
+			"location": "Borås Judoklubb Stationsgatan 22, Borås",
+			"description": "En nybörjartävling upp till orange bälte där man samlar poäng under hela årets tävlingar. Länk till Smoothcomp"
+		},
+		{
+			"id": "24",
+			"type": "Tävling",
+			"start": "2022-12-03 00:00",
+			"end": "2022-12-03 24:00",
+			"name": "Kata-SM 2022",
+			"district": "Skåne-Blekinge Judoförbund",
+			"location": "Kristianstads Judoklubb Björkhemsvägen 7a, Kristianstad",
+			"description": "Anmälan i Smoothcomp: https://smoothcomp.com/sv/event/9199  Nivå: A."
+		},
+		{
+			"id": "25",
+			"type": "Tävling",
+			"start": "2022-12-10 00:00",
+			"end": "2022-12-10 24:00",
+			"name": "Lag-SM 2022",
+			"district": "Värmland-Örebro Judoförbund",
+			"location": "Lindesberg Arena Nyborgsgatan 1, Lindesberg",
+			"description": "Inbjudan kommer att publiceras i Smoothcomp. Nivå: A."
+		},
+		{
+			"id": "26",
+			"type": "Tävling",
+			"start": "2022-12-17 00:00",
+			"end": "2022-12-17 24:00",
+			"name": "Sundsvalls Cup 2022",
+			"district": "Södra Norrlands Judoförbund",
+			"location": "Judo Club Sundsvall Björneborgsgatan 25, Sundsvall",
+			"description": "Inbjudan kommer att läggas upp i Smoothcomp.  Nivå: B/C.  "
+		},
+		{
+			"id": "27",
+			"type": "Tävling",
+			"start": "2023-01-28 00:00",
+			"end": "2023-01-28 24:00",
+			"name": "Södra Judo Open 1",
+			"district": "Stockholms Judoförbund",
+			"location": "Torvalla Sporthall Dalarövägen 66, Haninge",
+			"description": "Inbjudan publiceras i Smoothcomp Nivå B."
+		},
+		{
+			"id": "28",
+			"type": "Tävling",
+			"start": "2023-01-28 08:00",
+			"end": "2023-01-28 17:00",
+			"name": "Kata tävling, Kristianstad",
+			"district": "Skåne-Blekinge Judoförbund",
+			"location": "Kristianstads Judoklubb Björkhemsvägen 7a, Kristianstad",
+			"description": "Nage No Kata & Katame No kata. Inbjudan och anmälan läggs upp senast 2 månader innan eventet."
+		},
+		{
+			"id": "29",
+			"type": "Tävling",
+			"start": "2023-02-04 00:00",
+			"end": "2023-02-04 24:00",
+			"name": "SM 2023",
+			"location": "Eriksdalshallen Ringvägen 70, Stockholm",
+			"district": "Stockholms Judoförbund",
+			"description": "Individuella SM för U18, U21, senior och veteran. Inbjudan kommer att läggas upp i Smoothcomp."
+		},
+		{
+			"id": "30",
+			"type": "Tävling",
+			"start": "2023-05-14 00:00",
+			"end": "2023-05-14 24:00",
+			"name": "Nordiska mästerskapen 2023",
+			"district": "Utomlands",
+			"description": "Tävlingen avgörs i Drammen, Norge. Mer information kommer."
+		}
+
+	]
+}

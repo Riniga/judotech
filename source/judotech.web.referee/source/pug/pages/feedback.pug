@@ -1,0 +1,20 @@
+﻿extends ../templates/main.pug
+block content
+    main.container
+        article#article
+            
+            h2 Feedback 
+            p ->Under utveckling - fungerar inte, ännu...<-
+            
+            img(src='images/user.svg' style='float:left;height: 64px;')
+            div(style='float: left; width:90%')
+                input#post(type='text' name='post' placeholder='Lämna ris & ros eller andra förslag')
+            div
+                div(style='clear:both;float: left; width: 80%')
+                div(style='float: left;width: 20%')
+                    button.contrast(data-target='modal-example' enabled=false onclick='post()') Posta
+                div(style='clear:both;')
+
+            div
+                
+

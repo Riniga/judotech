@@ -1,0 +1,22 @@
+﻿extends ../templates/main.pug
+block content
+    header.container
+        hgroup
+            h1 Välkommen till domarsidan för svensk judo
+            p Det här är en samlingsplats för dig som är aktiv judodomare. Här hittar du viktig information, dokument och verktyg som underlättar ditt uppdrag.
+            //- img(src="images/judoreferee.jpg" alt="Judodomare i aktion" style="max-width: 100%; border-radius: var(--border-radius); margin-top: 1rem;")
+    main.container
+        article#article
+            h2 Kom igång
+            p Behöver du fylla i din <strong>domararvodesblankett</strong>? Det kan du göra här:
+            
+            p
+                a.contrast(href="arvodesblankett.html") Gå till domararvodesblanketten
+
+            p Genom att <a href="login.html">logga in</a> får du tillgång till ytterligare funktioner som profil, historik och verktyg för matchrapportering.
+            blockquote Observera att sidan just nu är under uppbyggnad och innehåller endast ett begränsat antal funktioner.
+            
+            footer 
+                small
+                    | Vill du hj&auml;lpa till? Kontakta mig: 
+                    a(hef='mailto:rickard@angelholmjudo.se') rickard@angelholmjudo.se

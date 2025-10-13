@@ -1,0 +1,26 @@
+﻿nav.container-fluid
+      ul
+        li
+          a.contrast(href='/')
+            strong Judohändelser i Sverige
+      ul
+        li
+            summary.secondary(aria-haspopup='listbox' role='link') 
+                a(href='index.html') Kalender
+        li
+            summary.secondary(aria-haspopup='listbox' role='link') 
+                a(href='club.html') Klubben
+        li#link_user
+          details(role='list' dir='rtl')
+            summary#user_firstname.secondary(aria-haspopup='listbox' role='link') Firstname
+            ul(role='listbox')
+              li
+                span#loggedin_welcome Välkommen Hela namnet!
+                br
+                span#loggedin_club Judoklubb
+                hr
+              li
+                a(href='../logout.html') Logga ut
+        li#link_login
+            summary.secondary(role='link') 
+                a(href='login.html') Logga in

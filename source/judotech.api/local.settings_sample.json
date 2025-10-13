@@ -1,0 +1,15 @@
+{
+    "IsEncrypted": false, 
+    "Host": {
+      "CORS": "*"
+    },
+  "Values": {
+    "EndpointUrl": "https://localhost:8081",
+    "PrimaryKey": "[Replace with Cosmos DB Primary Key]]",
+    "DatabaseId": "JudoDatabase",
+    "ContainerId": "Users",
+    "LoginsContainerId": "Logins",
+    "CompetitionsContainerId": "Competitions"
+  }
+  }
+  

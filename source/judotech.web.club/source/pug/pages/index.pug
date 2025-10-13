@@ -1,0 +1,28 @@
+﻿extends ../templates/main.pug
+block content
+    header.container
+        hgroup
+            h1 Välkommen till Judostech för klubbar
+            h2
+                | Det här är vår digitala medlemsplattform - en plats för dig som är medlem i en judoklubb. Här hittar du allt du behöver som judoka eller vårdnadshavare: nyheter, träningsschema, avgifter, klubbinfo och dina personliga uppgifter som grader, mål och mer.
+                
+    main.container
+        article#article
+            h2 Så loggar du in
+            p Klicka på knappen Logga in här nedanför. Använd den e-postadress du har registrerat hos klubben.
+            button.contrast(data-target='modal-signin' onclick='toggleModal(event)') 🔒Logga in
+
+            h3 Första gången? Saknar du lösenord?
+            p 
+                span Om du inte har fått något lösenord än, eller glömt det, klicka på "Återställ mitt lösenord". 
+                br
+                span Du får då ett mejl skickat till din registrerade e-postadress med en länk för att välja ett nytt lösenord och komma igång.
+            
+            button.contrast(data-target='modal-resetpassword' onclick='toggleModal(event)') 🛠️ Återställ mitt lösenord
+
+            p 💡 Tips: Om du inte får något mejl – kontrollera din skräppost eller kontakta klubbens administratör.
+            
+            footer 
+                small
+                    | Vill du hj&auml;lpa till? Kontakta mig: 
+                    a(hef='mailto:rickard@nisses-gagner.se') rickard@nisses-gagner.se

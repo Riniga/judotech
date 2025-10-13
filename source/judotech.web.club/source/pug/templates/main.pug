@@ -1,0 +1,27 @@
+﻿doctype html
+head
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  title JudoTech &bull; Club
+  meta(name='description' content='An application for cooperation.')
+  link(rel='shortcut icon' href='/images/favicon.ico')
+  link(rel='stylesheet' href='https://unpkg.com/@picocss/pico@latest/css/pico.min.css')
+  link(rel="stylesheet" href="https://cdn.datatables.net/2.1.6/css/dataTables.dataTables.min.css")
+
+  link(rel='stylesheet' href='stylesheets/main.min.css')
+
+body
+    include ../blocks/navbar.pug
+    block content
+    include ../blocks/footer.pug
+    include ../blocks/login_modal.pug
+    div#cover-spin
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" crossorigin="anonymous")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/core.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/md5.js")
+    script(src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js")
+    script(src='/javascripts/config.js')
+    script(src='/javascripts/main.js')
+    block scripts
+    
+    

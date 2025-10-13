@@ -1,0 +1,28 @@
+﻿doctype html(data-theme="dark")
+head
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  meta(name='author' content='Rickard Nisses-Gagnér')
+  title Judohändelser i Sverige
+  meta(name='description' content='Här hittar du alla tävlingar, läger och klubbhändelser i sverige. Det är vi tillsammans som klubbar administrerar så att denna kalender alltid är komplett.')
+  link(rel="icon" href="/images/Logotype_Svensk-Judo_RGB-350x350.png" sizes="32x32")
+  link(rel="icon" href="/images/Logotype_Svensk-Judo_RGB-350x350.png" sizes="192x192")
+  link(rel="apple-touch-icon" href="/images/Logotype_Svensk-Judo_RGB-350x350.png")
+  link(rel='stylesheet' href='https://unpkg.com/@picocss/pico@latest/css/pico.min.css')
+  link(rel='stylesheet' href='//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css' type='text/css')
+  link(rel='stylesheet' href='/styles/style.min.css' type='text/css')
+body
+    span#ajaxLoader
+    include ../blocks/navbar.pug
+    block content
+    footer.container-fluid
+      small
+        | Utvecklat av: 
+        a.secondary(href='mailto:rickard@angelholmjudo.se') Rickard Nisses-Gagnér
+        |  &bull; 
+        a.secondary(href='https://github.com/Riniga/Judoka' target='_blank') Anslut och hjälp till med koden
+    
+    script(src="https://code.jquery.com/jquery-3.5.1.js")
+    script(src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js")
+    script(src="/scripts/startup.js")
+    block scripts

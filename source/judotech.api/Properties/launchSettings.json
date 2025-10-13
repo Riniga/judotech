@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "judotech_api": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7117",
+      "launchBrowser": false
+    }
+  }
+}

@@ -1,0 +1,17 @@
+﻿extends ../templates/startpage.pug
+block content
+    
+    main.container
+      article.grid
+        div
+          hgroup
+            h1 Logga in
+            h2 Du använder ditt IdrottOnline-användarnamn och lösenord
+          form
+            input#input_email(type='text' name='login' placeholder='Användarnamn' aria-label='Användarnamn' autocomplete='nickname' required='')
+            input#input_password(type='password' name='password' placeholder='Lösenord' aria-label='Lösenord' autocomplete='current-password' required='')
+            button#login_button.contrast(type='submit' onclick='event.preventDefault()') Logga in
+        div
+
+block scripts 
+    script(src="/scripts/login.js")

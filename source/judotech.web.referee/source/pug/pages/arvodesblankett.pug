@@ -1,0 +1,32 @@
+﻿extends ../templates/main.pug
+block content
+    main.container
+        article#PersonalInformationTab
+            h2 Dina personuppgifter
+            p Håll din profil uppdaterad! Vill du ändra namn, epost, zon eller licens vänligen kontakta 
+                a(href="mailto:domare@judo.se") domare@judo.se
+            label Namn
+                input#fullname(type="text" value="Fullständigt namn" readonly)
+            label Personnummer
+                input#personnumber(type="text" value="020202-0202")
+            label Adress
+                input#adress(type="text" value="Storgatan 1")
+            label Postnummer
+                input#postalcode(type="text" value="123 45")
+            label Ort
+                input#city(type="text" value="Storstaden")
+            label Telefon (primär)
+                input#primaryphone(type="text" value="010-12 34 567")
+            label Telefon (sekundär)
+                input#secondaryphone(type="text" value="")
+            label Mailadress
+                input#email(type="text" value="epost@domän.se" readonly)
+            label Licens
+                input#license(type="text" value="Licens" readonly)
+            label Klubb
+                input#club(type="text" value="Judoklubb")
+            label Zon
+                input#zone(type="text" value="Zonen" readonly)
+            input(type="button" value="Spara" onclick="updateProfile()") 
+block scripts
+    script(src='/javascripts/profile.js')

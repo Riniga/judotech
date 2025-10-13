@@ -1,0 +1,40 @@
+name: Deploy(manual) - Static Web 
+on: workflow_dispatch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Build static site judotech.web
+      run: |
+        cd ./source/judotech.web
+        npm install
+        gulp --production
+        
+    - uses: azure/login@v1
+      with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - name: Upload to blob storage
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+          az storage blob delete-batch --account-name storagejudotech --auth-mode key -s '$web'
+          az storage blob upload-batch --account-name storagejudotech --auth-mode key -s ./source/judotech.web/public -d '$web' 
+    #- name: Purge CDN endpoint
+    #  uses: azure/CLI@v1
+    #  with:
+    #    inlineScript: |
+    #       az cdn endpoint purge --content-paths  "/*" --profile-name "CDN_PROFILE_NAME" --name "CDN_ENDPOINT" --resource-group "RESOURCE_GROUP"
+    
+    - name: logout
+      run: |
+            az logout
+      if: always()
+        

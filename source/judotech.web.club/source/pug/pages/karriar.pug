@@ -1,0 +1,135 @@
+﻿extends ../templates/main.pug
+block content
+    main.container
+        article
+            nav(role='tab-control')
+                ul
+                    li
+                        label(for='aspirant') Aspirant
+                    li
+                        label(for='du') Distrikt ungdom
+                    li
+                        label(for='d') Distrikt
+                    li
+                        label(for='n') Nationell
+                    li
+                        label(for='elit') Elit
+                    li
+                        label(for='ijf-b') IJF-B
+                    li
+                        label(for='ijf-a') IJF-A
+                    
+            div(role='tabs')
+                section#PersonalInformationTab
+                    input#aspirant(hidden='hidden' type='radio' name='tabs' checked='checked')
+                    figure
+                        h5 
+                            | För att erhålla
+                            u  aspirant-licens
+                            | , så ska du:
+                        ul 
+                            li Gått en regelkurs
+                            li Graderad lägst 3:e kyu 
+                        b Erhålls när:
+                        span  zondomaransvarig kallar dig till en tävling
+                    input#du(hidden='hidden' type='radio' name='tabs')
+                    figure
+                        h5
+                            | För att erhålla
+                            u  Distriktsdomarlicens för ungdom
+                            | , så ska du:
+                        ul 
+                            li Erhållit en aspirant-licens 
+                            li Vara 14-17 år
+                            li Graderad lägst 3:e kyu 
+                            li Dömt 10 tävlingar (tidigare erforderligt antal)
+                            
+                        b Erhålls när:
+                        span du godkänts vid praktiskt D-licenstest på en ungdomstävling
+                    
+                    input#d(hidden='hidden' type='radio' name='tabs')
+                    figure
+                        h5
+                            | För att erhålla
+                            u  Distriktsdomarlicens
+                            | , så ska du:
+                        ul 
+                            li Erhållit en aspirant-licens 
+                            li Vara lägst 18 år
+                            li Graderad lägst 2:a kyu 
+                            li Dömt 10 tävlingar (tidigare erforderligt antal)
+
+                        b Erhålls när:
+                        span  du godkänts vid praktiskt D-licenstest
+                    
+                    input#n(hidden='hidden' type='radio' name='tabs')
+                    figure
+                        h3
+                            | För att erhålla
+                            u  Nationell domarlicens
+                            | , så ska du:
+                        ul 
+                            li Inneha distriktsdomarlicens
+                            li Vara lägst 20 år
+                            li Graderad lägst 1:a kyu 
+                            li Dömt 20 tävlingar (tidigare erforderligt antal, minst 15)
+
+                        b Erhålls när du:
+                        ol 
+                            li Gått en N-Licens kurs och godkänts på det teoretiska provet.
+                            li Godkänts vid praktiskt N-licenstest
+                    
+                    input#elit(hidden='hidden' type='radio' name='tabs')
+                    figure
+                        h2
+                            | För att erhålla
+                            u  Elitdomarlicens
+                            | , så ska du:
+                        ul 
+                            li Inneha nationell domarlicens i 3 år
+                            li Vara lägst 23 år
+                            li Graderad lägst 1:a dan 
+                            li Dömt 50 tävlingar 
+                                i (tidigare mycket stort antal , minst 15)
+                                | alternativt, minst 12 tävlingar(zon/riks) per år 
+                            li Deltagit vid samtliga riksomarkonferansen
+                            li Deltagande på årliga fortbildningar inom zonen
+                            li Dömt minst 5 SM tävlinger eller motsvarande med klassifiecering minst 4,5
+                            li Dömt minst 1 gång per år utomlands 
+
+                            li 
+                                i Vara ett föredöme för domarkåren och judosporten
+                            li 
+                                i Genomgått mentorsprogram
+
+                        b Erhålls när du:
+                        span  Godkänts vid praktiskt Elit-licenstest vid SM eller internationell tävling
+                            
+                    input#ijf-b(hidden='hidden' type='radio' name='tabs')
+                    figure
+                        h2
+                            | För att erhålla
+                            u  IJF-B licens
+                            | , så ska du:
+                        ul 
+                            li Innehaft elitdomarlicens i 4 år
+                            li Vara mellan 25-50 år
+                            li Graderad lägst 2:a dan 
+                            li Döma minst 15 tävlingar (zon/riks) per år 
+                            li Dömt minst 5 SM tävlinger eller motsvarande med klassifiecering minst 4,5
+                            li Deltagit vid samtliga riksomarkonferansen
+                            li Deltagande på årliga fortbildningar inom zonen
+                            li Uttagen till bevakningsgrupp
+
+
+                    input#ijf-a(hidden='hidden' type='radio' name='tabs')
+                    figure
+                        h2
+                            | För att erhålla
+                            u  IJF-A licens
+                            | , så ska du:
+                        ul 
+                            li 
+                            li 
+                            li 
+                            

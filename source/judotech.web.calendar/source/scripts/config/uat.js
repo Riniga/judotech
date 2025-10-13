@@ -1,0 +1,1 @@
+var MainMenuApiUrl = "https://azurewebappfunctionuat.azurewebsites.net/api/MainMenu?code=zrJTe9utvIeKmx3T84z1lj1/9gaXjtE/sBAZllWh5L2FzwEeAYt9lg==";

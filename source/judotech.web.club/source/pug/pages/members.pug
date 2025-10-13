@@ -1,0 +1,17 @@
+﻿extends ../templates/main.pug
+block content
+    main.container
+        article#article
+            figure
+                h2 Medelmmar
+                table#refereetable   
+                    thead
+                        tr 
+                            th Namn 
+                            th Ålder
+                            th Närvaro
+                            th Grad
+                            th Borde
+                    tbody
+block scripts
+    script(src='/javascripts/members.js')

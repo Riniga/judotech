@@ -1,0 +1,54 @@
+﻿extends ../templates/main.pug
+block content
+    main.container
+        article#article
+            h2 Administration
+            p personer med rollen administrator skall kunna göra enklare databasuppdateringar här 
+            nav(role='tab-control')
+                ul
+                    li
+                        label(for='domare') Domarregister
+                    li
+                        label(for='tavlingar') Tävlingar
+                    li
+                        label(for='feedback') Feedback
+            div(role='tabs')
+                section#PersonalInformationTab
+                    input#domare(hidden='hidden' type='radio' name='tabs' checked='checked')
+                    figure
+                        h2 Domare i Sverige
+                        table#refereetable   
+                            thead
+                                tr 
+                                    th Namn 
+                                    th Licens 
+                                    th Zon
+                                    th Klubb
+                            tbody
+                                tr 
+                                    td Rickard Nisses-Gagnér
+                                    td N 
+                                    td Södra 
+                                    td Ängelholms Judoklubb
+                    input#tavlingar(hidden='hidden' type='radio' name='tabs')
+                    figure
+                        table   
+                            tr 
+                                td Datum
+                                td Tävlingsn namn
+                                td Ort
+                                td Land
+                                td Typ 
+                                td poäng
+                            tr 
+                                td 2023-05-15
+                                td Nordiska mästerskapen
+                                td Drammen
+                                td Norge
+                                td NM
+                                td 1
+                    input#feedback(hidden='hidden' type='radio' name='tabs')
+                    figure
+                        h3 Administrera feedback
+                                                                                                   
+                    

@@ -1,0 +1,63 @@
+<!DOCTYPE html(data-theme="dark")>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="author" content="Rickard Nisses-Gagnér"/>
+  <title>Judohändelser i Sverige</title>
+  <meta name="description" content="Här hittar du alla tävlingar, läger och klubbhändelser i sverige. Det är vi tillsammans som klubbar administrerar så att denna kalender alltid är komplett."/>
+  <link rel="icon" href="/images/Logotype_Svensk-Judo_RGB-350x350.png" sizes="32x32"/>
+  <link rel="icon" href="/images/Logotype_Svensk-Judo_RGB-350x350.png" sizes="192x192"/>
+  <link rel="apple-touch-icon" href="/images/Logotype_Svensk-Judo_RGB-350x350.png"/>
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"/>
+  <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css"/>
+  <link rel="stylesheet" href="/styles/style.css" type="text/css"/>
+</head>
+<body><span id="ajaxLoader"></span>
+  <nav class="topnavigation" data-theme="light">
+    <ul>
+      <li><span><a href="/"><img class="logo" src="/images/Logotype_Svensk-Judo_RGB.png" alt="Logotyp"/></a></span></li>
+    </ul>
+    <ul>
+      <li>
+        <h1>JudoTech -<i>Athlete</i></h1>
+      </li>
+    </ul>
+    <ul id="login">
+      <li>
+        <button class="contrast" data-target="modal-signin" onclick="toggleModal(event)">Logga in</button>
+      </li>
+    </ul>
+    <ul id="logout">
+      <li>
+        <div class="loggedinuser">
+          <div class="profileimage"><a href="profile.html"><img id="userGravatar" src="images/user.svg"/></a></div>
+          <div class="profileinformation"><span id="userFirstName">Name</span><br/>(<a href="#" onclick="signOut()">logga ut</a>)</div>
+        </div>
+      </li>
+    </ul>
+  </nav>
+  <nav class="topmenu" id="mainMenu">
+    <ul> 
+      <li> <a href="/index.html">Hem</a></li>
+      <li> <a href="/club.html">Klubben </a></li>
+    </ul>
+  </nav>
+  <main class="container">
+    <article class="grid">
+      <div>
+        <hgroup>
+          <h1 id="clubname">Klubbens namn</h1>
+          <h2 class="clubdescription"></h2><span id="cluburl"></span><br/><span id="clubcontact"></span><br/><span id="clubphone"></span>
+        </hgroup>
+      </div>
+      <div class="mapouter">
+        <iframe id="gmap_canvas" width="600" height="500" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2216.7344145529546!2d12.854910551633628!3d56.248098061054854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46522a9ebd5cee39%3A0xafff622543541114!2s%C3%84ngelholms%20Judo!5e0!3m2!1ssv!2sse!4v1668100314749!5m2!1ssv!2sse" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+      </div>
+    </article>
+  </main>
+  <footer class="container-fluid"><small>Utvecklat av: <a class="secondary" href="mailto:rickard@angelholmjudo.se">Rickard Nisses-Gagnér</a> &bull; <a class="secondary" href="https://github.com/Riniga/Judoka" target="_blank">Anslut och hjälp till med koden</a></small></footer>
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+  <script src="/scripts/startup.js"></script>
+  <script src="/scripts/club.js"></script>
+</body>

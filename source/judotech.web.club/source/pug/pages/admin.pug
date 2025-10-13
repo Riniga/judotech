@@ -1,0 +1,60 @@
+﻿extends ../templates/main.pug
+block content
+    main.container
+        article#article
+            h2 Administration
+            p personer med rollen administrator skall kunna göra enklare databasuppdateringar här 
+            nav(role='tab-control')
+                ul
+                    li
+                        label(for='users') Användare
+                    li
+                        label(for='clubs') Klubbar
+                    li
+                        label(for='feedback') Feedback
+            div(role='tabs')
+                    input#users(hidden='hidden' type='radio' name='tabs' checked='checked')
+                    figure
+                        h1 Anv&auml;ndarhantering
+                        p
+                        | Lista &ouml;ver anv&auml;ndare fr&aring;n 
+                        code /api/ReadAllUser
+                        | . Klicka p&aring; Redigera eller Radera f&ouml;r &aring;tg&auml;rder.
+                        button#btnOpenAddUser(data-target='dlgAddUser') &#x2795; L&auml;gg till anv&auml;ndare
+                        table#usersTable.display(style='width:100%')
+                            thead
+                                tr
+                                th E-post
+                                th Namn
+                                th Telefon
+                                th Licens
+                                th Klubb
+                                th Roller
+                                th &angst;tg&auml;rder
+                            tbody
+                    input#clubs(hidden='hidden' type='radio' name='tabs')
+                    figure
+                        table   
+                            tr 
+                                td Datum
+                                td Tävlingsn namn
+                                td Ort
+                                td Land
+                                td Typ 
+                                td poäng
+                            tr 
+                                td 2023-05-15
+                                td Nordiska mästerskapen
+                                td Drammen
+                                td Norge
+                                td NM
+                                td 1
+                    input#feedback(hidden='hidden' type='radio' name='tabs')
+                    figure
+                        h3 Administrera feedback
+                                                                                                   
+    include ../blocks/user_edit_modal.pug    
+    include ../blocks/user_delete_modal.pug    
+    include ../blocks/user_add_modal.pug    
+block scripts
+    script(src='/javascripts/admin.js')

@@ -1,0 +1,64 @@
+dialog#dlgEditUser
+  article
+    header
+      h3 Redigera anv&auml;ndare
+    form#formEditUser
+      // Hidden technical fields
+      input(type='hidden' name='id')
+      input(type='hidden' name='originalEmail')
+      fieldset
+        legend Grunduppgifter
+        .grid
+          label
+            | E-post *
+            input(type='email' name='email' required='')
+          label
+            | Fullst&auml;ndigt namn
+            input(type='text' name='fullname')
+        .grid
+          label
+            | Personnummer
+            input(type='text' name='personnumber')
+          label
+            | Prim&auml;rt telefonnummer
+            input(type='tel' name='primaryphone')
+        .grid
+          label
+            | Sekund&auml;rt telefonnummer
+            input(type='tel' name='secondaryphone')
+          label
+            | Licens
+            input(type='text' name='license')
+      fieldset
+        legend Adress
+        .grid
+          label
+            | Adress
+            input(type='text' name='adress')
+          label
+            | Postnummer
+            input(type='text' name='postalcode')
+        label
+          | Ort
+          input(type='text' name='city')
+      fieldset
+        legend F&ouml;rening &amp; Roller
+        .grid
+          label
+            | Klubb
+            input(type='text' name='club')
+          label
+            | Zon
+            input(type='text' name='zone')
+        label
+          | Roller (kommaseparerade)
+          input(type='text' name='roles')
+      fieldset
+        legend S&auml;kerhet
+        small Fyll i f&ouml;r att byta l&ouml;senord, annars l&auml;mna tomt.
+        label
+          | Nytt l&ouml;senord
+          input(type='password' name='password' autocomplete='new-password')
+      footer.grid
+        button#btnEditUserSubmit(type='submit') Spara &auml;ndringar
+        button.secondary(type='button' data-close='dlgEditUser') Avbryt

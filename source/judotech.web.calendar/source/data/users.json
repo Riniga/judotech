@@ -1,0 +1,19 @@
+﻿{
+	"users": [
+		{
+			"username": "rickard",
+			"password": "password",
+			"firstname": "Rickard",
+			"lastname": "Nisses-Gagnér",
+			"club": "Ängelholms Judoklubb",
+			"manager":  "true"
+		},
+		{
+			"username": "jenny",
+			"password": "password",
+			"firstname": "Jenny",
+			"lastname": "Lundberg",
+			"club": "Helsingborgs JK"
+		}
+	]
+}

@@ -1,0 +1,48 @@
+﻿{
+	"districts": [
+		{
+			"name": "Bohuslän-Dals Judoförbund"
+		},
+		{
+			"name": "Dalarnas Judoförbund"
+		},
+		{
+			"name": "Göteborgs Judoförbund"
+		},
+		{
+			"name": "Norra Norrlands Judoförbund"
+		},
+		{
+			"name": "Skåne-Blekinge Judoförbund"
+		},
+		{
+			"name": "Smålands Judoförbund"
+		},
+		{
+			"name": "Stockholms Judoförbund"
+		},
+		{
+			"name": "Södermanland-Östergötlands Judoförbund"
+		},
+		{
+			"name": "Södra Norrlands Judoförbund"
+		},
+		{
+			"name": "Upplands Judoförbund"
+		},
+		{
+			"name": "Värmland-Örebro Judoförbund"
+		},
+		{
+			"name": "Västergötlands Judoförbund"
+		},
+		{
+			"name": "Västmanlands Judoförbund"
+		},
+		{
+			"name": "Utomlands"
+		}
+	]
+}
+
+

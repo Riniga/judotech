@@ -1,0 +1,60 @@
+dialog#dlgAddUser
+  article
+    header
+      h3 L&auml;gg till anv&auml;ndare
+    form#formAddUser
+      fieldset
+        legend Grunduppgifter
+        .grid
+          label
+            | E-post *
+            input(type='email' name='email' required='' placeholder='namn@exempel.se')
+          label
+            | Fullst&auml;ndigt namn
+            input(type='text' name='fullname' placeholder='För- och efternamn')
+        .grid
+          label
+            | Personnummer
+            input(type='text' name='personnumber' placeholder='YYYYMMDD-XXXX')
+          label
+            | Prim&auml;rt telefonnummer
+            input(type='tel' name='primaryphone' placeholder='+46...')
+        .grid
+          label
+            | Sekund&auml;rt telefonnummer
+            input(type='tel' name='secondaryphone' placeholder='+46...')
+          label
+            | Licens
+            input(type='text' name='license' placeholder='Licens-id eller nivå')
+      fieldset
+        legend Adress
+        .grid
+          label
+            | Adress
+            input(type='text' name='adress' placeholder='Gatuadress')
+          label
+            | Postnummer
+            input(type='text' name='postalcode' placeholder='SE-XXXXX')
+        label
+          | Ort
+          input(type='text' name='city' placeholder='Stad/Ort')
+      fieldset
+        legend F&ouml;rening &amp; Roller
+        .grid
+          label
+            | Klubb
+            input(type='text' name='club' placeholder='Klubbnamn')
+          label
+            | Zon
+            input(type='text' name='zone' placeholder='Zon/region')
+        label
+          | Roller (kommaseparerade)
+          input(type='text' name='roles' placeholder='t.ex. medlem, tränare, admin')
+      fieldset
+        legend S&auml;kerhet
+        label
+          | L&ouml;senord
+          input(type='password' name='password' autocomplete='new-password')
+      footer.grid
+        button#btnAddUserSubmit(type='submit') Spara
+        button.secondary(type='button' data-close='dlgAddUser') Avbryt
