@@ -3,52 +3,47 @@ block content
     main.container
         article#PersonalInformationTab
             h2 Dina personuppgifter
-            p Håll din profil uppdaterad!
+            input#email(type="hidden")
             label Namn
-                input#fullname(type="text" value="Fullständigt namn" readonly)
+                input#fullname(type="text" value="Fullständigt namn")
             label Bältesgrad
-                input#grade(type="text" value="020202-0202")
+                select#grade
+                    option(value="6") Vit
+                    option(value="5-1") Vitt med gult streck
+                    option(value="5") Gult
+                    option(value="4") Orange
+                    option(value="3") Grönt
+                    option(value="2") Blått
+                    option(value="1") Brunt
+
+
             label Närvaro
                 input#attendance(type="text" value="Storgatan 1")
-            //- label Postnummer
-            //-     input#postalcode(type="text" value="123 45")
-            //- label Ort
-            //-     input#city(type="text" value="Storstaden")
-            //- label Telefon (primär)
-            //-     input#primaryphone(type="text" value="010-12 34 567")
-            //- label Telefon (sekundär)
-            //-     input#secondaryphone(type="text" value="")
-            //- label Mailadress
-            //-     input#email(type="text" value="epost@domän.se" readonly)
-            //- label Licens
-            //-     input#license(type="text" value="Licens" readonly)
+
             label Klubb
                 input#club(type="text" value="Judoklubb")
-            //- label Zon
-            //-     input#zone(type="text" value="Zonen" readonly)
             fieldset
             legend 
                 strong Gillar / Vill gärna
             label
-                input(type="checkbox", name="likes_technique", checked=likes_technique)
+                input#likes_technique(type="checkbox", name="likes_technique", checked=likes_technique)
                 |  Träna teknik m.m.
             label
-                input(type="checkbox", name="likes_randori", checked=likes_randori)
+                input#likes_randori(type="checkbox", name="likes_randori", checked=likes_randori)
                 |  Träna randori
             label 
-                input(type="checkbox", name="likes_compete", checked=likes_compete)
+                input#likes_compete(type="checkbox", name="likes_compete", checked=likes_compete)
                 |  Tävla
             label
-                input(type="checkbox", name="likes_coach", checked=likes_coach)
+                input#likes_coach(type="checkbox", name="likes_coach", checked=likes_coach)
                 |  Bli / vara tränare
             label
-                input(type="checkbox", name="likes_referee", checked=likes_referee)
+                input#likes_referee(type="checkbox", name="likes_referee", checked=likes_referee)
                 |  Bli / vara domare
 
             label(for="comment") Kommentar:
             textarea#comment(name="comment", rows="4") #{comment || ''}
-
-            input(type="button" value="Spara" onclick="updateProfile()" disabled) 
+            input(type="button" value="Spara" onclick="updateProfile()") 
             
 
 block scripts

@@ -42,27 +42,24 @@ public class DbUser
     public string Zone { get; set; } = default!;
     [JsonProperty("roles")]
     public List<string> Roles { get; set; } = default!;
+
+
+    [JsonProperty("likes_technique")] public bool likes_technique { get; set; } = default!;
+    [JsonProperty("likes_randori")] public bool likes_randori { get; set; } = default!;
+    [JsonProperty("likes_compete")] public bool likes_compete { get; set; } = default!;
+    [JsonProperty("likes_coach")] public bool likes_coach { get; set; } = default!;
+    [JsonProperty("likes_referee")] public bool likes_referee { get; set; } = default!;
+
+
+
+
+
     // [JsonIgnore]
     [JsonProperty("password")]
     public string Password { get; set; } = default!;
 
     public DbUser() { }
-    public DbUser(string email, string fullName, string personnumber, string adress, string postalCode, string city, string primaryPhone, string secondaryPhone,string license, string club, string zone, string password) 
-    {
-        Email = email;
-        FullName = fullName;
-        Personnumber = personnumber;
-        Adress = adress;
-        PostalCode = postalCode;
-        City = city;
-        PrimaryPhone = primaryPhone;
-        SecondaryPhone = secondaryPhone;
-        License = license;
-        Club = club;
-        Zone = zone;
-        Roles = new List<string>();
-        Password = password;
-    }
+
     public DbUser(string email)
     {
         var database = DatabaseBase.GetDefaultDatabase();
@@ -86,6 +83,14 @@ public class DbUser
         Age = userfromdb.Age;
         Grade = userfromdb.Grade;
         Borde = userfromdb.Borde;
+
+        likes_technique = userfromdb.likes_technique;
+        likes_randori = userfromdb.likes_randori;
+        likes_compete = userfromdb.likes_compete;
+        likes_coach = userfromdb.likes_coach;
+        likes_referee = userfromdb.likes_referee;
+        
+
         Diff = userfromdb.Diff;
         
     }

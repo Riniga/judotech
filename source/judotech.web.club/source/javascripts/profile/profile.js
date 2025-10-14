@@ -1,11 +1,19 @@
 function loadPersonalInformation(user)
 {
     console.log(user);
-    // document.getElementById("email").value = user.email;
+    document.getElementById("email").value = user.email;
     document.getElementById("fullname").value = user.fullName;
     document.getElementById("grade").value = user.grade;
     document.getElementById("club").value = user.club;
     document.getElementById("attendance").value = user.attendance;
+
+    document.getElementById("likes_technique").checked = user.likes_technique == true ;
+    document.getElementById("likes_randori").checked = user.likes_randori == true ;
+    document.getElementById("likes_compete").checked = user.likes_compete == true ;
+    document.getElementById("likes_coach").checked = user.likes_coach == true ;
+    document.getElementById("likes_referee").checked = user.likes_referee == true ;
+
+
     // document.getElementById("adress").value = user.adress;
     // document.getElementById("postalcode").value = user.postalcode;
     // document.getElementById("city").value = user.city;
@@ -55,31 +63,29 @@ function updateProfile()
 {
     $('#cover-spin').show(0)
     const currentLogin = JSON.parse(localStorage.getItem('currentLogin')); 
+    // if (currentLogin.email==user.email) localStorage.setItem('currentUser', JSON.stringify(currentUser) );
+    // console.log(updateUserApiUrl + "?token=" + currentLogin.token)
+    // var bodyContent = {token: currentLogin.token, user: user};
+
     var user = new User();
     user.email  = document.getElementById("email").value;
     user.fullname  = document.getElementById("fullname").value;
-    user.personnumber = document.getElementById("personnumber").value;
-    user.adress = document.getElementById("adress").value;
-    user.postalcode = document.getElementById("postalcode").value;
-    user.city = document.getElementById("city").value;
-    user.primaryphone = document.getElementById("primaryphone").value;
-    user.secondaryphone = document.getElementById("secondaryphone").value;
+    user.grade = document.getElementById("grade").value;
+    user.attendance = document.getElementById("attendance").value;
+    user.likes_technique = document.getElementById("likes_technique").checked;
+    user.likes_randori = document.getElementById("likes_randori").checked;
+    user.likes_compete = document.getElementById("likes_compete").checked;
+    user.likes_coach = document.getElementById("likes_coach").checked;
+    user.likes_referee = document.getElementById("likes_referee").checked;
     user.club = document.getElementById("club").value;
-    user.license = document.getElementById("license").value;
-    user.zone = document.getElementById("zone").value;
-
-    if (currentLogin.email==user.email) localStorage.setItem('currentUser', JSON.stringify(currentUser) );
-
-    console.log(updateUserApiUrl + "?token=" + currentLogin.token)
-
-    var bodyContent = {token: currentLogin.token, user: user};
-
+    user.comment = document.getElementById("comment").value;
+    // Gill vill ska sparas också
     
     fetch( updateUserApiUrl+ "?token=" + currentLogin.token,
     {
         method: 'post',
         headers: {'Content-Type': 'application/text' },
-        body: JSON.stringify(bodyContent)
+        body: JSON.stringify(user)
     })
     .then(response => response.json())
     .then(data =>

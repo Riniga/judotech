@@ -15,48 +15,6 @@ namespace judotech.api
             _logger = logger;
         }
 
-        [Function("TestAuthenticationApi")]
-        public static async Task<IActionResult> Test([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req, ILogger log)
-        {
-            Dictionary<string, string> AllTests = new Dictionary<string, string>();
-            AllTests.Add("Create user object", "failed");
-            AllTests.Add("Create user in database", "failed");
-            AllTests.Add("Login user", "failed");
-            AllTests.Add("Verified correct token", "failed");
-            AllTests.Add("Verified wrong token", "failed");
-            AllTests.Add("Logged out user", "failed");
-            AllTests.Add("Delete user", "failed");
-            try
-            { 
-                var user = new DbUser("test@test.nu", "Test Testsson", "0202020202-0202", "adress", "12345", "city", "123", "456","license", "club", "zone", "QuLWdRplKNXLjEz3IQyoJ8aGrY/OlPTOMWw2YidkzIk=");
-                AllTests["Create user object"] = "passed";
-                
-                user.Create();
-                AllTests["Create user in database"] = "passed";
-                
-                var login = await DbLogin.LoginUser(user);
-                AllTests["Login user"] = "passed";
-
-                var result = await DbLogin.GetUserFromToken(login.Token.ToString()) ;
-                if (result.Email==login.Email) AllTests["Verified correct token"] = "passed";
-                
-                var correctToken = login.Token;
-                login.Token = Guid.NewGuid();
-                result = await DbLogin.GetUserFromToken(login.Token.ToString()) ;
-                if (result==null) AllTests["Verified wrong token"] = "passed";
-
-                login.Token = correctToken;
-                if (login.Logout()) AllTests["Logged out user"] = "passed";
-
-                user.Delete();
-                AllTests["Delete user"] = "passed";
-            }
-            catch (Exception) { }
-
-
-            return new OkObjectResult(AllTests);
-        }
-
         [Function("Login")]
         public static async Task<IActionResult> Login([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req, ILogger log)
         {
