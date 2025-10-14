@@ -3,6 +3,7 @@ function loadPersonalInformation(user)
     console.log(user);
     document.getElementById("email").value = user.email;
     document.getElementById("fullname").value = user.fullName;
+    document.getElementById("age").value = user.age;
     document.getElementById("grade").value = user.grade;
     document.getElementById("club").value = user.club;
     document.getElementById("attendance").value = user.attendance;
@@ -70,6 +71,7 @@ function updateProfile()
     var user = new User();
     user.email  = document.getElementById("email").value;
     user.fullname  = document.getElementById("fullname").value;
+    user.age = document.getElementById("age").value;
     user.grade = document.getElementById("grade").value;
     user.attendance = document.getElementById("attendance").value;
     user.likes_technique = document.getElementById("likes_technique").checked;
@@ -92,6 +94,7 @@ function updateProfile()
     {
         console.log("user data saved!");
         $('#cover-spin').hide(0)
+        document.location.reload();
     })
     .catch((error) => {
         console.log(error);
