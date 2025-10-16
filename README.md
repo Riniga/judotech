@@ -39,5 +39,5 @@ To indicate the stability, we add:
 * Miniconda (https://docs.anaconda.com/miniconda/install/)
 
 ## Setup and preparations
-1. [Konfigurera utvecklingsmiljö](./DevelopmentEnvironment.md)
-2. [Konfigurera azure](./AzureDeployment.md)2
+1. [Konfigurera utvecklingsmiljö](./source/DevelopmentEnvironment.md)
+2. [Konfigurera azure](./source/AzureDeployment.md)2
