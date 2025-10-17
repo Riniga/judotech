@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Judoka.VideoStreamCapture")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Skanska")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Judoka.VideoStreamCapture")]
-[assembly: AssemblyCopyright("Copyright © Skanska 2022")]
+[assembly: AssemblyCopyright("Copyright © 2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
