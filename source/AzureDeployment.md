@@ -71,12 +71,27 @@ SwedenCentralPlan - App Service plan
 2. az webapp config appsettings set -g $RG -n $APP --settings FUNCTIONS_EXTENSION_VERSION=~4 FUNCTIONS_WORKER_RUNTIME=dotnet-isolated   AzureWebJobsStorage__accountName=$STO AzureWebJobsStorage__credential=managedidentity CosmosConn=$COSCON 
 3. az webapp config appsettings list -g Judoka -n judotechapi -o table
 
+
+### Storage account
+az storage blob service-properties update --account-name $STO --static-website --index-document index.html --404-document 404.html
+
+
 ## Deploy
 1. dotnet publish -c Release -o .\publish 
 2. "c:\Program Files\7-Zip\7z.exe" a artifact.zip .\publish\*
 3. func azure functionapp publish judotechapi --clean
 4. func azure functionapp publish judotechapi --publish-local-settings -i
-4. az functionapp deployment source config-zip -g Judoka -n judotechapi --src .\artifact.zip
+5. az functionapp deployment source config-zip -g Judoka -n judotechapi --src .\artifact.zip
+
+6. az storage blob upload-batch --account-name $STO --auth-mode login --destination '$web' --source ./public
+
+Aktivera static webserver
+Deploy public
+
+
+
+
+
 
 ## Verifiera
 - az cosmosdb keys list --name judokacosmosdb --resource-group Judoka

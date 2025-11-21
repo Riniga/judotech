@@ -7,6 +7,8 @@ $LOC="swedencentral"
 $APP="judotechapi"              
 $STO="judoka$(Get-Random -Max 999999)"
 $COSMOS="judokacosmosdb"
+$ACR_NAME="acr$(Get-Random -Max 999999)"
+
 
 ## Förberedelser
 az login
@@ -22,6 +24,22 @@ az group create -n $RG -l $LOC
 az storage account create -g $RG -n $STO -l $LOC --sku Standard_LRS --kind StorageV2
 az cosmosdb create --name $COSMOS --resource-group $RG
 az functionapp create -g $RG -n $APP --consumption-plan-location $LOC --storage-account $STO --functions-version 4 --assign-identity
+
+### Azure Container Registry
+az acr create -n $ACR_NAME -g $RG --sku Basic
+$ACR_LOGIN=$(az acr show -n $ACR_NAME --query loginServer -o tsv)
+az acr login -n $ACR_NAME
+docker tag users-api:local $ACR_LOGIN/users-api:v1
+docker push $ACR_LOGIN/users-api:v1
+
+### Deploy till Azure Container Apps
+az extension add -n containerapp
+
+az provider register -n Microsoft.App
+
+$ENV_NAME="cae-users"
+$APP_NAME="users-api"
+$LOGWS="logws-users"
 
 
 ## Konfigurera Function App
