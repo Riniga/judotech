@@ -41,7 +41,9 @@ Om dependabot klagar så här fixade jag det sist....
 
 
 
-
+# Data
+pip install pandas
+pip install openpyxl
 
 
 
