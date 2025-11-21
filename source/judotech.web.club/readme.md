@@ -40,7 +40,7 @@ Om dependabot klagar så här fixade jag det sist....
 6. Upgradera samtliga paket...
 
 
-# Deplou to Azure
+# Deploy to Azure
 Konfigurera storage
 az storage blob service-properties update --account-name $STO --static-website --index-document index.html --404-document 404.html --auth-mode login
 
