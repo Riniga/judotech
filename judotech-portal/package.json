@@ -1,0 +1,14 @@
+{
+  "name": "judotech-portal",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:athlete": "npm run dev --workspace @judotech/athlete",
+    "build:athlete": "npm run build --workspace @judotech/athlete",
+    "preview:athlete": "npm run preview --workspace @judotech/athlete",
+    "build": "turbo build"
+  }
+}

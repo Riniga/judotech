@@ -1,5 +1,8 @@
 import pandas as pd
 
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
+
 df = pd.read_excel("Personregister.xlsx")          # Download personregister from https://kansli.sportadmin.se/personregister/personregister
 
 df = df.rename(columns={
