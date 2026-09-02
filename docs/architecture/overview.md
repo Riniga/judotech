@@ -21,12 +21,12 @@ The repository currently contains **two parallel generations of code**:
    streaming experiments, and data-import scripts.
 2. `judotech-portal/` – a newer npm-workspaces monorepo intended to become the
    front-end platform (React + Vite + Tailwind). This is the "initial version"
-   referred to in `documentation/claude-prompts/initera-projektet/`.
+   referred to in `docs/claude-prompts/initera-projektet/`.
 
 How the two generations relate (migration, replacement, coexistence) is **not
 documented in the repository**. See Open Questions.
 
-The `documentation/roadmap.md` file expresses an intent to grow the platform into
+The `docs/roadmap.md` file expresses an intent to grow the platform into
 many applications (public site, club portal, referee site, coach site, calendar,
 athlete mobile app, results site, scoreboard app, competition server, streaming
 server/app, care app, intercom app). Most of these do not exist yet.
@@ -43,16 +43,20 @@ judotech/
 ├─ .vscode/                       # settings, tasks, launch (tasks/launch untracked)
 ├─ devcontainer/dockerfile        # Ubuntu 22.04 base dev container
 │
-├─ documentation/                 # Project documentation (note: not "docs/")
+├─ docs/                          # All project documentation
+│  ├─ README.md                   # Documentation entry point / reading order
 │  ├─ features.md
 │  ├─ functional-requirements.md          # Swedish
 │  ├─ non-functional-requirements.md      # Swedish
 │  ├─ roadmap.md
-│  ├─ azure.drawio, coding.png
+│  ├─ azure.drawio
+│  ├─ architecture/               # overview.md (this doc), coding.png, decisions/
 │  ├─ standards/                  # coding.md, documentation.md, git.md, testing.md
+│  ├─ development/                # setup, process, ci-cd, workflow (stubs)
+│  ├─ dependencies/               # dependency policy (stub)
+│  ├─ mvp/                        # MVP-001-workspace-foundation.md
+│  ├─ plans/                      # MVP-001-workspace-foundation.plan.md
 │  └─ claude-prompts/             # AI-assisted workflow prompt templates
-│
-├─ docs/architecture/overview.md  # This document
 │
 ├─ source/                        # Earlier implementation
 │  ├─ judotech.sln                # Contains judotech.core + judotech.api
@@ -139,7 +143,7 @@ own `package.json`.
   form.
 
 The relationship between these sites and the intended `Judotech.Web.*` submodule
-architecture in `documentation/features.md` is aspirational; the sites are
+architecture in `docs/features.md` is aspirational; the sites are
 currently standalone.
 
 ### 3.4 `source/judotech.VideoStream*` (.NET Framework 4.8)
@@ -285,7 +289,7 @@ profiles), `secrets.AZURE_CREDENTIALS`.
 
 ## 6. Coding standards
 
-`documentation/standards/` contains four standard documents:
+`docs/standards/` contains four standard documents:
 
 - `coding.md` – requires English for all code and commits; SOLID where it helps;
   simplicity over cleverness; docstrings on public members; comments explain
@@ -307,9 +311,9 @@ profiles), `secrets.AZURE_CREDENTIALS`.
   every bug fix; tests for every feature; deterministic and offline.
 
 **Observation:** the standards assume a Python project. The actual code is C#
-(.NET 8) and TypeScript/React, neither of which is covered. The standards also
-reference a `docs/` directory while the repository keeps its documentation in
-`documentation/`.
+(.NET 8) and TypeScript/React, neither of which is covered. (The `docs/` vs
+`documentation/` split noted in earlier revisions of this document has since been
+resolved — all documentation now lives under `docs/`.)
 
 Actual conventions visible in the code:
 
@@ -322,14 +326,15 @@ Actual conventions visible in the code:
 
 ## 7. Development process
 
-- `documentation/claude-prompts/` defines an AI-assisted, document-driven
+- `docs/claude-prompts/` defines an AI-assisted, document-driven
   workflow: initialize the project → identify an MVP
   (`docs/mvp/MVP-001-...`) → create an implementation plan (`docs/plans/`) →
   implement in small steps → complete the MVP and open a PR. These prompts
-  reference `docs/development/development-process.md`, `docs/standards/*`,
+  reference `docs/development/`, `docs/standards/*`,
   `docs/architecture/overview.md` and ADRs under
-  `docs/architecture/decisions/` — a structure that does **not exist yet**
-  (this document is the first file under `docs/`).
+  `docs/architecture/decisions/`. The `docs/architecture/decisions/`,
+  `docs/development/` and `docs/dependencies/` trees are currently stubs
+  (created in MVP-001, Phase 1).
 - `git.md` describes the intended Git workflow (feature branches, small PRs to
   `main`, CI green before merge).
 - `.claude/settings.json` grants an AI assistant read-only and edit/write tools
@@ -367,7 +372,7 @@ etc.) is documented, and the `service.py`/`repository.py` structure in
 
 ## 9. Testing strategy
 
-- `documentation/standards/testing.md` mandates `pytest`, a `tests/` directory
+- `docs/standards/testing.md` mandates `pytest`, a `tests/` directory
   and tests for every feature and bug fix.
 - **No automated tests exist in the repository.** There are no test projects in
   `judotech.sln`, no `tests/` directories, no `*.test.*` / `test_*.py` files,
@@ -425,15 +430,15 @@ Referenced but not integrated:
 - The `judotech-portal` UI package is consumed directly as TypeScript source
   (via alias / tsconfig paths) rather than being built and versioned; it also
   contains a large amount of unexported template code.
-- The standards documents (`documentation/standards/`) describe a Python project
-  and a `docs/` layout, neither of which matches the current codebase.
+- The standards documents (`docs/standards/`) describe a Python project, which
+  does not match the current C#/.NET and TypeScript/React codebase.
 - Language is mixed (English and Swedish) across code, docs and data, contrary
   to the English-only rule in `coding.md`.
 - No test infrastructure exists in either generation.
 
 ## 12. Planned evolution of the workspace
 
-From `documentation/roadmap.md` and `documentation/features.md` (intent, not
+From `docs/roadmap.md` and `docs/features.md` (intent, not
 commitments, and not all consistent with each other):
 
 - `v1.0.0-alpha` (stated current): Core, API, Referee at `1.0.0-alpha.1`.
@@ -452,7 +457,7 @@ commitments, and not all consistent with each other):
 - Root `tsconfig.base.json`; optionally adopt Turborepo for builds; add Tailwind
   for table UI.
 
-`documentation/claude-prompts/` implies the immediate next step is to define
+`docs/claude-prompts/` implies the immediate next step is to define
 `docs/mvp/MVP-001-workspace-foundation.md` establishing the workspace foundation
 before feature work begins.
 
@@ -463,9 +468,6 @@ Structure and direction:
 - What is the intended relationship between `source/` and `judotech-portal/`?
   Is the .NET API being kept, replaced, or wrapped? Is `source/judotech.web*`
   being migrated into the React monorepo?
-- Should documentation live in `documentation/` or `docs/`? The standards and
-  prompt templates assume `docs/`; the existing content is under
-  `documentation/`.
 - Which standards actually apply? The current standards target Python; there are
   no C# or TypeScript/React standards.
 
@@ -495,9 +497,10 @@ Structure and direction:
 
 Process:
 
-- No `docs/development/development-process.md`, no ADR log, no
-  `docs/mvp/` or `docs/plans/` content, despite the workflow prompts depending
-  on them.
+- `docs/development/` and `docs/architecture/decisions/` exist as stubs only
+  (created in MVP-001, Phase 1); the development process and ADR log still need
+  to be written (MVP-001, Phase 3 and Phase 2). `docs/mvp/` and `docs/plans/`
+  now hold the MVP-001 documents.
 - Whether branch/PR discipline from `git.md` is being followed in practice is
   unknown.
 

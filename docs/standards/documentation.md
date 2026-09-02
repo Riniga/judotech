@@ -67,7 +67,7 @@ Do not write documentation for:
 | Architecture overview | `docs/architecture/overview.md` | System structure and key dependencies |
 | ADR | `docs/architecture/decisions/` | Record of significant architectural decisions |
 | Vision | `docs/vision.md` | Long-term purpose and principles |
-| Roadmap | `docs/roadmap/` | Direction and planned work |
+| Roadmap | `docs/roadmap.md` | Direction and planned work |
 | MVP | `docs/mvp/` | Scoped delivery increments |
 | Implementation plan | `docs/plans/` | Step-by-step implementation guide |
 | Development setup | `docs/development/` | Environment, tools, and workflow |
