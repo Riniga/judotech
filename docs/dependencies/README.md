@@ -26,6 +26,9 @@ architecture overview if it affects contributors.
 - **NuGet** (`source/`): exact versions on every `<PackageReference>`. There is
   no `packages.lock.json`; `dotnet restore` resolves from nuget.org. Adding
   lock files (`<RestorePackagesWithLockFile>`) is optional future work.
+- Reference a package **explicitly** if code uses it directly, even when a
+  transitive path exists — e.g. `Newtonsoft.Json` in `judotech.core` /
+  `judotech.api` (also required by `Microsoft.Azure.Cosmos` >= 3.32).
 - The legacy `source/judotech.VideoStream*` projects use classic
   `packages.config`; they are dormant (ADR-0001) and not maintained.
 

@@ -74,7 +74,15 @@ Do not merge it. Either:
 
 - pin the offending package back with an `ignore:` entry (with a version
   constraint) and let the rest of the group through, or
-- fix the incompatibility on a normal `fix/` or `chore/` branch and close the
-  Dependabot PR.
+- fix the incompatibility on a normal `fix/` or `chore/` branch, merge that to
+  `main`, then `@dependabot recreate` the PR so it rebases onto the fix.
 
 Record anything non-obvious in [`../architecture/technical-debt.md`](../architecture/technical-debt.md).
+
+**Worked example (PR #42, `dotnet` group).** Bumping `Microsoft.Azure.Cosmos`
+3.34 → 3.62 broke `CI - .NET` and `CodeQL`:
+`error : The Newtonsoft.Json package must be explicitly referenced`. Cosmos
+>= 3.32 requires consumers to pin `Newtonsoft.Json` themselves. Fix: add
+`<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />` to
+`judotech.core` and `judotech.api` (both already use it directly) on a `fix/`
+branch → merge → `@dependabot recreate` #42 → green. TD-051.
