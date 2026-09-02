@@ -501,6 +501,22 @@ Commit message: `Add xUnit and Vitest test suites with a passing test per compon
 
 Commit message: `Split CI from deployment and add portal and legacy-web pipelines`
 
+> **Phase 7 addendum (separate commit): Dependabot.** GitHub had ~8 ungrouped
+> Dependabot PRs open on `main` and no `dependabot.yml`. Added:
+> - `.github/dependabot.yml` — grouped weekly updates for four ecosystems
+>   (portal npm, legacy-site npm, NuGet, GitHub Actions), one version + one
+>   security group each.
+> - `.github/workflows/dependabot-auto-merge.yml` — auto-merge patch /
+>   non-production minor bumps once CI is green.
+> - `docs/development/dependency-updates.md` — the take-in process.
+> - Removed a stray empty `source/judotech.VideoStreamCapture/package-lock.json`.
+>
+> Recommended sequence: merge MVP-001 → the open Dependabot PRs gain
+> `ci-web-legacy` coverage → `@dependabot recreate` to regroup → merge green.
+> Tracked as TD-048 (the PR wave) and TD-049 (stale branches).
+> Suggested commit message:
+> `Add grouped Dependabot config and auto-merge for low-risk updates`.
+
 - [x] 7.1 Add `.github/workflows/ci-dotnet.yml` (push/PR to `main` + manual;
       `setup-dotnet@v4` 8.0.x; restore, build `-c Release --no-restore`, test
       `--no-build --filter "Category!=Integration"` + trx artifact). Exact

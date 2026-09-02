@@ -82,3 +82,4 @@ When Claude Code, Copilot or similar is used:
 - [`workflow.md`](workflow.md) — the MVP → plan → implement → complete loop
 - [`setup.md`](setup.md) — environment and how to run each component
 - [`ci-cd.md`](ci-cd.md) — pipelines, secrets, branch protection
+- [`dependency-updates.md`](dependency-updates.md) — handling Dependabot PRs

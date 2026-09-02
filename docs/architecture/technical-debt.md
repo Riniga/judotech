@@ -60,8 +60,10 @@ Owner `unassigned` means no one has picked it up yet.
 | TD-027 | `apps/athlete` has a leftover `postcss.config.mjs.bak` | plan | Fixed in MVP-001 (Phase 5) — deleted; no PostCSS config needed with Tailwind v4 `@tailwindcss/vite` | – | – |
 | TD-041 | Tailwind theme tokens live only in `packages/ui/src/styles/index.css` (~780 lines); not extracted into `@judotech/config` for reuse by non-UI packages | MVP-001 Phase 5 (Risk 8) | Backlog | low | unassigned |
 | TD-042 | `apps/athlete` still carries unused `@tailwindcss/postcss`, `autoprefixer`, `postcss` devDeps (Tailwind v4 uses the Vite plugin) | MVP-001 Phase 5 | Backlog | low | unassigned |
-| TD-043 | `npm audit` reports 13 advisories in the portal dependency tree (dev-only / transitive) | MVP-001 Phase 5 | Backlog | medium | unassigned |
+| TD-043 | `npm audit` reports 13 advisories in the portal dependency tree (dev-only / transitive) | MVP-001 Phase 5 | Backlog — Dependabot security updates (`.github/dependabot.yml`) address these over time | medium | unassigned |
 | TD-044 | `apps/athlete` `devDependencies` still list ESLint plugins now provided transitively by `@judotech/config` | MVP-001 Phase 5 | Backlog | low | unassigned |
+| TD-048 | ~8 open Dependabot PRs on `main` (transitive security bumps in the legacy static sites) predate MVP-001 and its CI | MVP-001 Phase 7 addendum | Backlog — triage per `docs/development/dependency-updates.md` after MVP-001 merges (they gain `ci-web-legacy` coverage then) | medium | unassigned |
+| TD-049 | Stale remote branches: `feature/containerapp`, `feature/saveprofile`, `features/react` | MVP-001 Phase 7 addendum | Backlog — delete after confirming they hold nothing wanted | low | unassigned |
 
 ## `source/` — other
 

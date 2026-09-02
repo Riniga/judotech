@@ -338,6 +338,11 @@ Removed: `ci_api.yml` and `ci_web.yml` (built **and** deployed on every push,
 pinned .NET 3.1). `codeql.yml` moved from the repo root into
 `.github/workflows/` and fixed.
 
+`.github/dependabot.yml` (Phase 7 addendum) opens grouped weekly dependency-update
+PRs for the portal npm tree, the legacy-site npm trees, NuGet, and GitHub
+Actions; `dependabot-auto-merge.yml` auto-merges low-risk bumps once CI is green.
+See [`../development/dependency-updates.md`](../development/dependency-updates.md).
+
 Secrets: `judotech_FFFF` (function publish profile), `AZURE_CREDENTIALS`
 (blob upload). The old `judotech` publish-profile secret is now unused.
 

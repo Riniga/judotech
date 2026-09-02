@@ -45,12 +45,15 @@ have none by design (see above).
 
 ## Updating dependencies
 
+- Most updates come in as **Dependabot** pull requests — see
+  [`../development/dependency-updates.md`](../development/dependency-updates.md)
+  for how they are grouped, auto-merged, and taken in as a batch.
 - Review updates deliberately; do not blanket-run `npm audit fix` /
   `dotnet outdated` and commit the result.
 - A **security** advisory that affects shipped code is a `fix/` branch on its
-  own.
-- Routine bumps go on a `chore/update-dependencies` branch, with CI green before
-  merge.
+  own (or a Dependabot security PR).
+- Manual routine bumps go on a `chore/update-dependencies` branch, CI green
+  before merge.
 - Run the stack's checks after any bump (`dotnet test` / `npm run lint typecheck
   test build`).
 
@@ -78,4 +81,9 @@ enough.
   to the portal (Phases 5–6).
 - `apps/athlete` still carries unused `@tailwindcss/postcss` / `autoprefixer` /
   `postcss` and redundant ESLint-plugin devDependencies — TD-042, TD-044.
-- 13 open `npm audit` advisories in the portal tree (dev/transitive) — TD-043.
+- 13 open `npm audit` advisories in the portal tree (dev/transitive) — TD-043;
+  Dependabot security updates chip away at these.
+- Deleted a stray empty `source/judotech.VideoStreamCapture/package-lock.json`
+  (no matching `package.json`).
+- Added `.github/dependabot.yml` (grouped, weekly) and a Dependabot auto-merge
+  workflow — Phase 7 addendum.

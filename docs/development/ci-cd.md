@@ -12,6 +12,7 @@ deployment are separate: **CI never deploys** (ADR-0006).
 | `ci-web-legacy.yml` | push/PR to `main`, manual | `npx gulp` build of the frozen Gulp/Pug sites (`calendar`, `club`, `referee` required; `judotech.web` non-blocking — TD-046) | No |
 | `codeql.yml` | push/PR to `main`, weekly | CodeQL analysis for `csharp` and `javascript-typescript` | No |
 | `security-secret-scan.yml` | push/PR to `main`, manual | gitleaks secret scan (allowlist in `.gitleaks.toml`) | No |
+| `dependabot-auto-merge.yml` | Dependabot PRs | enable auto-merge for patch / non-production minor bumps (still gated on CI) | No |
 | `deploy_function.yml` | **manual only** (`workflow_dispatch`) | Publish `source/judotech.api` and deploy to the `judotech` Azure Function App | Yes — `production` environment |
 | `deploy_web.yml` | **manual only** (`workflow_dispatch`, pick a `site`) | Build a static site and upload to the `storagejudotech` `$web` container | Yes — `production` environment |
 
@@ -50,6 +51,12 @@ Recommended settings (repository settings → Branches → add rule for `main`):
   - `Security - Secret scan / gitleaks`
 - Require branches to be up to date before merging.
 - Do not allow direct pushes (no bypass).
+
+## Dependency updates
+
+`.github/dependabot.yml` opens grouped weekly update PRs for four ecosystems
+(portal npm, legacy-site npm, NuGet, GitHub Actions). They run the same CI as
+any PR. See [`dependency-updates.md`](dependency-updates.md).
 
 ## Notes
 
