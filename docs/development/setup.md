@@ -31,6 +31,21 @@ does **not** yet include the .NET SDK or Node.js — install them inside the
 container per the versions above, or use a local toolchain. Extending the
 Dockerfile with pinned .NET 8 and Node 24 is tracked for a later change.
 
+## Running the tests
+
+| Stack | From | Command |
+|-------|------|---------|
+| .NET | repo root | `dotnet test source/judotech.sln` |
+| .NET (CI subset — no external services) | repo root | `dotnet test source/judotech.sln --filter "Category!=Integration"` |
+| Portal (all workspaces) | `judotech-portal/` | `npm test` |
+| One portal workspace | `judotech-portal/` | `npm test --workspace @judotech/ui` |
+
+The .NET integration test in `judotech.api.tests` is `Skip`-marked; remove the
+`Skip` and provide `EndpointUrl` / `PrimaryKey` / `DatabaseId` (Cosmos emulator
+or a real endpoint) to run it.
+
+See [`../standards/testing.md`](../standards/testing.md) for conventions.
+
 ## Per-component setup
 
 > Added in MVP-001 Phase 8, verified on a clean checkout:

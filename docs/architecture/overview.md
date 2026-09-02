@@ -151,8 +151,9 @@ Serialization uses `Newtonsoft.Json`.
 - `CompetitionApi` – `CreateCompetition`, `CreateCompetitions`,
   `ReadCompetition`, `ReadAllCompetitions`, `UpdateCompetition` (role-checked
   against `manager`).
-- `AuthenticatorApi` – `Login`, `Logout`, `HashPassword`,
-  `TestAuthenticationApi` (an ad-hoc self-test invoked over HTTP).
+- `AuthenticatorApi` – `Login`, `Logout`, `HashPassword`. (The ad-hoc
+  HTTP-invoked `TestAuthenticationApi` self-test was removed in MVP-001 Phase 6;
+  its flow moved to `judotech.api.tests`.)
 
 Local configuration is via `local.settings.json` (copied from
 `local.settings_sample.json`; not committed).
@@ -410,19 +411,23 @@ etc.) is documented.
 
 ## 9. Testing strategy
 
-- `docs/standards/testing.md` now defines xUnit for .NET and Vitest + React
-  Testing Library for the portal (MVP-001 Phase 3; ADR-0005). The test suites
-  themselves are added in MVP-001 Phase 6.
-- **At the time this section was first written, no automated tests existed** —
-  no test projects in `judotech.sln`, no `tests/` directories, no `*.test.*`
-  files, and the athlete app had no `test` script (only `lint`).
-- `AuthenticatorApi.TestAuthenticationApi` is a manual, HTTP-invoked smoke test
-  that catches and discards all exceptions.
-- The legacy static sites have the default `"test": "echo \"Error: no test
-  specified\" && exit 1"`.
-- CI runs CodeQL static analysis but no unit/integration test step.
-
-Testing strategy is therefore **aspirational only** at this point.
+- `docs/standards/testing.md` defines xUnit for .NET and Vitest + React Testing
+  Library for the portal (MVP-001 Phase 3; ADR-0005).
+- **Test suites now exist (MVP-001 Phase 6):**
+  - `source/judotech.core.tests` (xUnit) — `HashPassword` and `Settings`
+    container-mapping tests. 6 tests.
+  - `source/judotech.api.tests` (xUnit) — function-registration reflection
+    checks, plus a skipped `[Trait("Category","Integration")]` end-to-end auth
+    test (needs Cosmos).
+  - `judotech-portal`: `@judotech/core` (`HttpClient`), `@judotech/ui` (`Button`)
+    and `apps/athlete` (`Dashboard`) each have a Vitest suite.
+  - Run with `dotnet test source/judotech.sln` and `npm test` (from
+    `judotech-portal/`). CI excludes integration tests via
+    `--filter Category!=Integration`.
+- **When this section was first written, no automated tests existed** — no test
+  projects, no `*.test.*` files, no `test` script on the athlete app.
+- The legacy static sites still have the default failing `test` script.
+- A CI test step is added in MVP-001 Phase 7.
 
 ## 10. Existing integrations
 
