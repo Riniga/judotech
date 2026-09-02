@@ -2,7 +2,7 @@
 
 ## Prompt
 
-Create a implementation plan for MVP:  `docs/mvp020-demo-ready.md`
+Create a implementation plan for MVP:  `docs\mvp\MVP-001-workspace-foundation.md`
 
 Requirements:
 
@@ -18,7 +18,7 @@ Output format:
 4. Step-by-step TODO grouped into phases
 5. Risks / open questions
 
-Save the plan in the folder: `docs/plans/020-demo-ready.plan.md`
+Save the plan in the folder: `docs/plans/MVP-001-workspace-foundation.plan.md`
 
 ---
 
