@@ -287,6 +287,27 @@ The MVP is complete when all of the following are true.
 ### Deferred (not in MVP-001 scope)
 
 Tracked in `docs/architecture/technical-debt.md` — notably the `judotech.api`
-security hardening (TD-032–039, suggested MVP-002), API structure (TD-002/003/045),
-`@judotech/ui` adoption (TD-020/021), and the product questions (TD-006, TD-028,
-TD-030, TD-031).
+security hardening (`docs/mvp/MVP-002-api-security-hardening.md`), API structure
+(TD-002/003/045), `@judotech/ui` adoption (TD-020/021), and the product
+questions (TD-006, TD-028, TD-030, TD-031).
+
+## Post-merge actions (GitHub side)
+
+Do these once the MVP-001 PR is merged to `main` — they can't be done from the
+branch and are easy to forget:
+
+1. **Branch protection on `main`** — require the checks listed in
+   `docs/development/ci-cd.md` (`CI - .NET`, `CI - Portal`, `CI - Legacy static
+   sites`, `CodeQL`, `Security - Secret scan`); require a PR; no direct pushes.
+2. **Create the `production` environment** (Settings → Environments) with a
+   required reviewer, so `deploy_function.yml` / `deploy_web.yml` are gated.
+3. **Dependabot** now active — `@dependabot recreate` on one PR per ecosystem to
+   regroup the ~8 open PRs, then merge the green grouped PRs
+   (`docs/development/dependency-updates.md`). TD-048.
+4. **Delete the unused `judotech` Actions secret** (old function publish
+   profile). TD-047.
+5. **Delete stale branches** after confirming they hold nothing wanted:
+   `feature/containerapp`, `feature/saveprofile`, `features/react`. TD-049.
+6. Delete the merged MVP-001 branch.
+
+Then start MVP-002 on a fresh `feature/mvp-002-*` branch.

@@ -1,5 +1,12 @@
 ## Roadmap
 
+This file is the product-level direction. The engineering increments that get
+there are tracked as MVPs in [`mvp/`](mvp/) (see
+[`development/workflow.md`](development/workflow.md)):
+
+- **MVP-001** — workspace foundation — *done*
+- **MVP-002** — [`judotech.api` security hardening](mvp/MVP-002-api-security-hardening.md) — *proposed*, prerequisite for portal auth
+
 ### v1.0.0-alpha (Current development)
 * Development: 1.0.0-alpha.1
     * Core: 1.0.0-alpha.1

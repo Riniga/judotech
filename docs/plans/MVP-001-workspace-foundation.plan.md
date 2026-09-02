@@ -70,6 +70,12 @@ out `@judotech/ui`, infrastructure changes beyond gating existing deploys.
 
 Legend: **A** = add, **M** = modify, **D** = delete.
 
+> This was the plan's forecast. The **as-built** record — including deviations —
+> is in each phase's checklist in section 4. Notable differences: `source/.editorconfig`
+> was folded into the root `.editorconfig`; `@judotech/config` ships ESLint +
+> Vitest presets only (no `tsconfig.base.json` / `tailwind-theme.css`); several
+> Dependabot files were added as a Phase 7 addendum.
+
 ### Documentation
 
 | Change | Path | Purpose |
@@ -231,7 +237,7 @@ Commit message: `Consolidate documentation under docs/ and add foundation stubs`
 
 ---
 
-### Phase 2 — Architecture decisions — DONE (staged, not committed)
+### Phase 2 — Architecture decisions — DONE (commit `827ba76`)
 
 Commit message: `Record foundational architecture decisions (ADR 0001-0007)`
 
@@ -283,7 +289,7 @@ Commit message: `Record foundational architecture decisions (ADR 0001-0007)`
 
 ---
 
-### Phase 3 — Standards alignment — DONE (staged, not committed)
+### Phase 3 — Standards alignment — DONE (commit `5f37fbe`)
 
 Commit message: `Align coding, testing and process standards with the real stack`
 
@@ -327,7 +333,7 @@ Commit message: `Align coding, testing and process standards with the real stack
 
 ---
 
-### Phase 4 — Toolchain pinning & editor baseline — DONE (staged, not committed)
+### Phase 4 — Toolchain pinning & editor baseline — DONE (commit `513fd55`)
 
 Commit message: `Pin .NET and Node toolchains and add shared editor config`
 
@@ -367,16 +373,17 @@ Node v24.4.1; npm 11.4.2.
 - [x] 4.9 Added a Prerequisites section to `docs/development/setup.md` (pinned
       versions table) and a "Dev container" note that the Dockerfile does not yet
       bundle .NET / Node. Dockerfile left unchanged (not blocking).
-- [~] **Verify**: `dotnet --version` respects `global.json` → **OK** (9.0.317).
+- [x] **Verify**: `dotnet --version` respects `global.json` → **OK** (9.0.317).
       `git check-ignore` resolves → **OK**. `node -v` (24) matches `.nvmrc` →
-      **OK**. `dotnet build source/judotech.sln` → **FAILS**, but with the
-      *pre-existing* 53 errors / 6 warnings (identical count before and after
-      Phase 4). `Directory.Build.props` did not regress anything. Root cause is
-      TD-040 (`judotech.core` broken by commit `f0b94b4`) — see Risk 15.
+      **OK**. `dotnet build source/judotech.sln` failed at the time with the
+      *pre-existing* 53 errors (TD-040, `judotech.core` broken by `f0b94b4`);
+      `Directory.Build.props` did not regress anything (identical error count
+      before/after). TD-040 was fixed in the Phase 5 addendum (`7fcd704`) — the
+      solution now builds with 0 errors.
 
 ---
 
-### Phase 5 — Portal workspace structure — DONE (staged, not committed)
+### Phase 5 — Portal workspace structure — DONE (commit `3715e42`; addendum `7fcd704`)
 
 Commit message: `Add shared portal config, working root build, and packages/core`
 
@@ -448,7 +455,7 @@ Commit message: `Add shared portal config, working root build, and packages/core
 
 ---
 
-### Phase 6 — Testing setup — DONE (staged, not committed)
+### Phase 6 — Testing setup — DONE (commit `862ddc2`)
 
 Commit message: `Add xUnit and Vitest test suites with a passing test per component`
 
@@ -497,7 +504,7 @@ Commit message: `Add xUnit and Vitest test suites with a passing test per compon
 
 ---
 
-### Phase 7 — CI/CD separation — DONE (staged, not committed)
+### Phase 7 — CI/CD separation — DONE (commit `79d942f`; Dependabot addendum `0ac8056`)
 
 Commit message: `Split CI from deployment and add portal and legacy-web pipelines`
 
@@ -557,7 +564,7 @@ Commit message: `Split CI from deployment and add portal and legacy-web pipeline
 
 ---
 
-### Phase 8 — MVP close-out — DONE (staged, not committed)
+### Phase 8 — MVP close-out — DONE (commit `1880d54`)
 
 Commit message: `Complete MVP-001 workspace foundation and record dispositions`
 

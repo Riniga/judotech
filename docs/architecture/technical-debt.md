@@ -100,8 +100,8 @@ The backlog groups naturally into a few scoped increments:
 
 | Candidate MVP | Rows | Notes |
 |---------------|------|-------|
-| **MVP-002 — `judotech.api` security hardening** | TD-032, TD-033, TD-034, TD-035, TD-036, TD-037, TD-038, TD-039 | Prerequisite before the portal ships any authenticated end-user feature (ADR-0001, ADR-0007). High-severity items first. |
-| **MVP-003 — `judotech.api` structure** | TD-002, TD-003, TD-045 | DI + repository boundary; settle the `DbUser`/Cosmos model. Likely folds into MVP-002 or follows it. |
+| **[MVP-002 — `judotech.api` security hardening](../mvp/MVP-002-api-security-hardening.md)** | TD-032…TD-039, TD-045, TD-002 (min) | Written up. Prerequisite before the portal ships any authenticated end-user feature (ADR-0001, ADR-0007). |
+| **MVP-003 — `judotech.api` structure** | TD-002, TD-003, TD-045 | DI everywhere + repository boundary; remove the in-memory caches. May fold into MVP-002. |
 | **`@judotech/ui` adoption** | TD-020, TD-021, TD-041 | Establish the template's licence, then export/type/test components as they are actually used. |
 | **Portal tidy-up** (small, opportunistic) | TD-042, TD-043, TD-044 | Prune unused devDeps, address audit advisories. |
 | **Legacy static sites** | TD-046, TD-017 | Only if the Gulp/Pug sites are being kept rather than folded into the portal. |
