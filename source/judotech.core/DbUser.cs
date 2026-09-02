@@ -6,42 +6,26 @@ public class DbUser
     public static string ContainerName = "Users";
     [JsonProperty("id")]
     public string Id { get; set; } = default!; 
-    [JsonProperty("email")]
-    public string Email { get; set; } = default!;
-    [JsonProperty("fullname")]
-    public string FullName { get; set; } = default!;
-    [JsonProperty("personnumber")]    
-    public string Personnumber { get; set; } = default!;
+    [JsonProperty("firstname")]
+    public string First { get; set; } = default!;
+    [JsonProperty("lastname")]
+    public string Lastname { get; set; } = default!;
+    [JsonProperty("started")]
+    public DateTime Started { get; set; } = default!;
+    [JsonProperty("birthdate")]
+    public DateTime BirthDate { get; set; } = default!;
     [JsonProperty("age")]
     public float Age { get; set; } = default!;
-    [JsonProperty("adress")]
-    public string Adress { get; set; } = default!;
-    [JsonProperty("postalcode")]
-    public string PostalCode { get; set; } = default!;
-    [JsonProperty("city")]
-    public string City { get; set; } = default!;
-    [JsonProperty("primaryphone")]
-    public string PrimaryPhone { get; set; } = default!;
-    [JsonProperty("secondaryphone")]
-    public string SecondaryPhone { get; set; } = default!;
+    
+
     [JsonProperty("active")]
     public bool Active { get; set; } = default!;
-    [JsonProperty("attendance")]
-    public int Attendance { get; set; } = default!;
+    [JsonProperty("total")]
+    public int Total { get; set; } = default!;
     [JsonProperty("grade")]
     public string Grade { get; set; } = default!;
-    [JsonProperty("borde")]
-    public string Borde { get; set; } = default!;
-    [JsonProperty("diff")]
-    public string Diff { get; set; } = default!;
-    [JsonProperty("license")]
-    public string License { get; set; } = default!;
-    [JsonProperty("club")]
-    public string Club { get; set; } = default!;
-    [JsonProperty("zone")]
-    public string Zone { get; set; } = default!;
-    [JsonProperty("roles")]
-    public List<string> Roles { get; set; } = default!;
+    [JsonProperty("should_have_grade")]
+    public string ShouldHaveGrade { get; set; } = default!;
     // [JsonIgnore]
     [JsonProperty("password")]
     public string Password { get; set; } = default!;

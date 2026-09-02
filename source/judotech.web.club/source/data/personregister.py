@@ -3,9 +3,8 @@ import pandas as pd
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
 
-df = pd.read_excel("Personregister.xlsx")          # Download personregister from https://kansli.sportadmin.se/personregister/personregister
-
-df = df.rename(columns={
+personer_df = pd.read_excel("G:\\Min enhet\\Styrelsens dokument\\Träning\\Gradering.xlsx","Personregister")          # Download personregister from https://kansli.sportadmin.se/personregister/personregister
+personer_df.rename(columns={
     "Personnummer":"personnumber",
     "Kön":"sex",
     "Förnamn":"firstname",
@@ -37,4 +36,9 @@ df = df.rename(columns={
   })
 
 
+narvaro_df = pd.read_excel("G:\\Min enhet\\Styrelsens dokument\\Träning\\Gradering.xlsx","Närvaro")
+
 df.to_json("Personregister.json", orient="records", force_ascii=False, indent=2)
+
+
+

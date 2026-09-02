@@ -57,7 +57,12 @@ Bygga med     "build": "turbo build"  // om du vill ta det steget
 ## Skapa site
 npm create vite@latest apps/athlete -- --template react-ts
 npm install -D tailwindcss postcss autoprefixer --workspace @judotech/athlete
+npm install -D tailwindcss @tailwindcss/postcss @tailwindcss/vite -w @judotech/athlete
+npm install react-router-dom -w @judotech/athlete
+npm install -D @types/react-router-dom -w @judotech/athlete
 
+npm install -D vite-plugin-svgr -w @judotech/athlete
+npm install tailwindcss @tailwindcss/vite -w @judotech/athlete
 
 
 

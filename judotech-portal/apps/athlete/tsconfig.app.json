@@ -11,7 +11,7 @@
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
+    // "verbatimModuleSyntax": false,
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
@@ -29,5 +29,5 @@
       "@judotech/ui": ["../../packages/ui/src"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "svg.d.ts"]
 }
