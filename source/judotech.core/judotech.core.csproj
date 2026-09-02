@@ -6,8 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="8.0.20" />
-    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.34.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="10.0.11" />
+    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.62.1" />
     <!-- Used directly (Newtonsoft [JsonProperty] on the Db* models) and required
          explicitly by Microsoft.Azure.Cosmos >= 3.32. -->
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
