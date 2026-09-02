@@ -328,7 +328,7 @@ manual and gated on a `production` environment. Full detail:
 |---|---|---|---|
 | `ci-dotnet.yml` | push/PR to `main`, manual | restore + build (Release) + test (`Category!=Integration`) on .NET 8 | No |
 | `ci-portal.yml` | push/PR to `main`, manual | `npm ci` + lint + typecheck + test + build in `judotech-portal/` | No |
-| `ci-web-legacy.yml` | push/PR to `main`, manual | `gulp` build of the frozen sites (`calendar`/`club`/`referee` required, `judotech.web` non-blocking) | No |
+| `ci-web-legacy.yml` | push/PR to `main`, manual | `gulp` build of all four frozen Gulp/Pug sites | No |
 | `codeql.yml` | push/PR to `main`, weekly | CodeQL for `csharp` + `javascript-typescript` | No |
 | `security-secret-scan.yml` | push/PR to `main`, manual | gitleaks | No |
 | `deploy_function.yml` | manual only | publish + deploy `judotech.api` to the `judotech` Function App | Yes (`production`) |
@@ -561,8 +561,8 @@ Structure and direction:
 - ~~CI targets the wrong .NET SDK version; CI and deployment are not separated.~~
   Fixed in MVP-001 Phase 4 & 7. No non-production environment (TD-012, deferred).
 - Email/registration-confirmation functionality status is unclear (TD-028).
-- `judotech.web.club` / `.calendar` / `.referee` now have build CI
-  (`ci-web-legacy.yml`); `judotech.web` itself does not build (TD-046).
+- All four `judotech.web*` static sites now have build CI (`ci-web-legacy.yml`);
+  `judotech.web`'s broken pug/gulp config was fixed (TD-046).
 - The video streaming projects are outside the solution and unbuilt (TD-018).
 - Member import is a manual local script with a hard-coded path.
 - Security review needed for the custom auth scheme (string-concatenated Cosmos

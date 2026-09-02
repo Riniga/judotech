@@ -55,14 +55,13 @@ is gitignored.
 ### `source/judotech.web*` — static sites (maintenance-only)
 
 ```bash
-cd source/judotech.web.club          # or .calendar / .referee
+cd source/judotech.web               # or .calendar / .club / .referee
 npm install
 npx gulp --environment development    # output in ./public
 npx live-server public                # optional local preview
 ```
 
-`source/judotech.web` currently fails to build (TD-046); `calendar`, `club` and
-`referee` build.
+All four sites build.
 
 ## Running the tests
 

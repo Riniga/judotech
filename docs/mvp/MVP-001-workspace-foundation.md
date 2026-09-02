@@ -280,8 +280,6 @@ The MVP is complete when all of the following are true.
 - **ADR ratification** — done. ADR-0001…0007 ratified by the owner 2026-09-02.
 - **CI green on GitHub** is confirmed only by inspection until the branch is
   pushed and a pull request is opened.
-- **`judotech.web`** does not build (TD-046); its `ci-web-legacy` leg is
-  non-blocking.
 - **`DbUser`** is a superset model, not a settled one (TD-045).
 
 ### Deferred (not in MVP-001 scope)

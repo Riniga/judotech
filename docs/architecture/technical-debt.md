@@ -42,7 +42,7 @@ Owner `unassigned` means no one has picked it up yet.
 | TD-016 | `judotech.web.club` / `.calendar` / `.referee` have no CI | §13 | Fixed in MVP-001 (Phase 7, build-only) | – | – |
 | TD-017 | `judotech.web.club` / `.calendar` / `.referee` have no deployment workflow | §13 | Partly fixed — `deploy_web.yml` now takes a `site` input covering all four; only `judotech.web` was previously deployable | low | unassigned |
 | TD-018 | Video-streaming projects (`judotech.VideoStream*`, net48) are outside `judotech.sln` and unbuilt | §13 | Accepted (ADR-0001) — kept dormant in place | low | unassigned |
-| TD-046 | `source/judotech.web` (the deployed "main" site) fails to build locally: `sub-layout.pug` extends `pug/templates/layout.pug` at the wrong path. `calendar` / `club` / `referee` build fine. | MVP-001 Phase 7 | Backlog — `ci-web-legacy.yml` runs it non-blocking (`allow-failure`) | medium | unassigned |
+| TD-046 | `source/judotech.web` failed to build: `sub-layout.pug` `extends`'d a non-existent path, and `gulpfile.js` referenced a phantom `../judotech.web/` "layout" project in the `scripts` / `styles` / `images` tasks. | MVP-001 Phase 7 | Fixed in MVP-001 (Phase 7 addendum) — corrected the `extends` to the sibling `layout.pug`, dropped the `../judotech.web/` references, guarded the empty `configurations` / `data` tasks, added a `.gitignore`. Builds dev + prod; `ci-web-legacy` now runs all four sites as required. | – | – |
 | TD-047 | The `judotech` GitHub Actions secret (old function publish profile) is no longer referenced by any workflow | MVP-001 Phase 7 | Backlog — delete in repo settings | low | unassigned |
 
 ## Front-end (`judotech-portal`)
@@ -104,7 +104,7 @@ The backlog groups naturally into a few scoped increments:
 | **MVP-003 — `judotech.api` structure** | TD-002, TD-003, TD-045 | DI everywhere + repository boundary; remove the in-memory caches. May fold into MVP-002. |
 | **`@judotech/ui` adoption** | TD-020, TD-021, TD-041 | Establish the template's licence, then export/type/test components as they are actually used. |
 | **Portal tidy-up** (small, opportunistic) | TD-042, TD-043, TD-044 | Prune unused devDeps, address audit advisories. |
-| **Legacy static sites** | TD-046, TD-017 | Only if the Gulp/Pug sites are being kept rather than folded into the portal. |
+| **Legacy static sites** | TD-017 | Deployment workflow coverage — only if the Gulp/Pug sites are being kept rather than folded into the portal. |
 | **Product questions** | TD-006, TD-028, TD-029, TD-030, TD-031 | Translation, email confirmation, member import, Smoothcomp intent, NFR monitoring — need product input, not just engineering. |
 
 New debt discovered later is appended with the next free `TD-0NN` id.

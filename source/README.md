@@ -10,7 +10,7 @@ needed to keep the deployed API and site running.
 | Path | Status |
 |------|--------|
 | `judotech.core/`, `judotech.api/` (+ `*.tests/`) | maintenance-only — the .NET Functions API the portal consumes |
-| `judotech.web/`, `judotech.web.calendar/`, `judotech.web.club/`, `judotech.web.referee/` | frozen Gulp/Pug static sites (`judotech.web` does not currently build — TD-046) |
+| `judotech.web/`, `judotech.web.calendar/`, `judotech.web.club/`, `judotech.web.referee/` | frozen Gulp/Pug static sites |
 | `judotech.VideoStream*/` | dormant .NET Framework 4.8 experiments, not in `judotech.sln` |
 | `judotech.integrations.members/`, `**/data/*.py` | manual member-import tooling |
 

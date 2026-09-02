@@ -16,20 +16,14 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    continue-on-error: ${{ matrix.allow-failure }}
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - site: judotech.web.calendar
-            allow-failure: false
-          - site: judotech.web.club
-            allow-failure: false
-          - site: judotech.web.referee
-            allow-failure: false
-          # judotech.web currently fails to build (TD-046); kept non-blocking.
-          - site: judotech.web
-            allow-failure: true
+        site:
+          - judotech.web
+          - judotech.web.calendar
+          - judotech.web.club
+          - judotech.web.referee
     steps:
       - uses: actions/checkout@v4
 

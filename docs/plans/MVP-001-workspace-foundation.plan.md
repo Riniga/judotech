@@ -504,9 +504,23 @@ Commit message: `Add xUnit and Vitest test suites with a passing test per compon
 
 ---
 
-### Phase 7 — CI/CD separation — DONE (commit `79d942f`; Dependabot addendum `0ac8056`)
+### Phase 7 — CI/CD separation — DONE (commit `79d942f`; addenda: Dependabot `0ac8056`, `judotech.web` fix pending)
 
 Commit message: `Split CI from deployment and add portal and legacy-web pipelines`
+
+> **Phase 7 addendum (separate commit): fix `judotech.web` (TD-046).** The
+> `ci-web-legacy` job was failing on the `judotech.web` leg. Root cause:
+> `source/pug/templates/sub-layout.pug` `extends`'d
+> `../../../../judotech.web/pug/templates/layout.pug` (a path that does not
+> exist — `layout.pug` is a sibling), and `gulpfile.js` pulled `scripts` /
+> `styles` / `images` from a phantom `../judotech.web/` "layout" project.
+> Fixed: `extends layout.pug`; dropped the `../judotech.web/` sources; guarded
+> the empty `configurations` / `data` tasks with `fs.existsSync`; added
+> `source/judotech.web/.gitignore`. Builds dev + prod locally. `ci-web-legacy.yml`
+> now runs all four sites as required (no `allow-failure`). Suggested commit
+> message: `Fix judotech.web pug/gulp build (TD-046)`.
+
+---
 
 > **Phase 7 addendum (separate commit): Dependabot.** GitHub had ~8 ungrouped
 > Dependabot PRs open on `main` and no `dependabot.yml`. Added:

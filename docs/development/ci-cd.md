@@ -9,7 +9,7 @@ deployment are separate: **CI never deploys** (ADR-0006).
 |----------|---------|--------------|----------|
 | `ci-dotnet.yml` | push/PR to `main`, manual | `dotnet restore` + `build -c Release` + `test --filter "Category!=Integration"` on .NET 8 | No |
 | `ci-portal.yml` | push/PR to `main`, manual | `npm ci` + `lint` + `typecheck` + `test` + `build` in `judotech-portal/` (Node from `.nvmrc`) | No |
-| `ci-web-legacy.yml` | push/PR to `main`, manual | `npx gulp` build of the frozen Gulp/Pug sites (`calendar`, `club`, `referee` required; `judotech.web` non-blocking — TD-046) | No |
+| `ci-web-legacy.yml` | push/PR to `main`, manual | `npx gulp` build of all four frozen Gulp/Pug sites (`judotech.web`, `calendar`, `club`, `referee`) | No |
 | `codeql.yml` | push/PR to `main`, weekly | CodeQL analysis for `csharp` and `javascript-typescript` | No |
 | `security-secret-scan.yml` | push/PR to `main`, manual | gitleaks secret scan (allowlist in `.gitleaks.toml`) | No |
 | `dependabot-auto-merge.yml` | Dependabot PRs | enable auto-merge for patch / non-production minor bumps (still gated on CI) | No |
@@ -46,7 +46,7 @@ Recommended settings (repository settings → Branches → add rule for `main`):
 - Require status checks to pass:
   - `CI - .NET / build-and-test`
   - `CI - Portal / verify`
-  - `CI - Legacy static sites / build` (the non-`allow-failure` legs)
+  - `CI - Legacy static sites / build`
   - `CodeQL`
   - `Security - Secret scan / gitleaks`
 - Require branches to be up to date before merging.
