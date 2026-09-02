@@ -380,6 +380,14 @@ Node v24.4.1; npm 11.4.2.
 
 Commit message: `Add shared portal config, working root build, and packages/core`
 
+> **Phase 5 addendum (separate commit): fix the `judotech.core` build (TD-040).**
+> At the owner's request, `source/judotech.core/DbUser.cs` was restored to a
+> superset of the pre- and post-`f0b94b4` property shapes so every call site
+> compiles again. `dotnet build source/judotech.sln` → 0 errors; `func start`
+> hosts all 15 functions; `GET /api/HashPassword` returns 200. Suggested commit
+> message: `Fix judotech.core build by restoring removed DbUser members (TD-040)`.
+> This unblocks Phases 6 and 7's .NET work.
+
 - [x] 5.1 Add `judotech-portal/tsconfig.base.json` with the common options
       currently duplicated in `apps/athlete/tsconfig.*`.
 - [x] 5.2 Create `packages/config` (`@judotech/config`).
@@ -648,8 +656,16 @@ Commit message: `Complete MVP-001 workspace foundation and record dispositions`
     standards, pinning, tests, CI). Phase 5 (portal restructure) and Phase 8
     polish can be a follow-up MVP if needed — but then acceptance criteria
     18–21 slip.
-15. **`source/judotech.core` does not compile (TD-040) — BLOCKER for Phases 6 &
-    7's .NET work.** Discovered during the Phase 4 build check: commit `f0b94b4`
+15. **~~`source/judotech.core` does not compile (TD-040) — BLOCKER for Phases 6 &
+    7's .NET work.~~ RESOLVED.** Fixed after Phase 5 at the owner's request:
+    `DbUser` restored to a superset of both property shapes (option (b), minimal
+    mechanical fix). `dotnet build source/judotech.sln` → 0 errors / 6
+    pre-existing nullable warnings; `func start` hosts all 15 functions;
+    `GET /api/HashPassword` verified. Phases 6 and 7 proceed with their .NET
+    work as originally planned. Choosing one coherent `DbUser` model is now
+    TD-045 (backlog). Original text kept below for context.
+
+    Discovered during the Phase 4 build check: commit `f0b94b4`
     ("initalized claude and first code base") reworked `DbUser`'s properties
     (removed `Email`, `FullName`, `Personnumber`, `Adress`, `PostalCode`, `City`,
     `PrimaryPhone`, `SecondaryPhone`, `Attendance`, `Borde`, `Diff`, `License`,
