@@ -1,0 +1,24 @@
+<Project>
+
+  <!--
+    Shared build settings for the SDK-style .NET projects under source/
+    (judotech.core, judotech.api and their test projects).
+
+    The legacy non-SDK projects judotech.VideoStream* are excluded: they target
+    .NET Framework 4.8, are not part of judotech.sln, and are not built in CI.
+  -->
+  <PropertyGroup Condition="'$(MSBuildProjectName)' != 'Judoka.VideoStreamCapture' and '$(MSBuildProjectName)' != 'Judoka.VideoStreamStorage' and '$(MSBuildProjectName)' != 'Judoka.VideoStreamView'">
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <!--
+      Warnings are not errors yet: the existing code produces analyzer and
+      nullable warnings that are tracked in docs/architecture/technical-debt.md.
+      Turn this on once that backlog is cleared.
+    -->
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+</Project>

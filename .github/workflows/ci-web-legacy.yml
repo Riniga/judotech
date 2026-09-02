@@ -1,0 +1,41 @@
+name: CI - Legacy static sites
+
+# Build-only checks for the frozen Gulp/Pug sites under source/ (ADR-0001).
+# No deployment — that stays in deploy_web.yml.
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        site:
+          - judotech.web
+          - judotech.web.calendar
+          - judotech.web.club
+          - judotech.web.referee
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Install
+        working-directory: source/${{ matrix.site }}
+        run: npm ci || npm install
+
+      - name: Build
+        working-directory: source/${{ matrix.site }}
+        run: npx gulp --environment development

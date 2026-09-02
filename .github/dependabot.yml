@@ -1,0 +1,77 @@
+version: 2
+
+# Dependency updates. Grouped per ecosystem to keep the PR list small.
+# Process: docs/development/dependency-updates.md
+
+updates:
+  # --- Front-end monorepo (npm workspaces, single root lockfile) ---
+  - package-ecosystem: npm
+    directory: /judotech-portal
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels: ["dependencies", "portal"]
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      portal:
+        applies-to: version-updates
+        patterns: ["*"]
+      portal-security:
+        applies-to: security-updates
+        patterns: ["*"]
+
+  # --- Legacy Gulp/Pug static sites (frozen — ADR-0001) ---
+  - package-ecosystem: npm
+    directories:
+      - /source/judotech.web
+      - /source/judotech.web.calendar
+      - /source/judotech.web.club
+      - /source/judotech.web.referee
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels: ["dependencies", "legacy-web"]
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      legacy-web:
+        applies-to: version-updates
+        patterns: ["*"]
+      legacy-web-security:
+        applies-to: security-updates
+        patterns: ["*"]
+
+  # --- .NET (judotech.sln: core, api, and the test projects) ---
+  - package-ecosystem: nuget
+    directory: /source
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels: ["dependencies", "dotnet"]
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      dotnet:
+        applies-to: version-updates
+        patterns: ["*"]
+      dotnet-security:
+        applies-to: security-updates
+        patterns: ["*"]
+
+  # --- GitHub Actions workflow versions ---
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels: ["dependencies", "ci"]
+    commit-message:
+      prefix: "ci(deps)"
+    groups:
+      actions:
+        patterns: ["*"]

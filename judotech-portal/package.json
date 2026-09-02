@@ -1,0 +1,25 @@
+{
+  "name": "judotech-portal",
+  "private": true,
+  "packageManager": "npm@11.4.2",
+  "engines": {
+    "node": ">=22"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "test": "turbo test",
+    "dev:athlete": "npm run dev --workspace @judotech/athlete",
+    "build:athlete": "npm run build --workspace @judotech/athlete",
+    "preview:athlete": "npm run preview --workspace @judotech/athlete"
+  },
+  "devDependencies": {
+    "turbo": "^2.5.0"
+  }
+}
