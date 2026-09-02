@@ -75,6 +75,8 @@ Owner `unassigned` means no one has picked it up yet.
 | TD-031 | NFR targets (response <1s p95, encryption at rest, 99.9% availability) have no verification or monitoring | §13 | Backlog | medium | unassigned |
 | TD-040 | `source/judotech.core` did not compile: commit `f0b94b4` reworked `DbUser`'s properties but left the constructors, `DbUser(string email)` loader, `Delete()`, `CosmosDatabase` and `AuthenticatorApi` referencing the removed members. 53 build errors. | MVP-001 Phase 4 build check | Fixed in MVP-001 (Phase 5 addendum) — `DbUser` restored to a **superset** of both property shapes so all call sites compile; solution builds (0 errors), `func start` hosts all 15 functions, `HashPassword` verified. Settling on one `DbUser` / Cosmos model remains open (see TD-045). | – | – |
 | TD-045 | `DbUser` is a superset of the pre- and post-`f0b94b4` models (both the address-book fields and `First`/`Lastname`/`Started`/`BirthDate`/`Total`/`ShouldHaveGrade`). One coherent model needs to be chosen, along with the Cosmos partition-key implications. | TD-040 fix | Backlog | medium | unassigned |
+| TD-050 | `judotech.api` produces ~13 nullable-reference warnings (`CS8600/CS8602/CS8603`) in `UserApi` / `CompetitionApi` / `AuthenticatorApi`; blocks turning on `TreatWarningsAsErrors` | Dependabot dotnet-group PR #42 (clean CI build) | Backlog | low | unassigned |
+| TD-051 | `Microsoft.Azure.Cosmos` >= 3.32 requires an explicit `Newtonsoft.Json` reference; Dependabot's dotnet-group bump (Cosmos 3.34→3.62) failed CI until it was added | Dependabot PR #42 | Fixed — explicit `Newtonsoft.Json` 13.0.3 added to `judotech.core` and `judotech.api` (both use it directly anyway) | – | – |
 
 ## Authentication (`decisions/0007-source-auth-review.md`)
 
