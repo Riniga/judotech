@@ -1,15 +1,44 @@
 # MVP Workflow
 
-> **Stub.** This document is filled in by MVP-001, Phase 3
-> ([`../plans/MVP-001-workspace-foundation.plan.md`](../plans/MVP-001-workspace-foundation.plan.md)).
-> The prompt templates that drive this workflow are in
-> [`../claude-prompts/`](../claude-prompts/).
+The workspace is built in small, scoped increments called MVPs. Each MVP goes
+through the same loop. The prompt templates that drive it (for AI-assisted work)
+are in [`../claude-prompts/`](../claude-prompts/).
 
-Intended contents:
+## The loop
 
-- The loop: identify an MVP → write an implementation plan → implement in small
-  steps → complete the MVP and open a pull request.
-- What lives where: `docs/mvp/` (scoped increments), `docs/plans/`
-  (implementation plans), `docs/architecture/decisions/` (decisions made along
-  the way), `docs/architecture/technical-debt.md` (deferred items).
-- How a plan phase maps to a single commit.
+1. **Identify an MVP.** Decide the next increment that moves the workspace or a
+   product forward. Write it up as `docs/mvp/MVP-NNN-<slug>.md` with: Goal,
+   Scope (in and out), Expected value, Acceptance criteria. No implementation
+   detail.
+2. **Plan it.** Write `docs/plans/MVP-NNN-<slug>.plan.md` with: Goal,
+   Assumptions, Proposed file changes, step-by-step TODOs grouped into phases
+   (one phase = one commit), Risks / open questions.
+3. **Decide as needed.** Any significant decision made while planning or
+   implementing gets an ADR in
+   [`../architecture/decisions/`](../architecture/decisions/).
+4. **Implement.** Work the plan one phase at a time on a branch. Check off plan
+   items as they land. Deferred or discovered issues go into
+   [`../architecture/technical-debt.md`](../architecture/technical-debt.md),
+   not into scope creep.
+5. **Complete.** Verify every acceptance criterion, update the MVP status to
+   `done` with a pointer to where each criterion was met, update the overview and
+   any affected docs, and open a pull request against `main`.
+
+## Where things live
+
+| Artefact | Location |
+|----------|----------|
+| MVP definition | `docs/mvp/MVP-NNN-<slug>.md` |
+| Implementation plan | `docs/plans/MVP-NNN-<slug>.plan.md` |
+| Decisions | `docs/architecture/decisions/NNNN-<slug>.md` |
+| Deferred / accepted issues | `docs/architecture/technical-debt.md` |
+
+## MVP status values
+
+`proposed` → `in progress` → `done`. A `done` MVP is not edited further; a
+follow-up is a new MVP.
+
+## Phase-to-commit mapping
+
+Each phase in a plan is one commit with the commit message given in the plan.
+The human reviews the diff and commits; the assistant does not commit.

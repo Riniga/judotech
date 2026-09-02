@@ -36,7 +36,10 @@ chore/update-dependencies
 - Do not commit large batches of unrelated changes.
 - Do not commit unfinished or unverified code.
 - Run relevant tests before committing.
-- For code changes, run `pytest` before commit unless the plan explicitly states otherwise.
+- For code changes, run the checks for the stack you changed before commit,
+  unless the plan explicitly states otherwise:
+  - .NET: `dotnet test source/judotech.sln`
+  - portal: `npm run lint && npm run typecheck && npm test` (from `judotech-portal/`)
 - Keep commits focused and easy to understand.
 
 ## Commit Messages
@@ -122,7 +125,9 @@ Work in small steps:
 
 ```bash
 git status
-pytest
+# run the checks for the stack you changed, e.g.:
+#   dotnet test source/judotech.sln
+#   (cd judotech-portal && npm run lint && npm run typecheck && npm test)
 git add .
 git commit -m "Add clear description of change"
 git push -u origin feature/<short-name>

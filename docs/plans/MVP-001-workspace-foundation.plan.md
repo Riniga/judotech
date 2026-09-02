@@ -195,127 +195,135 @@ Legend: **A** = add, **M** = modify, **D** = delete.
 
 ---
 
-### Phase 1 — Documentation structure
+### Phase 1 — Documentation structure — DONE (commit `b5fbae3`)
 
 Commit message: `Consolidate documentation under docs/ and add foundation stubs`
 
-- [ ] 1.1 Confirm `documentation/` on disk is empty (`git ls-files documentation/`
+- [x] 1.1 Confirm `documentation/` on disk is empty (`git ls-files documentation/`
       returns nothing; directory has no files). Delete the empty directory.
-- [ ] 1.2 In `docs/architecture/overview.md`, replace every `documentation/`
+- [x] 1.2 In `docs/architecture/overview.md`, replace every `documentation/`
       path reference with `docs/`. Update the tree diagram: the top-level doc
       folder is `docs/`, not `documentation/`. Remove the "(note: not docs/)"
       aside.
-- [ ] 1.3 Add `docs/README.md`: one paragraph on what `docs/` contains, plus a
+- [x] 1.3 Add `docs/README.md`: one paragraph on what `docs/` contains, plus a
       recommended reading order (overview → standards → development → decisions →
       roadmap → mvp → plans). List each subfolder with a one-line purpose.
-- [ ] 1.4 Create `docs/architecture/decisions/` with:
+- [x] 1.4 Create `docs/architecture/decisions/` with:
       - `README.md` — what an ADR is, numbering, statuses (proposed / accepted /
         superseded), how to add one.
       - `adr-template.md` — sections: Title, Status, Context, Decision,
         Consequences, Alternatives considered.
-- [ ] 1.5 Create `docs/development/` with placeholder files that state their
+- [x] 1.5 Create `docs/development/` with placeholder files that state their
       purpose and a "TODO: filled in Phase 3/7" note:
       `README.md`, `setup.md`, `ci-cd.md`, `workflow.md`.
-- [ ] 1.6 Create `docs/dependencies/README.md` as a stub ("filled in Phase 8").
-- [ ] 1.7 Fix any stale path references in `docs/standards/documentation.md` and
+- [x] 1.6 Create `docs/dependencies/README.md` as a stub ("filled in Phase 8").
+- [x] 1.7 Fix any stale path references in `docs/standards/documentation.md` and
       `docs/standards/git.md` that point at a non-`docs/` location (do not change
-      their substance yet).
-- [ ] 1.8 Add `.github/pull_request_template.md` referencing the MVP/plan and a
+      their substance yet). — Note: `git.md` had no non-`docs/` path references;
+      fixed one real mismatch in `documentation.md` (`docs/roadmap/` →
+      `docs/roadmap.md`).
+- [x] 1.8 Add `.github/pull_request_template.md` referencing the MVP/plan and a
       short checklist (tests pass, docs updated, no secrets, scope matches plan).
-- [ ] **Verify**: `find docs -type f` shows the new structure; no `documentation/`
+- [x] **Verify**: `find docs -type f` shows the new structure; no `documentation/`
       directory remains; `grep -rn "documentation/" docs/` returns nothing except
       intentional prose. Markdown renders (no broken relative links —
       spot-check in editor preview).
 
 ---
 
-### Phase 2 — Architecture decisions
+### Phase 2 — Architecture decisions — DONE (staged, not committed)
 
 Commit message: `Record foundational architecture decisions (ADR 0001-0007)`
 
-- [ ] 2.1 Write `0001-source-vs-portal-scope.md` (Status: proposed). Decision:
+- [x] 2.1 Write `0001-source-vs-portal-scope.md` (Status: proposed). Decision:
       `source/` is maintenance-only (security/critical fixes to `judotech.api`
       and `judotech.web` only); `judotech-portal/` is the active target; the
       portal consumes the existing `judotech.api`; a future ADR will decide any
       API rewrite. List which paths are "active" vs "frozen".
-- [ ] 2.2 Write `0002-documentation-location.md` (accepted). Decision: all
+- [x] 2.2 Write `0002-documentation-location.md` (accepted). Decision: all
       project docs under `docs/`; `documentation/` removed.
-- [ ] 2.3 Write `0003-language-policy.md` (proposed). Decision: English for code,
+- [x] 2.3 Write `0003-language-policy.md` (proposed). Decision: English for code,
       identifiers, comments, commits, docs; Swedish only in business data files
       and future UI copy. Consequence: existing Swedish docs
       (`functional-requirements.md`, `non-functional-requirements.md`,
       `features.md`) get translated — add that as a technical-debt item, not a
       blocker.
-- [ ] 2.4 Write `0004-frontend-workspace.md` (proposed). Decision: npm workspaces
+- [x] 2.4 Write `0004-frontend-workspace.md` (proposed). Decision: npm workspaces
       (keep), adopt Turborepo for task running, `packages/{ui,core,config}`,
       `apps/{public,athlete,trainer,referee}` created on demand, `@judotech/*`
       scope, packages consumed from source within the monorepo.
-- [ ] 2.5 Write `0005-test-frameworks.md` (proposed). Decision: xUnit (.NET),
+- [x] 2.5 Write `0005-test-frameworks.md` (proposed). Decision: xUnit (.NET),
       Vitest + React Testing Library (portal); integration tests that need Cosmos
       are `[Trait("Category","Integration")]` / `describe.skip` by default.
-- [ ] 2.6 Write `0006-environments-and-deployment.md` (proposed). Decision: one
+- [x] 2.6 Write `0006-environments-and-deployment.md` (proposed). Decision: one
       `production` environment for now; all deploy workflows are
       `workflow_dispatch` only and bound to a protected GitHub `production`
       environment; CI workflows never deploy; Test/UAT tiers deferred.
-- [ ] 2.7 Write `0007-source-auth-review.md` (proposed). Record findings from
+- [x] 2.7 Write `0007-source-auth-review.md` (proposed). Record findings from
       `overview.md` + code: static hard-coded salt in `DbLogin.HashPassword`,
       SQL built by string concatenation in `GetUserFromToken`, no token expiry,
       `AuthorizationLevel.Function` only. Decision: acceptable for current
       internal/low-volume use; **must** be hardened before the portal exposes
       auth to end users. Each item becomes a technical-debt entry; not an MVP
       blocker.
-- [ ] 2.8 Create `docs/architecture/technical-debt.md`: a table with columns
+- [x] 2.8 Create `docs/architecture/technical-debt.md`: a table with columns
       _ID, Source (overview §), Description, Disposition (fixed in MVP-001 /
       backlog / accepted), Owner, Notes_. Populate one row for every bullet in
-      `overview.md` sections 11 and 13, and for the ADR-0007 items.
-- [ ] 2.9 Update `docs/architecture/overview.md`: add a short "Decisions" section
+      `overview.md` sections 11 and 13, and for the ADR-0007 items. — Done as
+      TD-001..TD-039, grouped by area, with a Severity column added.
+- [x] 2.9 Update `docs/architecture/overview.md`: add a short "Decisions" section
       linking ADR-0001..0007 and `technical-debt.md`; adjust section 1 and
-      section 11/13 wording to say the items now have dispositions.
-- [ ] 2.10 Update `docs/mvp/MVP-001-workspace-foundation.md` status to
+      section 11/13 wording to say the items now have dispositions. — Section
+      intros updated; individual §11/§13 bullets kept as the historical record
+      (deeper per-bullet rewrite left for Phase 8).
+- [x] 2.10 Update `docs/mvp/MVP-001-workspace-foundation.md` status to
       `in progress`.
-- [ ] **Verify**: every ADR file has all template sections filled; every
+- [x] **Verify**: every ADR file has all template sections filled; every
       overview §11/§13 bullet appears in `technical-debt.md`; links resolve.
 
 ---
 
-### Phase 3 — Standards alignment
+### Phase 3 — Standards alignment — DONE (staged, not committed)
 
 Commit message: `Align coding, testing and process standards with the real stack`
 
-- [ ] 3.1 Rewrite `docs/standards/coding.md` as **stack-agnostic principles
+- [x] 3.1 Rewrite `docs/standards/coding.md` as **stack-agnostic principles
       only** (correctness, clarity, SOLID-where-useful, small functions, comment
       the why, no silent catch, no secrets in logs, tests for reusable logic).
       Remove Python-specific rules (`snake_case`, `pyproject.toml`,
       `service.py/repository.py`, `T | None`). Add a "Language-specific
       standards" section linking the two new files.
-- [ ] 3.2 Add `docs/standards/coding-dotnet.md`: target `net8.0`, nullable
+- [x] 3.2 Add `docs/standards/coding-dotnet.md`: target `net8.0`, nullable
       enabled, `PascalCase` types/methods, `camelCase` locals, file-scoped
       namespaces, `async` suffix, one type per file, `Directory.Build.props`
       analyzers, `dotnet format` before commit, no `catch {}` that swallows.
       Note current deviations to fix opportunistically (Active Record, static
       salt, string-built queries) with links to `technical-debt.md`.
-- [ ] 3.3 Add `docs/standards/coding-typescript-react.md`: TS strict, ESLint flat
+- [x] 3.3 Add `docs/standards/coding-typescript-react.md`: TS strict, ESLint flat
       config from `@judotech/config`, Prettier for formatting, `PascalCase`
       components + files, hooks rules, no default exports for shared library
       code (allow for app pages), Tailwind for styling, path alias `@judotech/*`.
-- [ ] 3.4 Rewrite `docs/standards/testing.md`: table of _stack → framework →
+- [x] 3.4 Rewrite `docs/standards/testing.md`: table of _stack → framework →
       test file pattern → command_. .NET: xUnit, `*Tests.cs`, `dotnet test`.
       Portal: Vitest, `*.test.ts(x)`, `npm test` / `turbo test`. Keep the
       "regression test for every bug fix, tests for every feature" principles.
       Add "Integration tests requiring Cosmos are skipped in CI" note.
-- [ ] 3.5 Edit `docs/standards/git.md`: replace "run `pytest` before commit" with
+- [x] 3.5 Edit `docs/standards/git.md`: replace "run `pytest` before commit" with
       "run the checks for the stack you changed (`dotnet test` / `npm test`)
-      before commit"; keep everything else.
-- [ ] 3.6 Fill `docs/development/README.md` (development process): branching model
+      before commit"; keep everything else. (Also updated the daily-workflow
+      snippet.)
+- [x] 3.6 Fill `docs/development/README.md` (development process): branching model
       (`feature/ fix/ docs/ refactor/ chore/` off `main`), review expectations,
       when docs are required, when tests are required, AI-assistant rules (mirror
       `.claude/settings.json` and `git.md`), definition of done.
-- [ ] 3.7 Fill `docs/development/workflow.md`: the MVP → plan → implement →
+- [x] 3.7 Fill `docs/development/workflow.md`: the MVP → plan → implement →
       complete loop, which folders hold what (`docs/mvp/`, `docs/plans/`), how a
       phase maps to a commit, how `technical-debt.md` is used.
-- [ ] **Verify**: `grep -rn "pytest\|pyproject\|snake_case" docs/standards/`
+- [x] **Verify**: `grep -rn "pytest\|pyproject\|snake_case" docs/standards/`
       returns only intentional historical mentions (ideally none);
-      `coding.md` links resolve to the two new files.
+      `coding.md` links resolve to the two new files. — No matches in
+      `docs/standards/`; all `coding.md` links resolve. Also refreshed
+      overview.md sections 6 and 9 which described the old standards.
 
 ---
 

@@ -1,65 +1,58 @@
 # Testing Standard
 
-## Purpose
+How the workspace is tested. Framework choices are recorded in
+[`../architecture/decisions/0005-test-frameworks.md`](../architecture/decisions/0005-test-frameworks.md).
 
-This document defines the testing standards for all projects in the workspace.
+## Frameworks
 
-## Test Framework
+| Stack | Framework | Test file pattern | Location | Run |
+|-------|-----------|-------------------|----------|-----|
+| C# / .NET (`source/`) | xUnit | `<Type>Tests.cs` | `source/<project>.tests/` | `dotnet test source/judotech.sln` |
+| TypeScript / React (`judotech-portal/`) | Vitest + React Testing Library (`jsdom`) | `*.test.ts` / `*.test.tsx` | next to the code under test | `npm test` (from `judotech-portal/`; Turborepo fans out) |
+| Python scripts (`source/`) | none required | — | — | — |
 
-- Framework: `pytest`
-- Test directory: `tests/`
-- Test files: `test_<module>.py`
-- Tests must be deterministic and runnable offline.
-- Avoid external dependencies whenever possible.
+## Principles
 
-## Test Principles
+- Tests are deterministic and run offline.
+- Prefer fast unit tests; add integration or end-to-end tests only where they
+  earn their cost.
+- Every new feature ships with tests. Every bug fix ships with a regression test
+  that fails before the fix.
+- Refactoring does not change tests except to follow renamed symbols; existing
+  tests stay green.
+- Keep fixtures small; never depend on production data.
 
-- Every bug fix should include a regression test.
-- Every new feature should include tests.
-- Prefer fast unit tests over slow integration tests.
-- Keep tests isolated and repeatable.
+## Test levels
 
-## Test Levels
+- **Unit** — a function or class in isolation. The default.
+- **Integration** — collaboration between modules, services or a data store.
+- **End-to-end** — a complete user or business workflow. Not yet in use.
 
-### Unit Tests
-Test individual functions and classes in isolation.
+## External services
 
-### Integration Tests
-Verify collaboration between modules, services or data sources.
+Tests that need an external service (currently: Azure Cosmos DB for
+`judotech.api`) must be marked and excluded from CI:
 
-### End-to-End Tests
-Verify complete user or business workflows where appropriate.
+- .NET: `[Trait("Category", "Integration")]`; CI runs
+  `dotnet test --filter Category!=Integration`.
+- Portal: guard with an environment check or `describe.skip`; do not let them run
+  by default.
 
-## Running Tests
+Running them locally needs the Cosmos DB emulator or a real endpoint; see
+[`../development/setup.md`](../development/setup.md).
 
-```bash
-pytest
-pytest -q
-pytest tests/test_example.py
-```
+## Requirements by change type
 
-All tests should pass before creating a Pull Request.
-
-## Test Requirements
-
-| Change | Required Tests |
-|---------|----------------|
-| New module | Happy path and error scenarios |
+| Change | Required tests |
+|--------|----------------|
+| New module / component | Happy path and the main error paths |
 | Bug fix | Regression test |
-| New feature | Unit tests and integration tests where applicable |
-| Refactoring | Existing tests must remain green |
-
-## Test Data
-
-- Keep fixtures small and reusable.
-- Do not depend on production data.
-- Prefer factories or fixtures over hard-coded data.
+| New feature | Unit tests, plus integration tests where a boundary is involved |
+| Refactor | Existing tests remain green |
 
 ## CI
 
-- All automated tests must pass before merging.
-- New failing tests must be investigated before merge.
-
-## Known Limitations
-
-Project-specific limitations (database engines, authentication providers, external services, etc.) belong in the project's architecture or testing documentation—not in this shared standard.
+- CI runs the unit test suites for every actively developed component on every
+  pull request (see [`../development/ci-cd.md`](../development/ci-cd.md)).
+- All tests must pass before merge. A newly failing test is investigated, not
+  skipped.

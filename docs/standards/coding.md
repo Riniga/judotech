@@ -1,93 +1,83 @@
 # Coding Standard
 
-This is the primary development guideline for coding conventions used across the workspace.
+The primary development guideline for the workspace. Language-neutral principles
+live here; concrete rules for each stack live in the per-language standards
+linked at the bottom.
 
-Correctness is mandatory. Clarity, structure, and maintainability take priority over speed and cleverness.
-Unnecessary complexity is never acceptable.
+Correctness is mandatory. Clarity, structure and maintainability take priority
+over speed and cleverness. Unnecessary complexity is never acceptable.
 
 ## Language
 
-- English for all code: variable names, function names, class names, comments, documentation, and commit messages.
+- English for all code: identifiers, comments, developer-facing log and error
+  messages, commit messages, and documentation.
+- See [`../architecture/decisions/0003-language-policy.md`](../architecture/decisions/0003-language-policy.md)
+  for what may stay in another language (domain data, user-facing UI copy).
 
-## Naming
+## Core principles
 
-- Functions and variables: `snake_case`
-- Classes: `PascalCase`
-- Files: `snake_case.py`
-- Constants: `UPPER_SNAKE_CASE`
+- Follow **SOLID** where it improves maintainability — not as a goal in itself:
+  - **S** – one class / module / function, one purpose.
+  - **O** – extend rather than modify stable behaviour.
+  - **L** – a subtype must honour its base contract.
+  - **I** – prefer small, focused interfaces.
+  - **D** – depend on abstractions, not concrete implementations.
+- Prefer simple, readable code over clever code.
+- Separate logic that can be understood, tested or reused independently.
+- Remove duplication only when it is real, recurring, and removing it improves
+  maintainability.
+- Do not add abstraction or configurability before it is needed.
+- Keep functions small and focused; prefer composition over duplication.
+- Refactor opportunistically — leave the code cleaner than you found it, but in
+  a separate commit from behavioural changes where practical.
 
-## Core Principles
+## Comments and documentation
 
-- Follow the **SOLID** principles whenever they improve maintainability:
-  - **S** – Single Responsibility: one class, one module, one function, one purpose.
-  - **O** – Open/Closed: extend existing code rather than modifying stable behavior.
-  - **L** – Liskov Substitution: derived implementations must behave as their base contracts.
-  - **I** – Interface Segregation: prefer small, focused interfaces over large, general ones.
-  - **D** – Dependency Inversion: depend on abstractions, not concrete implementations.
-- Prefer simple, readable and maintainable code over clever solutions.
-- Separate logic that can be independently understood, tested or reused.
-- Eliminate duplication only when it is real, recurring and improves maintainability.
-- Write unit tests for reusable logic and non-trivial business rules.
-- Do not introduce abstractions or complexity before they are needed.
-- Refactor opportunistically: leave the code cleaner than you found it.
-- Every public class and function must include a concise docstring.
-- Write comments to explain **why**, never **what** the code does.
-- Do not leave `TODO` comments without a corresponding MVP or implementation plan.
+- Every public type and function has a short doc comment (XML doc for C#, TSDoc
+  for TypeScript) saying what it is for.
+- Comments explain **why**, not **what**.
+- Do not leave a `TODO` without a corresponding entry in
+  [`../architecture/technical-debt.md`](../architecture/technical-debt.md), an
+  MVP, or an implementation plan.
 
-## Typing
+## Error handling
 
-- Type hints are required for all function signatures.
-- Use `T | None` instead of `Optional[T]` where appropriate.
-- Always declare a return type, including `-> None`.
-
-## Imports
-
-- Import order: standard library → third-party → local modules.
-- Remove unused imports.
-
-## Error Handling
-
-- Never use `except: pass` or silently ignore exceptions.
-- Log unexpected exceptions with sufficient context.
-- Protect all division operations against zero denominators.
-- Domain-specific errors should be implemented as custom exception classes.
-
-## Project Structure
-
-Each domain should follow a consistent structure where applicable:
-
-```text
-<domain>/
-    service.py
-    repository.py
-    schemas.py
-    exceptions.py
-```
-
-- Business logic belongs in `service.py`.
-- Data access belongs in `repository.py`.
+- Never swallow an exception silently (`catch {}`, `except: pass`, empty
+  `.catch()`).
+- Log unexpected exceptions with enough context to diagnose them.
+- Model domain errors as their own types, not bare strings or generic
+  exceptions.
+- Guard against predictable failure inputs (null, empty, zero divisor,
+  out-of-range).
 
 ## Security
 
-- Never log passwords, API keys, tokens, cookies, or secrets.
-- Validate and authorize all external requests.
-- Protect all state-changing web endpoints against CSRF where applicable.
+- Never log passwords, API keys, tokens, cookies, connection strings or other
+  secrets.
+- Validate and authorise every external request.
+- Never build a query or command by concatenating untrusted input — use
+  parameters.
+- Protect state-changing web endpoints against CSRF where applicable.
 
 ## Dependencies
 
-- Manage dependencies through `pyproject.toml`.
-- Pin compatible version ranges.
-- Document significant new dependencies in an ADR.
+- Follow [`../dependencies/README.md`](../dependencies/README.md) for how
+  versions are pinned and reviewed.
+- A significant new dependency needs a note in the dependency policy or an ADR.
+- Remove unused dependencies and imports.
 
 ## Testing
 
-- New functionality should include automated tests.
-- Bug fixes should include a regression test whenever practical.
+- New functionality includes automated tests.
+- A bug fix includes a regression test whenever practical.
+- Details and frameworks: [`testing.md`](testing.md).
 
-## General Principles
+## Language-specific standards
 
-- Keep functions small and focused.
-- Prefer composition over duplication.
-- Favor readability over cleverness.
-- Refactor before complexity grows.
-- Leave the codebase cleaner than you found it.
+- [`coding-dotnet.md`](coding-dotnet.md) — C# / .NET (`source/`)
+- [`coding-typescript-react.md`](coding-typescript-react.md) — TypeScript / React
+  (`judotech-portal/`)
+
+The Python data-import scripts in `source/` are maintenance-only tooling
+(ADR-0001) and are not covered by a formal standard; keep them readable and
+PEP 8-ish.

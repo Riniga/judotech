@@ -309,31 +309,30 @@ profiles), `secrets.AZURE_CREDENTIALS`.
 
 ## 6. Coding standards
 
-`docs/standards/` contains four standard documents:
+`docs/standards/` contains (as of MVP-001 Phase 3):
 
-- `coding.md` – requires English for all code and commits; SOLID where it helps;
-  simplicity over cleverness; docstrings on public members; comments explain
-  *why*. However the concrete rules are **Python-oriented**: `snake_case`
-  functions/variables, `snake_case.py` files, type hints, `T | None`,
-  `pyproject.toml`, a `service.py`/`repository.py`/`schemas.py`/`exceptions.py`
-  domain layout. These do not match the current C#/.NET or React/TypeScript code.
-- `documentation.md` – all documentation in English, Markdown, `kebab-case` file
-  and folder names; keep it short and practical; docs explain *why*/*what*, code
-  explains *how*; update docs in the same PR as the change. It defines a `docs/`
-  tree (`docs/architecture/overview.md`, `docs/architecture/decisions/`,
-  `docs/standards/`, `docs/mvp/`, `docs/plans/`, `docs/development/`, etc.).
-- `git.md` – always branch from `main`; branch prefixes
-  `feature/ fix/ docs/ refactor/ chore/`; small focused commits in English,
-  imperative mood; PRs against `main`; CI must pass before merge; never commit
-  secrets; AI assistants must not commit/push/merge without approval. Mentions
-  `pytest` as the pre-commit check.
-- `testing.md` – `pytest`, `tests/`, `test_<module>.py`; regression test for
-  every bug fix; tests for every feature; deterministic and offline.
+- `coding.md` – language-neutral principles: SOLID where it helps, simplicity
+  over cleverness, small focused units, comment the *why*, no silent exception
+  handling, no secrets in logs, no query building by string concatenation,
+  tests for reusable logic. Links to the per-stack standards below.
+- `coding-dotnet.md` – C# / .NET conventions matching the real code (`net8.0`,
+  nullable, `PascalCase`, file-scoped namespaces, `dotnet format`, thin
+  Functions, parameterised Cosmos queries) and a list of known deviations.
+- `coding-typescript-react.md` – TypeScript / React conventions (strict TS,
+  shared ESLint/Prettier via `@judotech/config`, named exports from packages,
+  function components, Tailwind theme tokens, API calls via `@judotech/core`).
+- `testing.md` – frameworks per stack (xUnit for .NET, Vitest + Testing Library
+  for the portal), test file patterns, run commands, and the rule that
+  Cosmos-dependent tests are excluded from CI.
+- `git.md` – branch from `main`; prefixes `feature/ fix/ docs/ refactor/
+  chore/`; small focused commits in English; PRs against `main`; CI green before
+  merge; never commit secrets; AI assistants do not commit/push/merge.
+- `documentation.md` – English, Markdown, `kebab-case`, short and practical;
+  update docs in the same PR as the change; defines the `docs/` tree.
 
-**Observation:** the standards assume a Python project. The actual code is C#
-(.NET 8) and TypeScript/React, neither of which is covered. (The `docs/` vs
-`documentation/` split noted in earlier revisions of this document has since been
-resolved — all documentation now lives under `docs/`.)
+Earlier revisions of this document noted that the standards described a Python
+project; that was corrected in MVP-001 Phase 3. Language policy is set by
+ADR-0003.
 
 Actual conventions visible in the code:
 
@@ -387,16 +386,16 @@ Observed in `judotech-portal`:
 - **Layout + `<Outlet/>` routing** (`AppLayout` wraps routed pages).
 
 No formal architectural pattern (layered, hexagonal, clean architecture, CQRS,
-etc.) is documented, and the `service.py`/`repository.py` structure in
-`coding.md` is not applied.
+etc.) is documented.
 
 ## 9. Testing strategy
 
-- `docs/standards/testing.md` mandates `pytest`, a `tests/` directory
-  and tests for every feature and bug fix.
-- **No automated tests exist in the repository.** There are no test projects in
-  `judotech.sln`, no `tests/` directories, no `*.test.*` / `test_*.py` files,
-  and the athlete app has no `test` script (only `lint`).
+- `docs/standards/testing.md` now defines xUnit for .NET and Vitest + React
+  Testing Library for the portal (MVP-001 Phase 3; ADR-0005). The test suites
+  themselves are added in MVP-001 Phase 6.
+- **At the time this section was first written, no automated tests existed** —
+  no test projects in `judotech.sln`, no `tests/` directories, no `*.test.*`
+  files, and the athlete app had no `test` script (only `lint`).
 - `AuthenticatorApi.TestAuthenticationApi` is a manual, HTTP-invoked smoke test
   that catches and discards all exceptions.
 - The legacy static sites have the default `"test": "echo \"Error: no test
