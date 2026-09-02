@@ -1,6 +1,6 @@
 # MVP-001: Workspace Foundation
 
-Status: in progress
+Status: done
 Date: 2026-09-02
 Related: `docs/architecture/overview.md`, `docs/roadmap.md`, `docs/standards/`,
 `docs/plans/MVP-001-workspace-foundation.plan.md`,
@@ -243,3 +243,50 @@ The MVP is complete when all of the following are true.
 26. Every known issue listed in `docs/architecture/overview.md` sections 11 and
     13 has a disposition: fixed in this MVP, converted to a tracked backlog item,
     or accepted in a decision record with a rationale.
+
+## Completion (Phase 8 review)
+
+| # | Status | Where |
+|---|--------|-------|
+| 1 | ✅ | `docs/architecture/decisions/0001-source-vs-portal-scope.md` (active/frozen path table); ADR-0001…0007 ratified 2026-09-02 |
+| 2 | ✅ | `judotech-portal/readme.md` structure; `packages/config` + `packages/core` populated; `docs/architecture/decisions/0004-frontend-workspace.md` naming/scope |
+| 3 | ✅ | `documentation/` removed; single `docs/` tree (Phase 1) |
+| 4 | ✅ | `overview.md` path references fixed; §11/§13 carry dispositions; "Decisions and technical debt" section added |
+| 5 | ✅ | `docs/development/` (README, setup, ci-cd, workflow), `docs/architecture/decisions/` (README + template), `docs/mvp/`, `docs/plans/` |
+| 6 | ✅ | `docs/README.md` — reading order + contents table |
+| 7 | ✅ | `docs/architecture/decisions/0003-language-policy.md`; `coding.md` links it; all `docs/` prose is English |
+| 8 | ✅ | `docs/standards/coding-dotnet.md`, `docs/standards/coding-typescript-react.md` (ADR-0005 for testing) |
+| 9 | ✅ | `coding.md` rewritten language-neutral; Python scoped to a one-line note about the data-import scripts |
+| 10 | ✅ | `docs/standards/testing.md` — framework table (xUnit / Vitest), run commands, integration-exclusion rule; ADR-0005 |
+| 11 | ✅ | `docs/development/README.md` — branching, review, when-tests/when-docs, AI-assistant rules, definition of done |
+| 12 | ✅ | `docs/development/workflow.md` — the 5-step loop; referenced dirs exist |
+| 13 | ✅ | `docs/development/setup.md` "Running the tests" table (`dotnet test` / `npm test`) |
+| 14 | ✅ | `judotech.core.tests` (6), `judotech.api.tests` (2 + 1 skipped), `@judotech/core` (3), `@judotech/ui` (3), `apps/athlete` (1) — all passing |
+| 15 | ✅ (by inspection) | `ci-dotnet.yml`, `ci-portal.yml`, `ci-web-legacy.yml` on push/PR to `main`; steps verified locally. Green runs on GitHub need the branch pushed. |
+| 16 | ✅ | `ci_api.yml` / `ci_web.yml` removed; `deploy_*.yml` are `workflow_dispatch` only + `environment: production`; ADR-0006 |
+| 17 | ✅ | `source/global.json` (8.0), `.nvmrc` (24), `packageManager` (npm 11.4.2); CI uses `8.0.x` / `.nvmrc` |
+| 18 | ✅ | `docs/development/setup.md` — install/build/run/test per component |
+| 19 | ✅ | `turbo.json` + `tsconfig.base.json` + `@judotech/config`; `npm run build` works |
+| 20 | ✅ | `clean` and `@types/react-router-dom` removed; `rolldown-vite` justified; `docs/dependencies/README.md` "Changes recorded" |
+| 21 | ✅ | `docs/dependencies/README.md`; `npm ci` verified from clean; lockfile table |
+| 22 | ✅ | `docs/development/setup.md` "Clone to running" + "Verified"; run clean on Windows 11 |
+| 23 | ✅ | `local.settings_sample.json` trimmed to the keys the code reads; `local.settings.json` gitignored; `docs/development/ci-cd.md` secrets table; `security-secret-scan.yml` + `.gitleaks.toml` |
+| 24 | ✅ | `.editorconfig`, `.vscode/settings.json`, `.vscode/extensions.json` |
+| 25 | ✅ | `docs/architecture/decisions/0007-source-auth-review.md` — 8 findings, "acceptable now, must harden before the portal exposes auth" |
+| 26 | ✅ | `docs/architecture/technical-debt.md` — TD-001…TD-047, all with a disposition + follow-up-MVP grouping |
+
+### Open on completion
+
+- **ADR ratification** — done. ADR-0001…0007 ratified by the owner 2026-09-02.
+- **CI green on GitHub** is confirmed only by inspection until the branch is
+  pushed and a pull request is opened.
+- **`judotech.web`** does not build (TD-046); its `ci-web-legacy` leg is
+  non-blocking.
+- **`DbUser`** is a superset model, not a settled one (TD-045).
+
+### Deferred (not in MVP-001 scope)
+
+Tracked in `docs/architecture/technical-debt.md` — notably the `judotech.api`
+security hardening (TD-032–039, suggested MVP-002), API structure (TD-002/003/045),
+`@judotech/ui` adoption (TD-020/021), and the product questions (TD-006, TD-028,
+TD-030, TD-031).

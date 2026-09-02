@@ -87,10 +87,22 @@ Owner `unassigned` means no one has picked it up yet.
 | TD-038 | `UserApi.ReadAllUser` returns every user object including the password hash | ADR-0007 G | Backlog | high | unassigned |
 | TD-039 | CORS configured as `*` in the sample settings | ADR-0007 H | Backlog | medium | unassigned |
 
-## How this register is used
+## Status
 
-- MVP-001 close-out (Phase 8) confirms every row has a final disposition.
-- Backlog rows, especially **high** severity, are candidate scope for the next
-  MVPs — in particular a security-hardening MVP for `source/judotech.api` before
-  the portal ships authenticated features (ADR-0001, ADR-0007).
-- New debt discovered later is appended here with the next free `TD-0NN` id.
+Reviewed at MVP-001 close-out (Phase 8): every row has a final disposition
+(fixed in MVP-001, accepted via an ADR, or backlog).
+
+## Suggested follow-up MVPs
+
+The backlog groups naturally into a few scoped increments:
+
+| Candidate MVP | Rows | Notes |
+|---------------|------|-------|
+| **MVP-002 — `judotech.api` security hardening** | TD-032, TD-033, TD-034, TD-035, TD-036, TD-037, TD-038, TD-039 | Prerequisite before the portal ships any authenticated end-user feature (ADR-0001, ADR-0007). High-severity items first. |
+| **MVP-003 — `judotech.api` structure** | TD-002, TD-003, TD-045 | DI + repository boundary; settle the `DbUser`/Cosmos model. Likely folds into MVP-002 or follows it. |
+| **`@judotech/ui` adoption** | TD-020, TD-021, TD-041 | Establish the template's licence, then export/type/test components as they are actually used. |
+| **Portal tidy-up** (small, opportunistic) | TD-042, TD-043, TD-044 | Prune unused devDeps, address audit advisories. |
+| **Legacy static sites** | TD-046, TD-017 | Only if the Gulp/Pug sites are being kept rather than folded into the portal. |
+| **Product questions** | TD-006, TD-028, TD-029, TD-030, TD-031 | Translation, email confirmation, member import, Smoothcomp intent, NFR monitoring — need product input, not just engineering. |
+
+New debt discovered later is appended with the next free `TD-0NN` id.

@@ -1,6 +1,12 @@
 # JudoTech
 JudoTech is a comprehensive ecosystem designed to manage all technical functionalities for our community. It serves as a unified platform for handling memberships, rankings, competition systems, result boards, and much more. 
 
+## Start here
+
+- **[docs/README.md](docs/README.md)** — documentation index and reading order
+- **[docs/architecture/overview.md](docs/architecture/overview.md)** — what the workspace contains
+- **[docs/development/setup.md](docs/development/setup.md)** — prerequisites and how to build, run and test each component
+
 ## Purpose and Vision
 JudoTech is built to streamline and enhance the experience for everyone involved in our community. Whether you are a competitor, organizer, or supporter, JudoTech provides the tools needed for seamless interaction and efficient management. Our goal is to create a system that is precise, easy to use, and continuously improved through collaboration.
 

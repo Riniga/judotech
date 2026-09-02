@@ -1,6 +1,6 @@
 # ADR-0007: `source/` authentication scheme — review outcome
 
-- Status: proposed
+- Status: accepted
 - Date: 2026-09-02
 - Deciders: project owner
 - Related: ADR-0001, `docs/architecture/overview.md` sections 3.1, 11, 13,

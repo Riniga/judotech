@@ -1,6 +1,6 @@
 # ADR-0001: `source/` is maintenance-only; `judotech-portal/` is the active target
 
-- Status: proposed
+- Status: accepted
 - Date: 2026-09-02
 - Deciders: project owner
 - Related: MVP-001 (`docs/plans/MVP-001-workspace-foundation.plan.md`),

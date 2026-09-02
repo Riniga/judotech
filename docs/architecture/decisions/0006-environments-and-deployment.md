@@ -1,6 +1,6 @@
 # ADR-0006: One production environment; deployments are separate and gated
 
-- Status: proposed
+- Status: accepted
 - Date: 2026-09-02
 - Deciders: project owner
 - Related: MVP-001 Phase 7, `docs/architecture/overview.md` section 5.5

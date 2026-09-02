@@ -1,6 +1,6 @@
 # ADR-0005: Test frameworks — xUnit for .NET, Vitest + Testing Library for the portal
 
-- Status: proposed
+- Status: accepted
 - Date: 2026-09-02
 - Deciders: project owner
 - Related: MVP-001 Phase 6, `docs/standards/testing.md`

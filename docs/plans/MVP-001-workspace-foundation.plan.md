@@ -541,59 +541,106 @@ Commit message: `Split CI from deployment and add portal and legacy-web pipeline
 
 ---
 
-### Phase 8 — MVP close-out
+### Phase 8 — MVP close-out — DONE (staged, not committed)
 
 Commit message: `Complete MVP-001 workspace foundation and record dispositions`
 
-- [ ] 8.1 Fill `docs/dependencies/README.md`: pin policy (exact for tools via
-      `global.json`/`.nvmrc`/`packageManager`; caret ranges for libs; lockfiles
-      committed), update cadence, when a new dependency needs an ADR, how to
-      record a removal. Note the resolved items (`clean`, `@types/react-router-dom`)
-      and the .NET commented-out package refs in `judotech.core.csproj` (decide:
-      delete the comments).
-- [ ] 8.2 Verify lockfiles: `judotech-portal/package-lock.json` present and in
-      sync (`npm ci` succeeds from clean); each `source/*/packages.config` or
-      `*.csproj` restores. Record any package manager without a committed lock.
-- [ ] 8.3 Fill `docs/development/setup.md` for real: prerequisites, then a
-      copy-pasteable "clone to running" block for each active component
-      (`judotech.api`, `judotech-portal` athlete app) and each maintenance
-      component (the 4 static sites). Actually run each block on a clean checkout
-      / clean `node_modules` and fix the docs until they work. Record which were
-      verified and on what OS.
-- [ ] 8.4 Confirm `source/judotech.api/local.settings_sample.json` lists exactly
-      the env vars the code reads (`EndpointUrl`, `PrimaryKey`, `DatabaseId`;
-      `Host.CORS`). Remove or comment the unused `*ContainerId` keys. Ensure
-      `.gitignore` excludes `local.settings.json`.
-- [ ] 8.5 Walk `docs/architecture/technical-debt.md`: set the final Disposition
-      for every row (fixed in MVP-001 / backlog / accepted). For "backlog" rows,
-      make sure they are specific enough to become future MVPs.
-- [ ] 8.6 Update `docs/architecture/overview.md` "Decisions" and sections 11/13
-      to point at `technical-debt.md` and note the MVP-001 outcome.
-- [ ] 8.7 Update `docs/mvp/MVP-001-workspace-foundation.md`: status `done`; walk
-      the 26 acceptance criteria and check each off with a one-line pointer to
-      where it was satisfied (file / workflow / ADR). Any not met → list under a
-      "Deferred" heading with rationale.
-- [ ] 8.8 Change all Phase-2 ADRs from `Status: proposed` to `Status: accepted`
-      **only after the owner confirms**; otherwise leave proposed and note it.
-- [ ] 8.9 Update `README.md` (repo root) top section: point to `docs/README.md`
-      and `docs/development/setup.md` as the entry points; keep the Azure CLI
-      notes but move the long provisioning block into `docs/development/` if it
-      clutters (optional).
-- [ ] 8.10 Prepare PR description (do not open/merge without approval): summary of
-      completed work, validation performed (commands + results), docs updated,
-      remaining risks/deferred items, suggested title
-      `MVP-001: Establish workspace foundation`.
-- [ ] **Verify**: `docs/mvp/MVP-001-workspace-foundation.md` shows all 26
-      criteria addressed or explicitly deferred; `dotnet test source/judotech.sln`
-      and `cd judotech-portal && npm ci && npm run lint && npm run typecheck &&
-      npm test && npm run build` all green; `git status` clean;
-      no secret-bearing files staged.
+- [x] 8.1 Filled `docs/dependencies/README.md` (tool-pin table, npm/NuGet range
+      policy, lockfile table, update cadence, when-an-ADR-is-needed, MVP-001
+      changes). Deleted the three commented-out Functions.Worker package refs
+      from `judotech.core.csproj`.
+- [x] 8.2 `npm ci` from clean → succeeds (portal + all four static-site
+      lockfiles committed). .NET projects have no lock file by design (documented
+      in `dependencies/README.md`). Noted the stray
+      `judotech.VideoStreamCapture/package-lock.json`.
+- [x] 8.3 Filled `docs/development/setup.md` — prerequisites + copy-pasteable
+      "clone to running" for `judotech-portal` (athlete), `source/judotech.api`
+      (`func start`), and the static sites; "Verified" note (Windows 11).
+- [x] 8.4 `local.settings_sample.json` trimmed to `FUNCTIONS_WORKER_RUNTIME` +
+      `EndpointUrl` / `PrimaryKey` / `DatabaseId` + `Host.CORS` (the `*ContainerId`
+      keys were unused — code only reads the three). `local.settings.json` is
+      gitignored at both the root and `judotech.api` level.
+- [x] 8.5 Walked `technical-debt.md`; every TD-001…TD-047 row has a disposition.
+      Added a "Suggested follow-up MVPs" grouping.
+- [x] 8.6 `overview.md` header reframed (1–10 current, 11–13 pre-MVP record);
+      "Decisions and technical debt" section notes MVP-001 addressed them and the
+      ADR ratification status.
+- [x] 8.7 `MVP-001-workspace-foundation.md` — status `done (pending ADR
+      ratification)`; 26-row completion table + "Open on completion" + "Deferred".
+- [x] 8.8 ADR-0001…0007 ratified by the owner (2026-09-02) — all `accepted`;
+      index and `overview.md` updated.
+- [x] 8.9 `README.md` — added a "Start here" block linking `docs/README.md`,
+      `docs/architecture/overview.md`, `docs/development/setup.md`. Left the Azure
+      provisioning block in place (not blocking).
+- [x] 8.10 PR description drafted below.
+- [x] **Verify**: MVP doc shows all 26 addressed; `dotnet test` (core 6 / api 2,
+      integration filtered) and `npm ci && lint && typecheck && test && build`
+      (3/3/3/1) all green from clean; no secret-bearing files.
+
+---
+
+## 6. Pull request
+
+**Do not open or merge without the owner's go-ahead.**
+
+**Title:** `MVP-001: Establish workspace foundation`
+
+**Body:**
+
+> Implements MVP-001 (`docs/mvp/MVP-001-workspace-foundation.md`) — turns the
+> repo into a consistent, documented, testable foundation before feature work.
+> No product features; `source/` stays maintenance-only (ADR-0001).
+>
+> **Decisions** — ADR-0001…0007 under `docs/architecture/decisions/`, all
+> `accepted` (ratified 2026-09-02): keep+consume the .NET API, English-only, npm
+> workspaces + Turborepo, xUnit + Vitest, single gated `production` environment,
+> `source/` auth acceptable now / harden before the portal ships auth.
+>
+> **Documentation** — single `docs/` tree; entry point, per-stack coding
+> standards, testing standard, dev process, MVP workflow, CI/CD doc, dependency
+> policy, setup guide, ADR log, and `technical-debt.md` (TD-001…TD-047, every
+> item dispositioned).
+>
+> **Tooling** — `source/global.json` (.NET 8), `.nvmrc` (Node 24),
+> `packageManager`, `.editorconfig`, `.vscode/extensions.json`, root `.gitignore`,
+> `.markdownlint.json`.
+>
+> **Portal** — `tsconfig.base.json`, `turbo.json`, `@judotech/config`,
+> `@judotech/core` (minimal `HttpClient`); `clean` and stale
+> `@types/react-router-dom` removed; `npm run lint/typecheck/test/build` green.
+>
+> **Tests** — `judotech.core.tests` + `judotech.api.tests` (xUnit) added to the
+> solution; Vitest suites for `@judotech/core`, `@judotech/ui`, `apps/athlete`.
+> Removed the `TestAuthenticationApi` self-test endpoint.
+>
+> **CI/CD** — `ci-dotnet` / `ci-portal` / `ci-web-legacy` / `codeql` /
+> `security-secret-scan`; none deploy. `ci_api.yml` + `ci_web.yml` (which
+> deployed on every push, pinned .NET 3.1) removed. Deploys are
+> `workflow_dispatch` + `environment: production`.
+>
+> **Also fixed:** `judotech.core` didn't compile (`DbUser` half-refactored in
+> `f0b94b4`) — restored as a superset so it builds; `func start` hosts the API.
+>
+> **Validation (local, Windows 11):** `dotnet build` 0 errors; `dotnet test`
+> core 6 / api 2 passed (+1 skipped integration); `npm ci && npm run lint &&
+> npm run typecheck && npm test && npm run build` all green. Workflow YAML parses;
+> CI green on GitHub is pending the branch push.
+>
+> **Open / deferred:** CI green on GitHub (needs the push); `judotech.web`
+> doesn't build (TD-046); `DbUser` model not settled (TD-045); `judotech.api`
+> security hardening (TD-032–039 → suggested MVP-002). Full list in
+> `technical-debt.md`.
+>
+> 🤖 Generated with [Claude Code](https://claude.com/claude-code)
 
 ---
 
 ## 5. Risks / open questions
 
-### Decisions that need the owner (block ratification, not execution)
+### Decisions that needed the owner — RESOLVED
+
+ADR-0001…0007 were ratified by the owner on 2026-09-02 as written. Node.js is
+pinned to 24. The items below are kept for context.
 
 1. **ADR-0001 (source vs portal)** — if the owner wants the .NET API *rewritten*
    inside the portal rather than kept, Phases 5–7 change substantially (no

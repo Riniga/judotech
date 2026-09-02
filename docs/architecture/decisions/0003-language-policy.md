@@ -1,6 +1,6 @@
 # ADR-0003: English for code and documentation; Swedish only in domain data and UI copy
 
-- Status: proposed
+- Status: accepted
 - Date: 2026-09-02
 - Deciders: project owner
 - Related: `docs/standards/coding.md`, `docs/architecture/overview.md` section 6

@@ -1,15 +1,19 @@
 # Architecture Overview
 
-This document describes the current state of the JudoTech workspace as of 2026-09-02.
-It documents what exists in the repository today. Where information is missing or
-cannot be confirmed from the repository, this is stated explicitly rather than assumed.
+This document describes the JudoTech workspace. Sections 1–10 describe the
+current state; sections 11–13 are the pre-MVP-001 record of observations and
+open questions, each now carrying a disposition. Where information is missing or
+cannot be confirmed from the repository, this is stated explicitly rather than
+assumed.
+
+Baseline written 2026-09-02; updated through MVP-001 (workspace foundation).
 
 ## Decisions and technical debt
 
-The open questions and observations in sections 11 and 13 are being resolved
-through MVP-001 (`docs/plans/MVP-001-workspace-foundation.plan.md`). Decisions
-are recorded as ADRs; deferred and accepted items are tracked in the debt
-register.
+The open questions and observations in sections 11 and 13 were addressed by
+**MVP-001** (`docs/mvp/MVP-001-workspace-foundation.md`,
+`docs/plans/MVP-001-workspace-foundation.plan.md`). Decisions are recorded as
+ADRs; every observation has a disposition in the debt register.
 
 - [`decisions/`](decisions/) — Architecture Decision Records:
   - ADR-0001 — `source/` is maintenance-only; `judotech-portal/` is the active target
@@ -21,7 +25,9 @@ register.
   - ADR-0007 — `source/` authentication scheme review outcome
 - [`technical-debt.md`](technical-debt.md) — every section 11 / 13 item and every
   ADR-0007 finding, each with a disposition (fixed in MVP-001, accepted via ADR,
-  or backlog).
+  or backlog), plus suggested follow-up MVPs.
+
+ADR-0001…0007 are all `accepted` (ratified 2026-09-02).
 
 ## 1. Project overview
 

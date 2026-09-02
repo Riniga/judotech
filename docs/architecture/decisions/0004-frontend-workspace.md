@@ -1,6 +1,6 @@
 # ADR-0004: Front-end workspace — npm workspaces + Turborepo, `@judotech/*` packages
 
-- Status: proposed
+- Status: accepted
 - Date: 2026-09-02
 - Deciders: project owner
 - Related: ADR-0001, MVP-001 Phase 5, `judotech-portal/readme.md`
