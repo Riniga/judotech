@@ -8,7 +8,7 @@
   },
   "type": "module",
   "devDependencies": {
-    "express": "^4.22.1",
+    "express": "^4.22.2",
     "gulp": "^5.0.0",
     "gulp-clean": "^0.4.0",
     "gulp-pug": "^5.0.0",
