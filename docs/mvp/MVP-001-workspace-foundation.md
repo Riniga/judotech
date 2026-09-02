@@ -1,8 +1,11 @@
 # MVP-001: Workspace Foundation
 
-Status: proposed
+Status: in progress
 Date: 2026-09-02
-Related: `docs/architecture/overview.md`, `docs/roadmap.md`, `docs/standards/`
+Related: `docs/architecture/overview.md`, `docs/roadmap.md`, `docs/standards/`,
+`docs/plans/MVP-001-workspace-foundation.plan.md`,
+`docs/architecture/decisions/` (ADR-0001–0007),
+`docs/architecture/technical-debt.md`
 
 This MVP defines the work required to turn the current repository into a solid,
 consistent foundation before feature development on new applications begins. It

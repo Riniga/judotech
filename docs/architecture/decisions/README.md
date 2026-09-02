@@ -33,4 +33,13 @@ Do not write an ADR for reversible, low-impact, or self-evident choices.
 
 | ADR | Title | Status |
 |-----|-------|--------|
-| _none yet_ | ADRs 0001–0007 are added in MVP-001, Phase 2 | — |
+| [0001](0001-source-vs-portal-scope.md) | `source/` is maintenance-only; `judotech-portal/` is the active target | proposed |
+| [0002](0002-documentation-location.md) | All project documentation lives under `docs/` | accepted |
+| [0003](0003-language-policy.md) | English for code and docs; Swedish only in domain data and UI copy | proposed |
+| [0004](0004-frontend-workspace.md) | Front-end workspace — npm workspaces + Turborepo, `@judotech/*` packages | proposed |
+| [0005](0005-test-frameworks.md) | Test frameworks — xUnit for .NET, Vitest + Testing Library for the portal | proposed |
+| [0006](0006-environments-and-deployment.md) | One production environment; deployments are separate and gated | proposed |
+| [0007](0007-source-auth-review.md) | `source/` authentication scheme — review outcome | proposed |
+
+ADRs 0001 and 0003–0007 are `proposed` pending owner ratification (MVP-001
+Phase 8 flips them to `accepted` once confirmed).

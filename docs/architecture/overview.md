@@ -4,6 +4,25 @@ This document describes the current state of the JudoTech workspace as of 2026-0
 It documents what exists in the repository today. Where information is missing or
 cannot be confirmed from the repository, this is stated explicitly rather than assumed.
 
+## Decisions and technical debt
+
+The open questions and observations in sections 11 and 13 are being resolved
+through MVP-001 (`docs/plans/MVP-001-workspace-foundation.plan.md`). Decisions
+are recorded as ADRs; deferred and accepted items are tracked in the debt
+register.
+
+- [`decisions/`](decisions/) — Architecture Decision Records:
+  - ADR-0001 — `source/` is maintenance-only; `judotech-portal/` is the active target
+  - ADR-0002 — all documentation lives under `docs/`
+  - ADR-0003 — English for code and docs; Swedish only in domain data and UI copy
+  - ADR-0004 — front-end workspace: npm workspaces + Turborepo, `@judotech/*` packages
+  - ADR-0005 — test frameworks: xUnit (.NET), Vitest + Testing Library (portal)
+  - ADR-0006 — one production environment; deployments are separate and gated
+  - ADR-0007 — `source/` authentication scheme review outcome
+- [`technical-debt.md`](technical-debt.md) — every section 11 / 13 item and every
+  ADR-0007 finding, each with a disposition (fixed in MVP-001, accepted via ADR,
+  or backlog).
+
 ## 1. Project overview
 
 JudoTech is described in the root `README.md` as an ecosystem for managing the
@@ -23,8 +42,9 @@ The repository currently contains **two parallel generations of code**:
    front-end platform (React + Vite + Tailwind). This is the "initial version"
    referred to in `docs/claude-prompts/initera-projektet/`.
 
-How the two generations relate (migration, replacement, coexistence) is **not
-documented in the repository**. See Open Questions.
+How the two generations relate is now decided in ADR-0001: `source/` is
+maintenance-only and `judotech-portal/` is the active development target, which
+consumes the existing `source/judotech.api` as its backend for now.
 
 The `docs/roadmap.md` file expresses an intent to grow the platform into
 many applications (public site, club portal, referee site, coach site, calendar,
@@ -412,9 +432,13 @@ Referenced but not integrated:
 
 ## 11. Architectural observations
 
-- The repository holds two generations of code with no documented relationship.
-  `source/` is a working-ish .NET + static-site stack; `judotech-portal/` is a
-  fresh front-end monorepo that is essentially a scaffold.
+Each observation below is tracked in
+[`technical-debt.md`](technical-debt.md) with a disposition (fixed in MVP-001,
+accepted via an ADR, or backlog).
+
+- The repository holds two generations of code. `source/` is a working-ish .NET +
+  static-site stack; `judotech-portal/` is a fresh front-end monorepo that is
+  essentially a scaffold. Their relationship is decided in ADR-0001.
 - The API combines domain logic and persistence in the model classes (Active
   Record) and reads Azure config from environment variables directly in the data
   layer. There is no dependency injection of the database, no repository
@@ -463,13 +487,17 @@ before feature work begins.
 
 ## 13. Open questions and areas not yet implemented
 
+The items below are tracked in [`technical-debt.md`](technical-debt.md) with a
+disposition. Several are resolved or scheduled by MVP-001; the list is kept here
+as the record of what was open before that work.
+
 Structure and direction:
 
-- What is the intended relationship between `source/` and `judotech-portal/`?
-  Is the .NET API being kept, replaced, or wrapped? Is `source/judotech.web*`
-  being migrated into the React monorepo?
+- ~~What is the intended relationship between `source/` and `judotech-portal/`?~~
+  Decided in ADR-0001 (`source/` maintenance-only, portal active, portal consumes
+  `judotech.api`). Whether to rewrite the API is a future ADR.
 - Which standards actually apply? The current standards target Python; there are
-  no C# or TypeScript/React standards.
+  no C# or TypeScript/React standards. (Fixed in MVP-001 Phase 3.)
 
 `judotech-portal` (not yet implemented):
 
