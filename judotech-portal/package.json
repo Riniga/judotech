@@ -1,6 +1,10 @@
 {
   "name": "judotech-portal",
   "private": true,
+  "packageManager": "npm@11.4.2",
+  "engines": {
+    "node": ">=22"
+  },
   "workspaces": [
     "apps/*",
     "packages/*"

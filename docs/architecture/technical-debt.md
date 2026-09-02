@@ -65,6 +65,7 @@ Owner `unassigned` means no one has picked it up yet.
 | TD-029 | Member import is a manual local Python script with a hard-coded Google Drive path | §13 | Backlog | low | unassigned |
 | TD-030 | Smoothcomp referenced only by a saved HTML file; no integration and unclear intent | §10 | Backlog | low | unassigned |
 | TD-031 | NFR targets (response <1s p95, encryption at rest, 99.9% availability) have no verification or monitoring | §13 | Backlog | medium | unassigned |
+| TD-040 | `source/judotech.core` does not compile: commit `f0b94b4` reworked `DbUser`'s properties but left the constructors, `DbUser(string email)` loader, `Delete()`, `CosmosDatabase` and `AuthenticatorApi` referencing the removed members (`Email`, `FullName`, `Club`, `Zone`, `Roles`, `Attendance`, `Borde`, `Diff`, `License`, …). 53 build errors. Blocks MVP-001 Phase 6 (.NET tests) and the `.NET` leg of Phase 7 (CI). | MVP-001 Phase 4 build check | Backlog — **blocker**, needs owner decision on the intended `DbUser` / Cosmos model | high | unassigned |
 
 ## Authentication (`decisions/0007-source-auth-review.md`)
 

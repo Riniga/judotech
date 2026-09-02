@@ -327,48 +327,52 @@ Commit message: `Align coding, testing and process standards with the real stack
 
 ---
 
-### Phase 4 — Toolchain pinning & editor baseline
+### Phase 4 — Toolchain pinning & editor baseline — DONE (staged, not committed)
 
 Commit message: `Pin .NET and Node toolchains and add shared editor config`
 
-- [ ] 4.1 Add repo-root `.gitignore` covering: `node_modules/`, `dist/`,
+Environment found: .NET SDKs 3.1.426 / 9.0.315 / 9.0.317 (**no 8.0.x**);
+Node v24.4.1; npm 11.4.2.
+
+- [x] 4.1 Add repo-root `.gitignore` covering: `node_modules/`, `dist/`,
       `dist-ssr/`, `**/bin/`, `**/obj/`, `.vs/`, `.idea/`, `.DS_Store`,
       `*.user`, `**/local.settings.json`, `.env`, `.env.*`, `!.env.sample`,
       `**/TestResults/`, `coverage/`, `*.log`, `.turbo/`. Keep the existing
       per-project `.gitignore` files.
-- [ ] 4.2 Add `source/global.json`:
-      `{ "sdk": { "version": "8.0.100", "rollForward": "latestFeature" } }`
-      (use a version the executor actually has; run `dotnet --list-sdks`).
-- [ ] 4.3 Add `source/Directory.Build.props` with shared
-      `<Nullable>enable</Nullable>`, `<ImplicitUsings>enable</ImplicitUsings>`,
-      `<LangVersion>latest</LangVersion>`, and `<AnalysisLevel>latest</AnalysisLevel>`.
-      Do **not** set `TreatWarningsAsErrors` yet (would break the build — track
-      as debt).
-- [ ] 4.4 Add `.nvmrc` (repo root) and `judotech-portal/.nvmrc` with `22`.
-- [ ] 4.5 Add `judotech-portal/package.json` fields: `"engines": { "node": ">=22" }`,
-      `"packageManager": "npm@<version from `npm -v`>"`.
-- [ ] 4.6 Add `.editorconfig` (repo root): `end_of_line = lf`,
-      `insert_final_newline = true`, `charset = utf-8`, `indent_style = space`;
-      `[*.cs] indent_size = 4`; `[*.{ts,tsx,js,jsx,json,css,md}] indent_size = 2`;
-      C# analyzer rules can live here or in `source/.editorconfig`.
-- [ ] 4.7 Add `.vscode/extensions.json`: `ms-dotnettools.csdevkit` (or
-      `ms-dotnettools.csharp`), `dbaeumer.vscode-eslint`,
+- [x] 4.2 Add `source/global.json`. Used
+      `{ "sdk": { "version": "8.0.0", "rollForward": "major", "allowPrerelease": false } }`
+      — requests 8.0 (which CI installs) and rolls forward to 9.x locally since
+      no 8.0.x is installed. Verified: `dotnet --version` in `source/` → 9.0.317,
+      no "SDK not found" error.
+- [x] 4.3 Add `source/Directory.Build.props` with shared `<Nullable>`,
+      `<ImplicitUsings>`, `<LangVersion>latest</LangVersion>`, `<AnalysisLevel>latest</AnalysisLevel>`,
+      `<EnableNETAnalyzers>`. `<TreatWarningsAsErrors>false</TreatWarningsAsErrors>`
+      explicit. Scoped away from the legacy `Judoka.VideoStream*` projects by
+      `MSBuildProjectName` condition.
+- [x] 4.4 Add `.nvmrc` (repo root) and `judotech-portal/.nvmrc`. **Pinned `24`,
+      not `22`** — matches the dev machine and current LTS (see Risk 5 update).
+- [x] 4.5 Add `judotech-portal/package.json` fields: `"engines": { "node": ">=22" }`,
+      `"packageManager": "npm@11.4.2"`.
+- [x] 4.6 Add `.editorconfig` (repo root) with the core rules plus a `[*.cs]`
+      section carrying a few analyzer/style preferences. Also added
+      `.markdownlint.json` (disables MD013/MD029/MD060 etc.) so the docs stop
+      generating editor warnings.
+- [x] 4.7 Add `.vscode/extensions.json` (`ms-dotnettools.csharp`,
+      `ms-azuretools.vscode-azurefunctions`, `dbaeumer.vscode-eslint`,
       `esbenp.prettier-vscode`, `bradlc.vscode-tailwindcss`,
-      `editorconfig.editorconfig`, `ms-azuretools.vscode-azurefunctions`.
-- [ ] 4.8 Update `.vscode/settings.json` (preserve existing keys): add
-      `"editor.formatOnSave": true`,
-      `"editor.codeActionsOnSave": { "source.fixAll.eslint": "explicit" }`,
-      `"[csharp]": { "editor.defaultFormatter": "ms-dotnettools.csharp" }`,
-      `"[typescript][typescriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" }`.
-- [ ] 4.9 In `devcontainer/dockerfile` **or** a new
-      `docs/development/setup.md` section: state which SDKs the dev container
-      needs (.NET 8, Node 22, `func`). If editing the Dockerfile is risky, only
-      document — do not block.
-- [ ] **Verify**: `dotnet --version` respects `global.json`;
-      `cd judotech-portal && node -v` matches `.nvmrc` (if `nvm` present);
-      `git check-ignore -v judotech-portal/node_modules` resolves to the root
-      ignore; `dotnet build source/judotech.sln` still succeeds with the new
-      props.
+      `editorconfig.editorconfig`).
+- [x] 4.8 Update `.vscode/settings.json` — existing keys preserved; added
+      format-on-save, eslint fix-on-save, `files.eol`, per-language formatters,
+      `eslint.workingDirectories` for `judotech-portal`.
+- [x] 4.9 Added a Prerequisites section to `docs/development/setup.md` (pinned
+      versions table) and a "Dev container" note that the Dockerfile does not yet
+      bundle .NET / Node. Dockerfile left unchanged (not blocking).
+- [~] **Verify**: `dotnet --version` respects `global.json` → **OK** (9.0.317).
+      `git check-ignore` resolves → **OK**. `node -v` (24) matches `.nvmrc` →
+      **OK**. `dotnet build source/judotech.sln` → **FAILS**, but with the
+      *pre-existing* 53 errors / 6 warnings (identical count before and after
+      Phase 4). `Directory.Build.props` did not regress anything. Root cause is
+      TD-040 (`judotech.core` broken by commit `f0b94b4`) — see Risk 15.
 
 ---
 
@@ -602,8 +606,10 @@ Commit message: `Complete MVP-001 workspace foundation and record dispositions`
    because the existing root script already calls it and it scales to more apps.
 4. **ADR-0006 (environments)** — plan assumes a single `production` environment
    and manual deploys. If Test/UAT are needed now, Phase 7 grows.
-5. **Node.js version** — plan pins 22; CI currently uses 20; README mentions 24.
-   Owner picks one; change three files if not 22 (`.nvmrc` x2, CI workflows).
+5. **Node.js version** — Phase 4 pinned **24** (dev machine has v24.4.1, npm
+   11.4.2, and Node 24 is current LTS). The plan originally said 22; the old CI
+   used 20; README mentions 24. `engines` allows `>=22`. If the owner wants 22,
+   change `.nvmrc` (x2), `packageManager`, and the Phase 7 CI workflows.
 
 ### Execution risks
 
@@ -647,6 +653,28 @@ Commit message: `Complete MVP-001 workspace foundation and record dispositions`
     standards, pinning, tests, CI). Phase 5 (portal restructure) and Phase 8
     polish can be a follow-up MVP if needed — but then acceptance criteria
     18–21 slip.
+15. **`source/judotech.core` does not compile (TD-040) — BLOCKER for Phases 6 &
+    7's .NET work.** Discovered during the Phase 4 build check: commit `f0b94b4`
+    ("initalized claude and first code base") reworked `DbUser`'s properties
+    (removed `Email`, `FullName`, `Personnumber`, `Adress`, `PostalCode`, `City`,
+    `PrimaryPhone`, `SecondaryPhone`, `Attendance`, `Borde`, `Diff`, `License`,
+    `Club`, `Zone`, `Roles`; added `First`, `Lastname`, `Started`, `BirthDate`,
+    `Total`, `ShouldHaveGrade`) but did **not** update the constructors, the
+    `DbUser(string email)` loader, `Delete()`, `CosmosDatabase` (which keys on
+    `user.Email`) or `AuthenticatorApi` — 53 build errors. Options:
+    - (a) Owner fixes `DbUser` and the call sites to a coherent model, then
+      Phase 6/7 proceed.
+    - (b) Owner asks the executor to do a mechanical fix — either re-add the
+      removed properties, or trim the constructors/`Delete()` and adjust
+      `CosmosDatabase`'s partition-key usage. This is more than a foundation-MVP
+      concern because it changes the API's user model and Cosmos keying, so it
+      needs an explicit decision (and probably its own ADR under ADR-0001's
+      "maintenance fix" umbrella).
+    - (c) Proceed with Phase 5 (portal, independent of .NET), and defer Phases 6
+      & 7's .NET legs until the build is fixed; CI for `.NET` is added but
+      expected-red until then.
+    Phase 4's toolchain files were added regardless and did not regress the
+    build (identical 53 errors / 6 warnings before and after).
 
 ### Open questions to resolve during execution
 

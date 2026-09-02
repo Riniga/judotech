@@ -131,6 +131,12 @@ Domain and data-access layer, referenced by `judotech.api`.
 - Roles are stored as a list of strings on `DbUser` (e.g. `judoka`, `coach`,
   `referee`, `admin`, `manager` are referenced in code and docs).
 
+> **`judotech.core` does not currently compile.** Commit `f0b94b4` reworked
+> `DbUser`'s properties but left the constructors, the `DbUser(string email)`
+> loader, `Delete()`, `CosmosDatabase` and `AuthenticatorApi` referencing removed
+> members. 53 build errors. Tracked as TD-040; it blocks the .NET test and CI
+> work in MVP-001 and needs an owner decision on the intended model.
+
 ### 3.2 `source/judotech.api` (.NET 8 isolated Azure Functions v4)
 
 HTTP-triggered REST-style API. `Program.cs` uses the isolated worker model with

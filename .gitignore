@@ -1,0 +1,44 @@
+# Repository-wide ignore rules.
+# Component-specific rules also live in per-project .gitignore files
+# (source/.gitignore, judotech-portal/.gitignore, etc.).
+
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build output
+dist/
+dist-ssr/
+build/
+**/bin/
+**/obj/
+.turbo/
+
+# Test / coverage
+**/TestResults/
+coverage/
+*.trx
+
+# Local configuration and secrets
+**/local.settings.json
+.env
+.env.*
+!.env.sample
+!.env.example
+*.pfx
+*.publishsettings
+
+# Tooling / IDE
+.vs/
+.idea/
+*.user
+*.suo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
