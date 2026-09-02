@@ -497,50 +497,47 @@ Commit message: `Add xUnit and Vitest test suites with a passing test per compon
 
 ---
 
-### Phase 7 — CI/CD separation
+### Phase 7 — CI/CD separation — DONE (staged, not committed)
 
 Commit message: `Split CI from deployment and add portal and legacy-web pipelines`
 
-- [ ] 7.1 Add `.github/workflows/ci-dotnet.yml`: triggers `pull_request` +
-      `push` to `main`; `ubuntu-latest`; `actions/setup-dotnet@v4` with
-      `dotnet-version: 8.0.x`; steps: `dotnet restore`, `dotnet build -c Release
-      --no-restore`, `dotnet test -c Release --no-build --filter
-      Category!=Integration`. No Azure steps.
-- [ ] 7.2 Add `.github/workflows/ci-portal.yml`: triggers `pull_request` +
-      `push` to `main`; `actions/setup-node@v4` with `node-version-file:
-      judotech-portal/.nvmrc` and `cache: npm`; `working-directory:
-      judotech-portal`; steps: `npm ci`, `npm run lint`, `npm run typecheck`,
-      `npm run test`, `npm run build`.
-- [ ] 7.3 Add `.github/workflows/ci-web-legacy.yml`: `pull_request` + `push` to
-      `main`; matrix over `[judotech.web, judotech.web.calendar,
-      judotech.web.club, judotech.web.referee]`; `npm ci || npm install` +
-      `npx gulp --production` in each `source/<site>`; no upload.
-- [ ] 7.4 Modify `.github/workflows/deploy_function.yml`: keep
-      `on: workflow_dispatch`; add `environment: production` to the job; bump
-      `setup-dotnet` to `8.0.x`; keep publish + `Azure/functions-action` with
-      the existing secret.
-- [ ] 7.5 Modify `.github/workflows/deploy_web.yml`: keep `workflow_dispatch`;
-      add `environment: production`; optionally add a `site` input
-      (default `judotech.web`); keep the blob upload + `az logout`.
-- [ ] 7.6 Delete `.github/workflows/ci_api.yml` and
-      `.github/workflows/ci_web.yml`.
-- [ ] 7.7 Move `codeql.yml` → `.github/workflows/codeql.yml` and fix it:
-      remove `dotnet-version: 3.1` / `3.1.301`; set
-      `matrix: { language: ['csharp', 'javascript-typescript'] }`; use
-      `github/codeql-action/*@v3`; add `actions/setup-dotnet@v4` (8.0.x) only for
-      the `csharp` leg; `dotnet build source/judotech.sln` for autobuild input.
-- [ ] 7.8 Fill `docs/development/ci-cd.md`: table of every workflow (trigger,
-      what it does, does it deploy), the list of secrets and what each is for,
-      and the required branch-protection settings for `main` (require
-      `ci-dotnet`, `ci-portal`, `ci-web-legacy`, `CodeQL` to pass; no direct
-      pushes; linear history optional).
-- [ ] 7.9 Add `.github/workflows/security-secret-scan.yml`: `gitleaks/gitleaks-action`
-      on `pull_request` + `push`.
-- [ ] **Verify**: `actionlint` (if available) passes on all workflow files, or
-      YAML parses cleanly; grep confirms no workflow triggered by `push` contains
-      an `Azure/` or `az storage` deploy step; `ci-*` workflows reference
-      `.nvmrc` / `8.0.x`. (Actual green runs require pushing the branch — do that
-      only with approval; note the result here afterward.)
+- [x] 7.1 Add `.github/workflows/ci-dotnet.yml` (push/PR to `main` + manual;
+      `setup-dotnet@v4` 8.0.x; restore, build `-c Release --no-restore`, test
+      `--no-build --filter "Category!=Integration"` + trx artifact). Exact
+      sequence verified locally: build 0 errors, core 6 / api 2 passed.
+- [x] 7.2 Add `.github/workflows/ci-portal.yml` (push/PR to `main` + manual;
+      `setup-node@v4` `node-version-file: judotech-portal/.nvmrc`, `cache: npm`;
+      `npm ci` + `lint` + `typecheck` + `test` + `build`). `npm ci` verified
+      locally (clean install → lint/build still green).
+- [x] 7.3 Add `.github/workflows/ci-web-legacy.yml`. **Deviations:** builds with
+      `npx gulp --environment development` (the gulpfiles default to
+      `development`; `--production` never set `argv.environment` anyway). Matrix
+      is `calendar` / `club` / `referee` as required + `judotech.web` as
+      `allow-failure` — `judotech.web` does not build (TD-046); the other three
+      were verified locally.
+- [x] 7.4 `deploy_function.yml` — `workflow_dispatch` only; `environment:
+      production`; `setup-dotnet@v4` 8.0.x; actions bumped to v4; keeps
+      `Azure/functions-action` + `secrets.judotech_FFFF`.
+- [x] 7.5 `deploy_web.yml` — `workflow_dispatch` with a `site` choice input
+      (default `judotech.web`, all four options); `environment: production`;
+      fixed the undefined `matrix.node-version` (now `.nvmrc`); actions bumped;
+      keeps blob upload + `az logout`.
+- [x] 7.6 Deleted `ci_api.yml` and `ci_web.yml`.
+- [x] 7.7 Moved `codeql.yml` → `.github/workflows/codeql.yml` (it was never an
+      active workflow at the repo root). Rewrote: `matrix.language` =
+      `['csharp', 'javascript-typescript']`; `codeql-action/*@v3`;
+      `setup-dotnet@v4` 8.0.x + `dotnet build` only on the `csharp` leg;
+      `autobuild` on the other.
+- [x] 7.8 Filled `docs/development/ci-cd.md` (workflow table, secrets table,
+      `production` environment setup, branch-protection recommendations, notes).
+- [x] 7.9 Add `.github/workflows/security-secret-scan.yml`
+      (`gitleaks/gitleaks-action@v2`, push/PR + manual). Added `.gitleaks.toml`
+      allowlisting the sample settings file and the fake hash fixture (Risk 13).
+- [x] **Verify:** `actionlint` not installed; all 7 workflow YAMLs parse
+      cleanly (Python `yaml.safe_load`); `.gitleaks.toml` parses. No `push`-
+      triggered workflow contains an `Azure/` or `az storage` step (deploys are
+      `workflow_dispatch` only). `ci-*` reference `.nvmrc` / `8.0.x`. Green runs
+      on GitHub still need the branch pushed + PR opened.
 
 ---
 

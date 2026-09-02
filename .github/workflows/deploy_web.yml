@@ -1,40 +1,50 @@
-name: Deploy(manual) - Static Web 
-on: workflow_dispatch
+name: Deploy (manual) - Static web
+
+on:
+  workflow_dispatch:
+    inputs:
+      site:
+        description: Site under source/ to build and publish
+        type: choice
+        default: judotech.web
+        options:
+          - judotech.web
+          - judotech.web.calendar
+          - judotech.web.club
+          - judotech.web.referee
+
+permissions:
+  contents: read
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: production
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Setup Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
+      - uses: actions/checkout@v4
 
-    - name: Build static site judotech.web
-      run: |
-        cd ./source/judotech.web
-        npm install
-        gulp --production
-        
-    - uses: azure/login@v1
-      with:
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Build ${{ inputs.site }}
+        working-directory: source/${{ inputs.site }}
+        run: |
+          npm ci || npm install
+          npx gulp --environment production
+
+      - uses: azure/login@v2
+        with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-    - name: Upload to blob storage
-      uses: azure/CLI@v1
-      with:
-        inlineScript: |
-          az storage blob delete-batch --account-name storagejudotech --auth-mode key -s '$web'
-          az storage blob upload-batch --account-name storagejudotech --auth-mode key -s ./source/judotech.web/public -d '$web' 
-    #- name: Purge CDN endpoint
-    #  uses: azure/CLI@v1
-    #  with:
-    #    inlineScript: |
-    #       az cdn endpoint purge --content-paths  "/*" --profile-name "CDN_PROFILE_NAME" --name "CDN_ENDPOINT" --resource-group "RESOURCE_GROUP"
-    
-    - name: logout
-      run: |
-            az logout
-      if: always()
-        
+
+      - name: Upload to blob storage
+        uses: azure/CLI@v2
+        with:
+          inlineScript: |
+            az storage blob delete-batch --account-name storagejudotech --auth-mode key -s '$web'
+            az storage blob upload-batch --account-name storagejudotech --auth-mode key -s ./source/${{ inputs.site }}/public -d '$web'
+
+      - name: Logout
+        run: az logout
+        if: always()

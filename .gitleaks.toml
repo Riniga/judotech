@@ -1,0 +1,14 @@
+# Extends the default gitleaks rule set.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Known non-secret placeholders and test fixtures"
+paths = [
+  '''source/judotech\.api/local\.settings_sample\.json''',
+  '''source/judotech\.api\.tests/AuthenticationIntegrationTests\.cs''',
+]
+regexes = [
+  # Fake PBKDF2 hash used as a test fixture, not a live credential.
+  '''QuLWdRplKNXLjEz3IQyoJ8aGrY/OlPTOMWw2YidkzIk=''',
+]

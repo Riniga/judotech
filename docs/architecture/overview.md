@@ -57,10 +57,10 @@ server/app, care app, intercom app). Most of these do not exist yet.
 judotech/
 ├─ README.md                     # Setup notes: Azure CLI, conda, .NET, Docker
 ├─ LICENSE                        # GPL-3.0
-├─ codeql.yml
 ├─ judotech_env.bat              # conda env activation helper
-├─ .github/workflows/            # CI/CD (see section 5)
-├─ .vscode/                       # settings, tasks, launch (tasks/launch untracked)
+├─ .editorconfig, .gitignore, .nvmrc, .markdownlint.json, .gitleaks.toml
+├─ .github/workflows/            # CI/CD (see section 5.5)
+├─ .vscode/                       # settings, tasks, launch, extensions
 ├─ devcontainer/dockerfile        # Ubuntu 22.04 base dev container
 │
 ├─ docs/                          # All project documentation
@@ -314,19 +314,26 @@ environment lock file is committed. `README.md` describes a conda environment
 
 ### 5.5 CI/CD (`.github/workflows/`)
 
-| Workflow | Trigger | What it does |
-|---|---|---|
-| `ci_api.yml` | push + PR to `main`, weekly cron | On `windows-latest`: restore, CodeQL (C#), build, publish, **and deploy `source/judotech.api` to the Azure Function app `judotech` on every run** (CI and CD are combined). Uses `DOTNET_CORE_VERSION: 3.1.x` — a mismatch with the `net8.0` project. |
-| `ci_web.yml` | push + PR to `main`, weekly cron | On `ubuntu-latest`, Node 20: `npm install` + `gulp --production` for `source/judotech.web`, CodeQL (JavaScript), then upload `public/` to Azure Storage `$web` container on `storagejudotech`. |
-| `deploy_function.yml` | manual (`workflow_dispatch`) | Build/publish/deploy the API (no CodeQL). |
-| `deploy_web.yml` | manual (`workflow_dispatch`) | Build and upload `judotech.web` to blob storage. |
-| `codeql.yml` (root) | Not analyzed in detail | CodeQL configuration. |
+Reorganised in MVP-001 Phase 7 (ADR-0006). CI never deploys; deployment is
+manual and gated on a `production` environment. Full detail:
+[`../development/ci-cd.md`](../development/ci-cd.md).
 
-There is **no CI for `judotech-portal`** and **no CI for the `judotech.web.club`,
-`judotech.web.calendar` or `judotech.web.referee` sites**.
+| Workflow | Trigger | What it does | Deploys? |
+|---|---|---|---|
+| `ci-dotnet.yml` | push/PR to `main`, manual | restore + build (Release) + test (`Category!=Integration`) on .NET 8 | No |
+| `ci-portal.yml` | push/PR to `main`, manual | `npm ci` + lint + typecheck + test + build in `judotech-portal/` | No |
+| `ci-web-legacy.yml` | push/PR to `main`, manual | `gulp` build of the frozen sites (`calendar`/`club`/`referee` required, `judotech.web` non-blocking) | No |
+| `codeql.yml` | push/PR to `main`, weekly | CodeQL for `csharp` + `javascript-typescript` | No |
+| `security-secret-scan.yml` | push/PR to `main`, manual | gitleaks | No |
+| `deploy_function.yml` | manual only | publish + deploy `judotech.api` to the `judotech` Function App | Yes (`production`) |
+| `deploy_web.yml` | manual only (choose `site`) | build + upload a static site to `storagejudotech` `$web` | Yes (`production`) |
 
-Secrets referenced: `secrets.judotech`, `secrets.judotech_FFFF` (function publish
-profiles), `secrets.AZURE_CREDENTIALS`.
+Removed: `ci_api.yml` and `ci_web.yml` (built **and** deployed on every push,
+pinned .NET 3.1). `codeql.yml` moved from the repo root into
+`.github/workflows/` and fixed.
+
+Secrets: `judotech_FFFF` (function publish profile), `AZURE_CREDENTIALS`
+(blob upload). The old `judotech` publish-profile secret is now unused.
 
 ## 6. Coding standards
 
@@ -472,10 +479,11 @@ accepted via an ADR, or backlog).
 - Authentication is a custom scheme: SHA-derived password hash plus an opaque
   GUID token stored in a Cosmos container. `GetUserFromToken` builds a Cosmos
   SQL query by string concatenation of the token value.
-- `ci_api.yml` deploys to production on every push to `main`; there is no
-  staging/test/UAT environment wired up despite the roadmap referencing
-  Test/UAT/Production tiers.
-- The `.NET 3.1.x` SDK pin in CI does not match the `net8.0` projects.
+- ~~`ci_api.yml` deploys to production on every push to `main`~~ — fixed in
+  MVP-001 Phase 7 (CI/CD split, ADR-0006). There is still no staging/test/UAT
+  environment (TD-012, deferred).
+- ~~The `.NET 3.1.x` SDK pin in CI does not match the `net8.0` projects.~~ Fixed
+  in MVP-001 Phase 4 & 7.
 - The `judotech-portal` UI package is consumed directly as TypeScript source
   (via alias / tsconfig paths) rather than being built and versioned; it also
   contains a large amount of unexported template code.
@@ -538,12 +546,13 @@ Structure and direction:
 
 `source/` (incomplete or unverified):
 
-- No automated tests anywhere.
-- CI targets the wrong .NET SDK version; CI and deployment are not separated;
-  no non-production environment.
-- Email/registration-confirmation functionality status is unclear.
-- `judotech.web.club` / `.calendar` / `.referee` have no CI or deployment.
-- The video streaming projects are outside the solution and unbuilt.
+- ~~No automated tests anywhere.~~ Fixed in MVP-001 Phase 6.
+- ~~CI targets the wrong .NET SDK version; CI and deployment are not separated.~~
+  Fixed in MVP-001 Phase 4 & 7. No non-production environment (TD-012, deferred).
+- Email/registration-confirmation functionality status is unclear (TD-028).
+- `judotech.web.club` / `.calendar` / `.referee` now have build CI
+  (`ci-web-legacy.yml`); `judotech.web` itself does not build (TD-046).
+- The video streaming projects are outside the solution and unbuilt (TD-018).
 - Member import is a manual local script with a hard-coded path.
 - Security review needed for the custom auth scheme (string-concatenated Cosmos
   queries, token handling, password hashing approach).

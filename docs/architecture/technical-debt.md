@@ -40,8 +40,10 @@ Owner `unassigned` means no one has picked it up yet.
 | TD-014 | No `packages/config`, no root `tsconfig.base.json` | §13 | Fixed in MVP-001 (Phase 5) | – | – |
 | TD-015 | `packages/core` is an empty directory | §13 | Fixed in MVP-001 (Phase 5, minimal) | – | – |
 | TD-016 | `judotech.web.club` / `.calendar` / `.referee` have no CI | §13 | Fixed in MVP-001 (Phase 7, build-only) | – | – |
-| TD-017 | `judotech.web.club` / `.calendar` / `.referee` have no deployment workflow | §13 | Backlog | low | unassigned |
+| TD-017 | `judotech.web.club` / `.calendar` / `.referee` have no deployment workflow | §13 | Partly fixed — `deploy_web.yml` now takes a `site` input covering all four; only `judotech.web` was previously deployable | low | unassigned |
 | TD-018 | Video-streaming projects (`judotech.VideoStream*`, net48) are outside `judotech.sln` and unbuilt | §13 | Accepted (ADR-0001) — kept dormant in place | low | unassigned |
+| TD-046 | `source/judotech.web` (the deployed "main" site) fails to build locally: `sub-layout.pug` extends `pug/templates/layout.pug` at the wrong path. `calendar` / `club` / `referee` build fine. | MVP-001 Phase 7 | Backlog — `ci-web-legacy.yml` runs it non-blocking (`allow-failure`) | medium | unassigned |
+| TD-047 | The `judotech` GitHub Actions secret (old function publish profile) is no longer referenced by any workflow | MVP-001 Phase 7 | Backlog — delete in repo settings | low | unassigned |
 
 ## Front-end (`judotech-portal`)
 
