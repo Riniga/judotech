@@ -376,72 +376,67 @@ Node v24.4.1; npm 11.4.2.
 
 ---
 
-### Phase 5 — Portal workspace structure
+### Phase 5 — Portal workspace structure — DONE (staged, not committed)
 
 Commit message: `Add shared portal config, working root build, and packages/core`
 
-- [ ] 5.1 Add `judotech-portal/tsconfig.base.json` with the common options
-      currently duplicated in `apps/athlete/tsconfig.*` (target/lib/module,
-      `moduleResolution: bundler`, `strict`, `noUnusedLocals/Parameters`,
-      `jsx: react-jsx`, `skipLibCheck`).
-- [ ] 5.2 Create `packages/config` (`@judotech/config`, `private`, `version 0.0.0`):
-      - `eslint.base.js` — the shared flat config currently inlined in
-        `apps/athlete/eslint.config.js` (js recommended, tseslint, react-hooks,
-        react-refresh).
-      - `tsconfig.base.json` — re-exports root base (or is the canonical base;
-        pick one location and have the other extend it).
-      - `tailwind-theme.css` — the `@theme` token block extracted from
-        `packages/ui/src/styles/index.css` (see Risks — may defer).
-      - `vitest.base.ts` — shared test config (environment, globals, coverage).
-      - `package.json` with `exports` for each file.
-- [ ] 5.3 Add root `judotech-portal/turbo.json` with pipelines: `build`
-      (`dependsOn: ["^build"]`, outputs `dist/**`), `lint`, `typecheck`, `test`
-      (all `dependsOn: ["^build"]` where needed).
-- [ ] 5.4 Update root `judotech-portal/package.json` scripts:
-      `"dev": "turbo dev"`, `"build": "turbo build"`, `"lint": "turbo lint"`,
-      `"typecheck": "turbo typecheck"`, `"test": "turbo test"`; keep the
-      `*:athlete` shortcuts. Add `turbo` to `devDependencies`.
-- [ ] 5.5 Add `judotech-portal/tsconfig.json` (solution file) with `references`
-      to `packages/config`, `packages/core`, `packages/ui`, `apps/athlete`, and
-      `"files": []`. Add root `"typecheck": "tsc -b"` capability.
-- [ ] 5.6 Refactor `apps/athlete`:
-      - `tsconfig.app.json` extends `../../tsconfig.base.json`; keep app-only
-        keys (`baseUrl`, `paths`, `types`).
-      - `eslint.config.js` imports from `@judotech/config`.
-      - `package.json`: remove `@types/react-router-dom`; add
-        `"typecheck": "tsc -b"`, `"test": "vitest run"`; add `@judotech/config`,
-        `@judotech/ui` as `dependencies` (workspace protocol) instead of only a
-        path alias.
-      - delete `postcss.config.mjs.bak` (keep `postcss.config.mjs`); confirm the
-        remaining file matches Tailwind v4 expectations.
-- [ ] 5.7 Create `packages/core` (`@judotech/core`):
-      - `package.json` with `main: src/index.ts`, `type: module`, scripts
-        (`lint`, `test`, `typecheck`), devDeps (`typescript`, `vitest`).
-      - `src/index.ts` exporting a minimal, real surface: an `HttpClient` and a
-        `User` type placeholder (no business logic — just enough to prove the
-        build/test path and give app code an import target).
-      - `src/api/http-client.ts` — thin `fetch` wrapper (baseUrl + JSON + error
-        normalization).
-      - `tsconfig.json`, `eslint.config.js`, `vitest.config.ts` extending config.
-- [ ] 5.8 Refactor `packages/ui`:
-      - `package.json`: remove `"clean"`; add `scripts` (`lint`, `test`,
-        `typecheck`); add devDeps `vitest`, `@testing-library/react`,
-        `@testing-library/jest-dom`, `jsdom`, `typescript`, `@judotech/config`.
-      - add `tsconfig.json`, `eslint.config.js`, `vitest.config.ts`.
-      - add `exports` map pointing at `src/index.ts` and `src/styles/index.css`.
-      - do **not** expand `src/index.ts` exports in this MVP beyond what already
-        works (`Button`, `AppLayout`, `ThemeProvider`) — note the rest as debt.
-- [ ] 5.9 Run `npm install` at `judotech-portal/` to refresh the lockfile with
-      the workspace links and removed/added deps.
-- [ ] 5.10 Update `judotech-portal/readme.md` to describe the real post-MVP
-      structure and the `turbo` commands; remove the stale "Todo" and "Skapa
-      site" scratch notes or move them to `docs/development/setup.md`.
-- [ ] **Verify** (all from `judotech-portal/`):
-      `npm run lint` → passes; `npm run typecheck` → passes;
-      `npm run build` → passes and produces `apps/athlete/dist`;
-      `npm run dev:athlete` → serves and the page renders;
-      `grep -n "clean" packages/ui/package.json` → nothing;
-      `grep -n "react-router-dom" apps/athlete/package.json` → only the real dep.
+- [x] 5.1 Add `judotech-portal/tsconfig.base.json` with the common options
+      currently duplicated in `apps/athlete/tsconfig.*`.
+- [x] 5.2 Create `packages/config` (`@judotech/config`).
+      **Deviations:** no `tsconfig.base.json` in the package — the canonical base
+      is `judotech-portal/tsconfig.base.json` and packages extend it by relative
+      path (avoids package-`exports`-for-tsconfig complexity). No
+      `tailwind-theme.css` — the ~780-line `packages/ui/src/styles/index.css`
+      stays the theme source (Risk 8 fallback taken; theme extraction → TD).
+      `vitest.base.js` (not `.ts`) exports a plain `testBase` object that
+      packages spread into their own config. Exports: `./eslint`, `./vitest`.
+- [x] 5.3 Add root `judotech-portal/turbo.json` (turbo 2.x `tasks` schema):
+      `build`/`lint`/`typecheck`/`test` all `dependsOn: ["^build"]`, `build`
+      outputs `dist/**`; `dev` non-cached + persistent.
+- [x] 5.4 Update root `judotech-portal/package.json` scripts (`dev`/`build`/
+      `lint`/`typecheck`/`test` → `turbo *`; kept `*:athlete`). Added
+      `turbo` ^2 devDep (resolved to 2.10.12).
+- [x] 5.5 Add `judotech-portal/tsconfig.json` (solution file, `files: []`,
+      references to `packages/core`, `packages/ui`, `apps/athlete`).
+      **Deviation:** root `typecheck` runs via `turbo typecheck` (each package
+      has its own `tsc` script) rather than a root `tsc -b`, which avoids
+      `composite` requirements on the non-composite `noEmit` projects.
+- [x] 5.6 Refactor `apps/athlete`: `tsconfig.app.json` extends base (dropped
+      `baseUrl` — deprecated in TS 7; `paths` now relative to the tsconfig);
+      `eslint.config.js` re-exports `@judotech/config/eslint`; removed
+      `@types/react-router-dom`; added `typecheck`/`test` scripts, `@judotech/ui`
+      + `@judotech/core` deps, `@judotech/config` + vitest/testing-library/jsdom
+      devDeps. `postcss.config.mjs.bak` deleted (`git rm`); there is no
+      `postcss.config.mjs` — Tailwind v4 runs via `@tailwindcss/vite`, no PostCSS
+      config needed.
+- [x] 5.7 Create `packages/core` (`@judotech/core`): `package.json`,
+      `src/index.ts` (`HttpClient`, `HttpError`, `createHttpClient`, `User`
+      placeholder), `src/api/http-client.ts` (fetch wrapper — baseUrl, JSON,
+      error normalisation), `tsconfig.json`, `eslint.config.js`,
+      `vitest.config.ts`. (Had to expand a parameter-property constructor —
+      disallowed by `erasableSyntaxOnly`.)
+- [x] 5.8 Refactor `packages/ui`: removed `clean`; added scripts + devDeps;
+      added `tsconfig.json`, `eslint.config.js` (turns off
+      `react-refresh/only-export-components` — it's a library not an HMR app —
+      and downgrades `react-hooks/set-state-in-effect` to warn for the
+      unadopted template code, TD-020/021), `vitest.config.ts`, `vitest.setup.ts`,
+      and **`svg.d.ts`** (needed so `tsc` resolves the `*.svg?react` imports in
+      `src/icons`). `exports` map for `.` and `./styles/index.css`. Export
+      surface unchanged.
+- [x] 5.9 Ran `npm install` — added 155 packages, removed 9 (`clean` + deps,
+      `@types/react-router-dom`). Lockfile updated. (13 npm-audit advisories,
+      pre-existing / dev-only — noted, not addressed.)
+- [x] 5.10 Rewrote `judotech-portal/readme.md` (real structure, `turbo`
+      commands, known gaps). Scratch notes dropped.
+- [x] **Verify** (from `judotech-portal/`):
+      `npm run lint` → **pass** (`@judotech/ui` 2 warnings, non-blocking).
+      `npm run typecheck` → **pass** (3/3).
+      `npm run build` → **pass**, `apps/athlete/dist` produced (95 modules).
+      `npm run dev:athlete` → **pass** (HTTP 200, serves `main.tsx`; full React
+      render not asserted — no headless browser).
+      `npm test` → **pass** (3/3, no test files yet — Phase 6).
+      `grep clean packages/ui/package.json` → nothing.
+      `grep react-router-dom apps/athlete/package.json` → only `^7.9.6`.
 
 ---
 

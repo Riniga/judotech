@@ -1,72 +1,56 @@
-# Judotech Portal Workspaces
+# JudoTech Portal
 
-This is the root for our workspaces and contains common stuff
+The front-end monorepo for JudoTech and the active development target for new
+work (see `docs/architecture/decisions/0001-source-vs-portal-scope.md`).
 
-## Catalog structure
-judo-portal/
+## Structure
+
+```text
+judotech-portal/
 ├─ apps/
-│  ├─ public/          # Besökare
-│  │  └─ src/
-│  ├─ trainer/         # Tränare
-│  │  └─ src/
-│  ├─ athlete/         # Tränande
-│  │  └─ src/
-│  └─ referee/         # Domare
-│     └─ src/
-│
+│  └─ athlete/          # @judotech/athlete — Vite + React 19 app
 ├─ packages/
-│  ├─ ui/              # Gemensamt UI-bibliotek (knappar, tabeller, layout, tema)
-│  │  ├─ src/
-│  │  ├─ ├─ components/
-│  │  │  │  ├─ Table/
-│  │  │  │  ├─ Button/
-│  │  │  │  ├─ Card/
-│  │  │  │  └─ Layout/
-│  │  │  ├─ theme/
-│  │  │  │  ├─ colors.ts
-│  │  │  │  └─ typography.ts
-│  │  │  └─ index.ts
-│  │  └─ package.json
-│  ├─ core/            # Domänlogik, typer, hooks, API-klienter
-│  │  packages/core/
-│  │  ├─ src/
-│  │  │  ├─ api/
-│  │  │  │  ├─ httpClient.ts
-│  │  │  │  └─ judoApi.ts        // t.ex. anrop till ditt backend
-│  │  │  ├─ hooks/
-│  │  │  │  ├─ useAuth.ts
-│  │  │  │  └─ useCurrentUser.ts
-│  │  │  ├─ models/
-│  │  │  │  ├─ User.ts
-│  │  │  │  └─ TrainingSession.ts
-│  │  │  └─ index.ts
-│  │  └─ package.json
-│  └─ config/          # Delad tsconfig, eslint, tailwind-config etc.
-│
-├─ package.json        # workspaces / pnpm/yarn workspace
-├─ tsconfig.base.json
-└─ README.md
+│  ├─ ui/               # @judotech/ui     — shared React components + Tailwind theme
+│  ├─ core/             # @judotech/core   — domain types, hooks, API clients
+│  └─ config/           # @judotech/config — shared ESLint + Vitest config
+├─ tsconfig.base.json   # shared TypeScript compiler options (packages extend this)
+├─ tsconfig.json        # solution file (project references, for editors)
+├─ turbo.json           # task pipelines
+└─ package.json         # npm workspaces + root scripts
+```
 
+More apps (`public`, `trainer`, `referee`) are added on demand, not scaffolded
+ahead of need (ADR-0004).
 
-## Todo:
-Använd UI från ui: import { Table, Layout, Button } from '@judo/ui';
-lägga till Tailwind för snyggare tabell-UI, eller
-Bygga med     "build": "turbo build"  // om du vill ta det steget
+## Requirements
 
+Node 24 (see `.nvmrc`) and npm 11. With `nvm`: `nvm install && nvm use`.
 
-## Skapa site
-npm create vite@latest apps/athlete -- --template react-ts
-npm install -D tailwindcss postcss autoprefixer --workspace @judotech/athlete
-npm install -D tailwindcss @tailwindcss/postcss @tailwindcss/vite -w @judotech/athlete
-npm install react-router-dom -w @judotech/athlete
-npm install -D @types/react-router-dom -w @judotech/athlete
+## Commands
 
-npm install -D vite-plugin-svgr -w @judotech/athlete
-npm install tailwindcss @tailwindcss/vite -w @judotech/athlete
+Run from `judotech-portal/`:
 
+| Command | What it does |
+|---------|--------------|
+| `npm install` | Install all workspaces |
+| `npm run dev` | `turbo dev` — run every app's dev server |
+| `npm run dev:athlete` | Just the athlete app (Vite, port 5173) |
+| `npm run build` | `turbo build` — build every app |
+| `npm run lint` | `turbo lint` — ESLint across the workspace |
+| `npm run typecheck` | `turbo typecheck` — `tsc` across the workspace |
+| `npm test` | `turbo test` — Vitest across the workspace |
 
+## Conventions
 
-## Run site(s)
-npm install
-npm npm run dev:athlete
+- Coding standard: `docs/standards/coding-typescript-react.md`.
+- Packages are consumed from source (no build/publish step) via the
+  `@judotech/*` scope and workspace links.
+- Shared ESLint config: `@judotech/config/eslint`. Shared Tailwind theme:
+  `@judotech/ui/styles/index.css`.
 
+## Known gaps
+
+`@judotech/ui` still contains a large set of unadopted admin-template components
+and only exports `Button`, `AppLayout` and `ThemeProvider` (TD-020 / TD-021 in
+`docs/architecture/technical-debt.md`). The athlete app is a scaffold — no real
+screens yet.

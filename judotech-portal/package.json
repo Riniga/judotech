@@ -10,9 +10,16 @@
     "packages/*"
   ],
   "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "test": "turbo test",
     "dev:athlete": "npm run dev --workspace @judotech/athlete",
     "build:athlete": "npm run build --workspace @judotech/athlete",
-    "preview:athlete": "npm run preview --workspace @judotech/athlete",
-    "build": "turbo build"
+    "preview:athlete": "npm run preview --workspace @judotech/athlete"
+  },
+  "devDependencies": {
+    "turbo": "^2.5.0"
   }
 }

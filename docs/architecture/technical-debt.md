@@ -54,8 +54,12 @@ Owner `unassigned` means no one has picked it up yet.
 | TD-023 | `apps/athlete` has both `react-router-dom` v7 and the stale `@types/react-router-dom` v5 | §13 | Fixed in MVP-001 (Phase 5) | – | – |
 | TD-024 | No real app logic: `Dashboard` is a placeholder; no API client, auth flow, routing structure or data model | §13 | Backlog (feature work; a minimal `HttpClient` lands in Phase 5) | medium | unassigned |
 | TD-025 | `apps/{public,trainer,referee}` do not exist | §13 | Accepted (ADR-0004) — created on demand | – | – |
-| TD-026 | `apps/athlete` uses `vite: npm:rolldown-vite` (pre-release); Vitest compatibility unverified | plan Risks | Backlog | low | unassigned |
-| TD-027 | `apps/athlete` has a leftover `postcss.config.mjs.bak` | plan | Fixed in MVP-001 (Phase 5) | – | – |
+| TD-026 | `apps/athlete` uses `vite: npm:rolldown-vite` (pre-release) | plan Risks | Accepted for now — Vitest 3 works with it (verified Phase 5) | low | unassigned |
+| TD-027 | `apps/athlete` has a leftover `postcss.config.mjs.bak` | plan | Fixed in MVP-001 (Phase 5) — deleted; no PostCSS config needed with Tailwind v4 `@tailwindcss/vite` | – | – |
+| TD-041 | Tailwind theme tokens live only in `packages/ui/src/styles/index.css` (~780 lines); not extracted into `@judotech/config` for reuse by non-UI packages | MVP-001 Phase 5 (Risk 8) | Backlog | low | unassigned |
+| TD-042 | `apps/athlete` still carries unused `@tailwindcss/postcss`, `autoprefixer`, `postcss` devDeps (Tailwind v4 uses the Vite plugin) | MVP-001 Phase 5 | Backlog | low | unassigned |
+| TD-043 | `npm audit` reports 13 advisories in the portal dependency tree (dev-only / transitive) | MVP-001 Phase 5 | Backlog | medium | unassigned |
+| TD-044 | `apps/athlete` `devDependencies` still list ESLint plugins now provided transitively by `@judotech/config` | MVP-001 Phase 5 | Backlog | low | unassigned |
 
 ## `source/` — other
 

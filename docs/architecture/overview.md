@@ -92,19 +92,22 @@ judotech/
 │  ├─ judotech.integrations.members/  # Jupyter notebook: member import from Excel
 │  └─ buildscript.sh
 │
-└─ judotech-portal/               # Newer front-end monorepo (npm workspaces)
-   ├─ package.json                # workspaces: apps/*, packages/*
-   ├─ readme.md                   # Describes intended, mostly-unbuilt structure
+└─ judotech-portal/               # Newer front-end monorepo (npm workspaces + Turborepo)
+   ├─ package.json                # workspaces: apps/*, packages/*; turbo scripts
+   ├─ turbo.json                  # task pipelines (build/lint/typecheck/test)
+   ├─ tsconfig.base.json          # shared TS compiler options
+   ├─ readme.md
    ├─ apps/
    │  └─ athlete/                 # Vite + React 19 app (only app that exists)
    └─ packages/
-      ├─ ui/                      # @judotech/ui shared React component library
-      └─ core/                    # Empty placeholder directory (no files)
+      ├─ ui/                      # @judotech/ui — shared React components + theme
+      ├─ core/                    # @judotech/core — domain types, hooks, API clients
+      └─ config/                  # @judotech/config — shared ESLint + Vitest config
 ```
 
-Note: `judotech-portal/readme.md` also describes `apps/public`, `apps/trainer`,
-`apps/referee`, `packages/config` and a root `tsconfig.base.json`. None of these
-exist yet.
+`packages/config`, `packages/core` (minimal) and `tsconfig.base.json` were added
+in MVP-001 Phase 5. `apps/public`, `apps/trainer` and `apps/referee` are still to
+be created on demand (ADR-0004).
 
 ## 3. Major components
 
@@ -219,9 +222,14 @@ Shared React component library. `package.json` sets `main` to `src/index.ts`
   expand/collapse state.
 - These components strongly resemble an existing admin dashboard template; the
   origin and licensing of that template are **not documented**.
-- `package.json` lists an unexplained dependency `"clean": "^4.0.2"`.
+- `package.json` listed an unexplained dependency `"clean": "^4.0.2"` (removed
+  in MVP-001 Phase 5).
 
-`packages/core` is an empty directory with no `package.json` or source.
+> **Updated (MVP-001 Phase 5):** `packages/core` is now a real package
+> (`@judotech/core`) with a minimal `HttpClient` and a `User` type placeholder.
+> `packages/ui` gained `tsconfig.json` / `eslint.config.js` / `vitest.config.ts`,
+> an `svg.d.ts`, and an `exports` map; its exported surface still comprises only
+> `Button`, `AppLayout` and `ThemeProvider` (TD-021).
 
 ## 4. Existing dependencies
 
@@ -241,20 +249,26 @@ Node tooling: `gulp` 5, `gulp-pug` 5, `gulp-uglify`, `gulp-csso`,
 
 ### 4.3 `judotech-portal`
 
-Root: npm workspaces; `build` script calls `turbo build` but `turbo` is **not a
-dependency and there is no `turbo.json`** (the script would currently fail).
+Root: npm workspaces + Turborepo (`turbo` ^2 as a dev dependency, `turbo.json`
+with `build` / `lint` / `typecheck` / `test` / `dev` pipelines). Node 24 pinned
+via `.nvmrc`; npm 11 pinned via `packageManager`. As of MVP-001 Phase 5.
 
 `apps/athlete` runtime: `react` ^19.2, `react-dom` ^19.2, `react-router-dom`
-^7.9.
+^7.9, plus workspace deps `@judotech/ui` and `@judotech/core`.
 `apps/athlete` dev: `vite` (`npm:rolldown-vite@7.2.5`), `@vitejs/plugin-react`,
-`tailwindcss` ^4.1, `@tailwindcss/vite`, `@tailwindcss/postcss`, `autoprefixer`,
-`postcss`, `vite-plugin-svgr`, `typescript` ~5.9, `eslint` ^9.39,
-`typescript-eslint`, `eslint-plugin-react-hooks`, `eslint-plugin-react-refresh`,
-`@types/*`. Note both `@types/react-router-dom` 5.x and `react-router-dom` 7.x
-are present (v7 ships its own types; the `@types` package is stale).
+`tailwindcss` ^4.1, `@tailwindcss/vite`, `vite-plugin-svgr`, `typescript` ~5.9,
+`vitest` ^3, `@testing-library/*`, `jsdom`, ESLint 9 + `@judotech/config`.
+(The stale `@types/react-router-dom` v5 was removed in Phase 5.)
 
-`packages/ui`: peer `react`/`react-dom` ^19.2; dev `typescript` ~5.9,
-`@types/react*`; dependency `clean` ^4.0.2 (purpose unknown).
+`packages/ui`: peer `react` / `react-dom` ^19.2 and `react-router-dom` ^7; dev
+`typescript` ~5.9, `@judotech/config`, `vitest`, `@testing-library/*`, `jsdom`.
+(The unexplained `clean` dependency was removed in Phase 5.)
+
+`packages/core`: dev `typescript` ~5.9, `vitest`, `@judotech/config`. No runtime
+dependencies yet.
+
+`packages/config`: `@eslint/js`, `typescript-eslint`, `eslint-plugin-react-hooks`,
+`eslint-plugin-react-refresh`, `globals`; peer `eslint` ^9, optional `vitest`.
 
 ### 4.4 Python
 
@@ -434,6 +448,7 @@ Referenced but not integrated:
   registrering" as in progress (🔄) and a commit is titled "Mail functionality",
   but **no email-sending code is present in the repository**. Status unknown.
 - **Turborepo** – referenced by the root `build` script but not installed.
+  *(Installed and configured in MVP-001 Phase 5.)*
 
 ## 11. Architectural observations
 
