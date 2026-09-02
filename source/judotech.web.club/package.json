@@ -13,17 +13,17 @@
   "type": "module",
   "devDependencies": {
     "fs": "^0.0.1-security",
-    "gulp": "^5.0.0",
-    "gulp-autoprefixer": "^9.0.0",
-    "gulp-changed": "^5.0.2",
+    "gulp": "^5.0.1",
+    "gulp-autoprefixer": "^10.0.0",
+    "gulp-changed": "^5.0.4",
     "gulp-clean": "^0.4.0",
     "gulp-concat": "^2.6.1",
     "gulp-csso": "^4.0.1",
     "gulp-pug": "^5.0.0",
-    "gulp-rename": "^2.0.0",
+    "gulp-rename": "^2.1.0",
     "gulp-uglify": "^3.0.2",
     "merge-stream": "^2.0.0",
     "path": "^0.12.7",
-    "yargs": "^17.7.2"
+    "yargs": "^18.1.0"
   }
 }
