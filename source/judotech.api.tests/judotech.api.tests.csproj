@@ -23,6 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\judotech.api\judotech.api.csproj" />
     <ProjectReference Include="..\judotech.core\judotech.core.csproj" />
+    <ProjectReference Include="..\judotech.testsupport\judotech.testsupport.csproj" />
   </ItemGroup>
 
 </Project>

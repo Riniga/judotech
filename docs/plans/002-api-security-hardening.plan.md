@@ -172,35 +172,38 @@ phase.
 
 ---
 
-### Phase 1 — Auth foundations
+### Phase 1 — Auth foundations — DONE (staged, not committed)
 
 Commit message: `Add hardened-auth ADR, DI seam, and test support`
 
-- [ ] 1.1 Write `docs/architecture/decisions/0008-hardened-auth.md`
-      (`Status: proposed`): password hashing (PBKDF2, random salt, 600k iters,
-      versioned format, migrate-on-login), tokens (256-bit random, SHA-256
-      hashed at rest, 12 h absolute expiry, revoke by delete + container TTL),
-      authorization (bearer header, role + ownership, `Login`/`Logout`
-      anonymous, rest keep the function key), DTO boundary, CORS. Mark it
-      "supersedes ADR-0007" in the header.
-- [ ] 1.2 Add `source/judotech.core/Data/IJudoDatabase.cs` — move the abstract
-      method signatures from `DatabaseBase` onto an interface. `DatabaseBase`
-      now `: IJudoDatabase`.
-- [ ] 1.3 Add `source/judotech.core/Auth/IAuthService.cs` and `AuthOptions.cs`
-      (interface + options only, no implementation yet).
-- [ ] 1.4 Create `source/judotech.testsupport/` (classlib, `net8.0`,
-      `<IsPackable>false</IsPackable>`, no `IsTestProject`). Reference
-      `judotech.core`. Add `InMemoryJudoDatabase : IJudoDatabase`,
-      `RecordingLogger : ILogger`, `TestData`.
-- [ ] 1.5 `dotnet sln source/judotech.sln add source/judotech.testsupport`.
-      Add a `ProjectReference` to `judotech.testsupport` from
+- [x] 1.1 `docs/architecture/decisions/0008-hardened-auth.md` written
+      (`Status: proposed`, `Supersedes: ADR-0007`) — full design: PBKDF2 (random
+      128-bit salt, 600k iters, `pbkdf2$sha256$…` format, migrate-on-login),
+      256-bit tokens (SHA-256 at rest, 12 h absolute expiry, revoke + container
+      TTL), bearer-header authz (role + ownership, `Login`/`Logout` anonymous),
+      `UserResponse` DTO, per-environment CORS, settled `DbUser` shape.
+- [x] 1.2 `source/judotech.core/Data/IJudoDatabase.cs` — interface with the 13
+      operation signatures (identical to `DatabaseBase`). `DatabaseBase :
+      IJudoDatabase` (the abstract methods already satisfy it — no other change).
+      New file kept in the global namespace to match the rest of `judotech.core`.
+- [x] 1.3 `source/judotech.core/Auth/IAuthService.cs` (+ `AuthLoginResult`
+      record) and `Auth/AuthOptions.cs` (`TokenLifetimeMinutes` 720,
+      `Pbkdf2Iterations` 600 000, `AllowedOrigins`). Interface/POCO only.
+- [x] 1.4 `source/judotech.testsupport/` (classlib, `net8.0`, `IsPackable=false`,
+      refs `judotech.core` + `Microsoft.Extensions.Logging.Abstractions` 8.0.2).
+      `InMemoryJudoDatabase : IJudoDatabase` (+ `Seed(...)`),
+      `RecordingLogger` / `RecordingLogger<T>`, `TestData` builders.
+- [x] 1.5 Added to `source/judotech.sln`; `ProjectReference` from
       `judotech.core.tests` and `judotech.api.tests`.
-- [ ] 1.6 Add `Microsoft.Extensions.Configuration.Binder` to `judotech.core` if
-      `AuthOptions` binding needs it (check — the Functions host may already
-      bring it transitively).
-- [ ] **Verify**: `dotnet build source/judotech.sln -c Release`;
-      `dotnet test --filter "Category!=Integration"` — all existing tests still
-      green; no behaviour change.
+- [~] 1.6 Skipped — `AuthOptions` is a plain POCO, no `Configuration.Binder`
+      needed now. The Functions host brings the binder transitively for Phase 6.
+- [x] **Bonus** `judotech.core.tests/TestSupport/InMemoryJudoDatabaseTests.cs`
+      — 2 sanity tests for the fake (create/read/delete round-trip; login →
+      token → resolve).
+- [x] **Verify**: `dotnet build source/judotech.sln -c Release` → 0 errors
+      (19 pre-existing nullable warnings, unchanged);
+      `dotnet test --filter "Category!=Integration"` → core.tests 8 (6 + 2 new),
+      api.tests 2, all pass. No production code path changed.
 
 ---
 

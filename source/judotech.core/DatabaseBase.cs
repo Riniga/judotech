@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-public abstract class DatabaseBase
+public abstract class DatabaseBase : IJudoDatabase
 {
 
     public abstract Task<bool> CreateUser(DbUser user);
