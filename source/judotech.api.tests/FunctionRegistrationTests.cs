@@ -26,14 +26,15 @@ public class FunctionRegistrationTests
 
         Assert.Contains("Login", names);
         Assert.Contains("Logout", names);
-        Assert.Contains("HashPassword", names);
         Assert.Contains("CreateUser", names);
         Assert.Contains("ReadAllUser", names);
     }
 
-    [Fact]
-    public void TestAuthenticationApi_IsNoLongerExposedAsAFunction()
+    [Theory]
+    [InlineData("TestAuthenticationApi")] // removed MVP-001 Phase 6
+    [InlineData("HashPassword")]          // removed MVP-002 Phase 2 (hashing oracle)
+    public void RemovedEndpoints_AreNotExposed(string name)
     {
-        Assert.DoesNotContain("TestAuthenticationApi", FunctionNames());
+        Assert.DoesNotContain(name, FunctionNames());
     }
 }

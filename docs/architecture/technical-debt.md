@@ -85,9 +85,9 @@ Owner `unassigned` means no one has picked it up yet.
 
 | ID | Description | Source | Disposition | Severity | Owner |
 |----|-------------|--------|-------------|----------|-------|
-| TD-032 | Password hashing uses a single hard-coded salt for all users (`DbLogin.HashPassword`) | ADR-0007 A | Backlog | high | unassigned |
+| TD-032 | Password hashing uses a single hard-coded salt for all users (`DbLogin.HashPassword`) | ADR-0007 A | Fixed in MVP-002 (Phase 2) — `PasswordHasher`: per-password 128-bit random salt, PBKDF2 600k iters, `pbkdf2$sha256$…` format; legacy hashes re-hashed on next successful login | – | – |
 | TD-033 | `CosmosDatabase.GetUserFromToken` builds SQL by concatenating the raw token (injection risk) | ADR-0007 B | Backlog | high | unassigned |
-| TD-034 | Plaintext password written to the log during `AuthenticatorApi.Login` | ADR-0007 C | Backlog | high | unassigned |
+| TD-034 | Plaintext password written to the log during `AuthenticatorApi.Login` | ADR-0007 C | Fixed in MVP-002 (Phase 2) — `Login` rewritten via `AuthService` with no logging; the `CreateUser` request-body log line removed. `DbLogin.LoginUser`'s hash-logging is dead code, removed in Phase 3. The `Logger.Instance` → `ILogger` migration + a no-secret-logging test are Phase 5. | – | – |
 | TD-035 | Session tokens never expire and are not rotated | ADR-0007 D | Backlog | medium | unassigned |
 | TD-036 | Single shared function key; most user/competition endpoints do no per-user or role check | ADR-0007 E | Backlog | medium | unassigned |
 | TD-037 | Login hash comparison is not constant-time; unknown-email path can dereference a null user | ADR-0007 F | Backlog | low | unassigned |

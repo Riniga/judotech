@@ -19,44 +19,33 @@ namespace judotech.api
         // self-test) was removed in MVP-001 Phase 6. Its flow now lives in
         // judotech.api.tests/AuthenticationIntegrationTests.cs.
 
+        // The former HashPassword endpoint (a hashing oracle) was removed in
+        // MVP-002 Phase 2 — clients send the plaintext password over TLS and the
+        // server hashes it (ADR-0008).
+
         [Function("Login")]
-        public static async Task<IActionResult> Login([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req, ILogger log)
+        public static async Task<IActionResult> Login(
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req)
         {
-            //TODO: Could this be simplified are we reaching over the river for water?
-            string userJson = await new StreamReader(req.Body).ReadToEndAsync();
-            
-            // var userObject = JObject.Parse(userJson);
-            // var user = userObject.ToObject<DbUser>();
-            
-            var user = JsonConvert.DeserializeObject<DbUser>(userJson);
-            Logger.Instance.Log("With password: " + user.Password);
+            string body = await new StreamReader(req.Body).ReadToEndAsync();
+            var creds = JsonConvert.DeserializeObject<LoginRequest>(body);
+            if (creds is null || string.IsNullOrWhiteSpace(creds.Email) || string.IsNullOrEmpty(creds.Password))
+                return new BadRequestObjectResult("email and password are required");
 
-            user.Password = DbLogin.HashPassword(user.Password); //TODO: Should and Could the password be hashed before sending it to service?
-            
+            var result = await AuthService.CreateDefault().LoginAsync(creds.Email, creds.Password);
+            if (!result.Succeeded)
+                return new UnauthorizedResult();
 
-            Logger.Instance.Log("Try to login user: " +user.Email);
-            Logger.Instance.Log("With password: " + user.Password);
-            
-            var login = await DbLogin.LoginUser(user);
-
-            Logger.Instance.Log("Return user on login:" + login ); 
-            return new OkObjectResult(login);
+            return new OkObjectResult(new { token = result.Token, expiresUtc = result.ExpiresUtc });
         }
+
         [Function("Logout")]
         public static async Task<IActionResult> Logout([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req, ILogger log)
         {
             string loginJson = await new StreamReader(req.Body).ReadToEndAsync();
             var loginObject = JObject.Parse(loginJson);
-            DbLogin login= loginObject.ToObject<DbLogin>();
+            DbLogin login = loginObject.ToObject<DbLogin>();
             return new OkObjectResult(login.Logout());
-        }
-        [Function("HashPassword")]
-        public static IActionResult HashPassword([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req, ILogger log)
-        {
-            if (!req.Query.TryGetValue("password", out var password) || string.IsNullOrWhiteSpace(password.ToString()))
-                return new BadRequestObjectResult("Please pass an password on the query string");
-            string hash = DbLogin.HashPassword(password.ToString());
-            return new OkObjectResult(hash);
         }
     }
 }

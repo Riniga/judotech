@@ -207,36 +207,49 @@ Commit message: `Add hardened-auth ADR, DI seam, and test support`
 
 ---
 
-### Phase 2 — Password hashing
+### Phase 2 — Password hashing — DONE (staged, not committed)
 
 Commit message: `Per-user salted password hashing`
 
-- [ ] 2.1 `Auth/PasswordHasher.cs` + `IPasswordHasher`:
-      - `Hash(string password)` → `pbkdf2$sha256$<iterations>$<salt-b64>$<hash-b64>`
-        with a fresh 16-byte salt from `RandomNumberGenerator`,
-        `AuthOptions.Pbkdf2Iterations` (default 600 000), 32-byte output.
-      - `Verify(string password, string stored)` → parses the format;
-        `CryptographicOperations.FixedTimeEquals` on the derived bytes.
-      - Legacy fallback in `Verify`: if `stored` has no `$` delimiters, compare
-        against the old scheme (`salt = ASCII("AzureWebsite")`, 100 000 iters).
-      - `NeedsRehash(string stored)` → true for legacy format or a lower
-        iteration count than configured.
-- [ ] 2.2 `AuthService` (partial — login only for now): `LoginAsync(email,
-      password)` loads the user via `IJudoDatabase`, `Verify`s, and if
-      `NeedsRehash` re-hashes and persists. Returns a result type
-      (`Succeeded` / `user`), never the hash.
-- [ ] 2.3 Wire `AuthenticatorApi.Login` and `UserApi.CreateUser` /
-      `CreateUsers` to hash **server-side from plaintext** (they currently call
-      `DbLogin.HashPassword` on possibly-pre-hashed input). Update
-      `CreateUserRequest` DTO.
-- [ ] 2.4 **Delete the `HashPassword` `[Function]`** from `AuthenticatorApi.cs`
-      (a hashing oracle; clients must send plaintext over TLS).
-- [ ] 2.5 Keep `DbLogin.HashPassword` temporarily as `[Obsolete]` forwarding to
-      `PasswordHasher` so nothing else breaks mid-refactor; remove in Phase 5.
-- [ ] 2.6 Tests: `PasswordHasherTests` (equal passwords → different stored
-      values; verify true/false; legacy verify; `NeedsRehash`);
-      `AuthServiceTests.Login_MigratesLegacyHashOnSuccess`.
-- [ ] **Verify**: `dotnet test --filter "Category!=Integration"` green;
+- [x] 2.1 `Auth/IPasswordHasher.cs` + `Auth/PasswordHasher.cs` —
+      `pbkdf2$sha256$<iter>$<salt-b64>$<hash-b64>`, 16-byte `RandomNumberGenerator`
+      salt, `AuthOptions.Pbkdf2Iterations` (600 000), 32-byte output.
+      `Verify` parses + `CryptographicOperations.FixedTimeEquals`, with a
+      `VerifyLegacy` fallback (static salt `"AzureWebsite"`, 100 000 iters).
+      `NeedsRehash` → true for legacy/malformed or `iterations < configured`.
+      Plus `Auth/Passwords.cs` — a process-wide default facade for the
+      not-yet-DI-wired call sites (removed in Phase 6).
+- [x] 2.2 `Auth/AuthService.cs` — `LoginAsync` reads the user, `Verify`s,
+      migrate-on-login (`NeedsRehash` → `Hash` + `UpdateUser`), issues a token
+      via the legacy `IJudoDatabase.LoginUser` for now (Phase 3 replaces it).
+      Returns `AuthLoginResult` (never the hash). `AuthenticateAsync` /
+      `LogoutAsync` throw `NotImplementedException("Phase 3")`. `CreateDefault()`
+      factory for the transitional call sites.
+- [x] 2.3 `AuthenticatorApi.Login` rewritten: `POST` only, `LoginRequest` DTO
+      (`Dtos/LoginRequest.cs`), `AuthService.CreateDefault().LoginAsync(...)`,
+      returns `{ token, expiresUtc }`, `401` on failure, `400` on missing
+      fields. **No secret logging.** `UserApi.CreateUser` / `CreateUsers` /
+      `UpdateUser` → `Passwords.Hash` instead of `DbLogin.HashPassword`.
+      **Deviation:** kept the `DbUser` deserialization (no `CreateUserRequest`
+      DTO — that lands with the DTO work in Phase 5); removed the
+      `_logger.LogInformation("Try to create user: " + userJson)` line now (it
+      logged the plaintext password — TD-034).
+- [x] 2.4 `HashPassword` `[Function]` deleted from `AuthenticatorApi.cs`.
+      Verified live: `GET /api/HashPassword` → 404; host lists 13 functions.
+- [x] 2.5 `DbLogin.HashPassword` → `[Obsolete]`, one-line forward to
+      `Passwords.Hash`. No caller left (deleted the MVP-001 `HashPasswordTests`
+      which now tested obsolete, non-deterministic-by-design behaviour).
+- [x] 2.6 `judotech.core.tests/Auth/PasswordHasherTests.cs` (9 cases: fresh
+      salt, format, verify ✓/✗, malformed theory ×4, legacy verify, `NeedsRehash`)
+      and `AuthServiceTests.cs` (5: success, wrong pw, unknown email,
+      migrate-on-login, no-rehash-when-current). `LegacyPassword` helper added to
+      `judotech.testsupport`.
+- [x] **Verify**: `dotnet test --filter "Category!=Integration"` →
+      core.tests 19, api.tests 3, all pass. `FunctionRegistrationTests` updated
+      (`RemovedEndpoints_AreNotExposed` theory covers `HashPassword` +
+      `TestAuthenticationApi`). Full build 0 errors / 18 warnings (was 19 —
+      the `Login` rewrite added a null check). `func start` + `POST /api/Login
+      {}` → 400 verified.
       `FunctionRegistrationTests` updated (no `HashPassword`).
 
 ---

@@ -22,8 +22,8 @@ public class UserApi
         string userJson = await new StreamReader(req.Body).ReadToEndAsync();
         var userObject = JObject.Parse(userJson);
         var user = userObject.ToObject<DbUser>();
-        user.Password = DbLogin.HashPassword(user.Password); //TODO: Should and Could the password be hashed before sending it to service?
-        _logger.LogInformation("Try to create user: " + userJson);
+        user.Password = Passwords.Hash(user.Password); // server-side hashing, per-user salt (ADR-0008)
+        // (request body is not logged — it carries the plaintext password)
         var result = user.Create();
         Users.Instance.Refresh();
         return new OkObjectResult(result);
@@ -40,7 +40,7 @@ public class UserApi
         bool result = true;
         foreach (var user in users)
         {
-            user.Password = DbLogin.HashPassword(user.Password); //TODO: Should and Could the password be hashed before sending it to service?
+            user.Password = Passwords.Hash(user.Password); // server-side hashing, per-user salt (ADR-0008)
             result = user.Create();
         }
         Users.Instance.Refresh();
@@ -75,10 +75,10 @@ public class UserApi
         var bodyJson = JObject.Parse(body);
         var user = bodyJson.ToObject<DbUser>();
 
-        // om lösnord har ett värde 
+        // hash the password only when the request actually supplies one
         if (!string.IsNullOrEmpty(user.Password))
         {
-            user.Password = DbLogin.HashPassword(user.Password);
+            user.Password = Passwords.Hash(user.Password);
         }
         var result = user.Update();
         Users.Instance.Refresh();
