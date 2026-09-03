@@ -1,5 +1,8 @@
 # Development Setup
 
+Once set up, [`smoke-test.md`](smoke-test.md) shows how to start every component
+and verify it is alive (TC-01…TC-14).
+
 ## Prerequisites
 
 | Tool | Version | Pinned by | Needed for |

@@ -3,7 +3,7 @@
 - Status: accepted
 - Date: 2026-09-02
 - Deciders: project owner
-- Related: MVP-001 (`docs/plans/MVP-001-workspace-foundation.plan.md`),
+- Related: MVP-001 (`docs/plans/001-workspace-foundation.plan.md`),
   `docs/architecture/overview.md` sections 1 and 11
 
 ## Context

@@ -1,6 +1,6 @@
 # Implementation Plan — MVP-001: Workspace Foundation
 
-Source MVP: `docs/mvp/MVP-001-workspace-foundation.md`
+Source MVP: `docs/mvp/001-workspace-foundation.md`
 Architecture reference: `docs/architecture/overview.md`
 Target executor: Cursor (stepwise, one phase per commit)
 Branch: continue on `introduce-claude` (or a fresh `feature/workspace-foundation` cut from it)

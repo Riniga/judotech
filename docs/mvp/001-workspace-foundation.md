@@ -3,7 +3,7 @@
 Status: done
 Date: 2026-09-02
 Related: `docs/architecture/overview.md`, `docs/roadmap.md`, `docs/standards/`,
-`docs/plans/MVP-001-workspace-foundation.plan.md`,
+`docs/plans/001-workspace-foundation.plan.md`,
 `docs/architecture/decisions/` (ADR-0001–0007),
 `docs/architecture/technical-debt.md`
 
@@ -285,9 +285,10 @@ The MVP is complete when all of the following are true.
 ### Deferred (not in MVP-001 scope)
 
 Tracked in `docs/architecture/technical-debt.md` — notably the `judotech.api`
-security hardening (`docs/mvp/MVP-002-api-security-hardening.md`), API structure
-(TD-002/003/045), `@judotech/ui` adoption (TD-020/021), and the product
-questions (TD-006, TD-028, TD-030, TD-031).
+security hardening (`docs/mvp/002-api-security-hardening.md`,
+`docs/plans/002-api-security-hardening.plan.md`), API structure (TD-002/003/045),
+`@judotech/ui` adoption (TD-020/021), and the product questions (TD-006, TD-028,
+TD-030, TD-031).
 
 ## Post-merge actions (GitHub side)
 

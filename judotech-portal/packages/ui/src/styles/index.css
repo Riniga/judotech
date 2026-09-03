@@ -3,6 +3,11 @@ layer(base);
 
 @import "tailwindcss";
 
+/* Tailwind v4 auto-detection does not scan imported workspace packages, so an
+   app that consumes @judotech/ui would otherwise miss every class used by the
+   components here (sidebar, header, Button, …). Point it at this package. */
+@source "../";
+
 @custom-variant dark (&:is(.dark *));
 
 @theme {

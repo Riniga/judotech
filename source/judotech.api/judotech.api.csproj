@@ -8,7 +8,11 @@
   </PropertyGroup>
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.ApplicationInsights.WorkerService" Version="3.1.2" />
+    <!-- Pinned to 2.x: Microsoft.Azure.Functions.Worker.ApplicationInsights 2.x
+         binds Microsoft.ApplicationInsights 2.x. WorkerService 3.x drags in
+         ApplicationInsights 3.x and the host crashes at startup with
+         TypeLoadException on ITelemetryInitializer (TD-052). -->
+    <PackageReference Include="Microsoft.ApplicationInsights.WorkerService" Version="2.23.0" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="2.52.0" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker.ApplicationInsights" Version="2.51.0" />
     <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http.AspNetCore" Version="2.1.1" />

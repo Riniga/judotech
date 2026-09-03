@@ -48,4 +48,4 @@ Read in this order:
 - Update documentation in the same pull request as the change it describes.
 
 Some tables above reference files that are stubs or are added by a later phase of
-[`mvp/MVP-001-workspace-foundation.md`](mvp/MVP-001-workspace-foundation.md).
+[`mvp/001-workspace-foundation.md`](mvp/001-workspace-foundation.md).

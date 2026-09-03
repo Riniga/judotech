@@ -100,7 +100,9 @@ Each item maps to a technical-debt row.
 
 ## Notes
 
-- Do this on a fresh `feature/mvp-002-*` branch after MVP-001 is merged.
+- Implementation plan: [`../plans/002-api-security-hardening.plan.md`](../plans/002-api-security-hardening.plan.md).
+- Do this on a fresh `feature/002-api-security-hardening` branch (MVP-001 is
+  merged).
 - MVP-003 (API structure — DI everywhere, remove the in-memory caches,
   repository boundary) is the natural follow-up and may merge into this if the
   work overlaps heavily.

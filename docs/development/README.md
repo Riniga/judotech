@@ -83,3 +83,4 @@ When Claude Code, Copilot or similar is used:
 - [`setup.md`](setup.md) — environment and how to run each component
 - [`ci-cd.md`](ci-cd.md) — pipelines, secrets, branch protection
 - [`dependency-updates.md`](dependency-updates.md) — handling Dependabot PRs
+- [`smoke-test.md`](smoke-test.md) — start everything and verify it is alive

@@ -11,8 +11,8 @@ Baseline written 2026-09-02; updated through MVP-001 (workspace foundation).
 ## Decisions and technical debt
 
 The open questions and observations in sections 11 and 13 were addressed by
-**MVP-001** (`docs/mvp/MVP-001-workspace-foundation.md`,
-`docs/plans/MVP-001-workspace-foundation.plan.md`). Decisions are recorded as
+**MVP-001** (`docs/mvp/001-workspace-foundation.md`,
+`docs/plans/001-workspace-foundation.plan.md`). Decisions are recorded as
 ADRs; every observation has a disposition in the debt register.
 
 - [`decisions/`](decisions/) — Architecture Decision Records:
@@ -80,8 +80,8 @@ judotech/
 │  ├─ standards/                  # coding.md, documentation.md, git.md, testing.md
 │  ├─ development/                # setup, process, ci-cd, workflow (stubs)
 │  ├─ dependencies/               # dependency policy (stub)
-│  ├─ mvp/                        # MVP-001-workspace-foundation.md
-│  ├─ plans/                      # MVP-001-workspace-foundation.plan.md
+│  ├─ mvp/                        # 001-workspace-foundation.md
+│  ├─ plans/                      # 001-workspace-foundation.plan.md
 │  └─ claude-prompts/             # AI-assisted workflow prompt templates
 │
 ├─ source/                        # Earlier implementation
@@ -526,7 +526,7 @@ commitments, and not all consistent with each other):
   for table UI.
 
 `docs/claude-prompts/` implies the immediate next step is to define
-`docs/mvp/MVP-001-workspace-foundation.md` establishing the workspace foundation
+`docs/mvp/001-workspace-foundation.md` establishing the workspace foundation
 before feature work begins.
 
 ## 13. Open questions and areas not yet implemented

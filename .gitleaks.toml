@@ -3,9 +3,10 @@
 useDefault = true
 
 [allowlist]
-description = "Known non-secret placeholders and test fixtures"
+description = "Known test fixtures — NOT real credentials"
+# local.settings_sample.json is deliberately NOT allowlisted: it must only ever
+# hold a placeholder, so gitleaks catches a real key if one ever lands there.
 paths = [
-  '''source/judotech\.api/local\.settings_sample\.json''',
   '''source/judotech\.api\.tests/AuthenticationIntegrationTests\.cs''',
 ]
 regexes = [

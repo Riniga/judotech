@@ -7,10 +7,10 @@ are in [`../claude-prompts/`](../claude-prompts/).
 ## The loop
 
 1. **Identify an MVP.** Decide the next increment that moves the workspace or a
-   product forward. Write it up as `docs/mvp/MVP-NNN-<slug>.md` with: Goal,
+   product forward. Write it up as `docs/mvp/NNN-<slug>.md` with: Goal,
    Scope (in and out), Expected value, Acceptance criteria. No implementation
    detail.
-2. **Plan it.** Write `docs/plans/MVP-NNN-<slug>.plan.md` with: Goal,
+2. **Plan it.** Write `docs/plans/NNN-<slug>.plan.md` with: Goal,
    Assumptions, Proposed file changes, step-by-step TODOs grouped into phases
    (one phase = one commit), Risks / open questions.
 3. **Decide as needed.** Any significant decision made while planning or
@@ -28,8 +28,8 @@ are in [`../claude-prompts/`](../claude-prompts/).
 
 | Artefact | Location |
 |----------|----------|
-| MVP definition | `docs/mvp/MVP-NNN-<slug>.md` |
-| Implementation plan | `docs/plans/MVP-NNN-<slug>.plan.md` |
+| MVP definition | `docs/mvp/NNN-<slug>.md` |
+| Implementation plan | `docs/plans/NNN-<slug>.plan.md` |
 | Decisions | `docs/architecture/decisions/NNNN-<slug>.md` |
 | Deferred / accepted issues | `docs/architecture/technical-debt.md` |
 

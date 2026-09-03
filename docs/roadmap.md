@@ -5,7 +5,7 @@ there are tracked as MVPs in [`mvp/`](mvp/) (see
 [`development/workflow.md`](development/workflow.md)):
 
 - **MVP-001** — workspace foundation — *done*
-- **MVP-002** — [`judotech.api` security hardening](mvp/MVP-002-api-security-hardening.md) — *proposed*, prerequisite for portal auth
+- **MVP-002** — [`judotech.api` security hardening](mvp/002-api-security-hardening.md) ([plan](plans/002-api-security-hardening.plan.md)) — *proposed*, prerequisite for portal auth
 
 ### v1.0.0-alpha (Current development)
 * Development: 1.0.0-alpha.1

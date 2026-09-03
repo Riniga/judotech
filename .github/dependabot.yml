@@ -54,6 +54,12 @@ updates:
     labels: ["dependencies", "dotnet"]
     commit-message:
       prefix: "chore(deps)"
+    ignore:
+      # Functions Worker ApplicationInsights 2.x binds ApplicationInsights 2.x;
+      # a 3.x bump crashes the isolated host at startup (TD-052). Unblock when
+      # Microsoft.Azure.Functions.Worker.ApplicationInsights supports AI 3.x.
+      - dependency-name: "Microsoft.ApplicationInsights*"
+        update-types: ["version-update:semver-major"]
     groups:
       dotnet:
         applies-to: version-updates

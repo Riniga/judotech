@@ -62,6 +62,7 @@ Owner `unassigned` means no one has picked it up yet.
 | TD-042 | `apps/athlete` still carries unused `@tailwindcss/postcss`, `autoprefixer`, `postcss` devDeps (Tailwind v4 uses the Vite plugin) | MVP-001 Phase 5 | Backlog | low | unassigned |
 | TD-043 | `npm audit` reports 13 advisories in the portal dependency tree (dev-only / transitive) | MVP-001 Phase 5 | Backlog — Dependabot security updates (`.github/dependabot.yml`) address these over time | medium | unassigned |
 | TD-044 | `apps/athlete` `devDependencies` still list ESLint plugins now provided transitively by `@judotech/config` | MVP-001 Phase 5 | Backlog | low | unassigned |
+| TD-055 | Tailwind v4 auto-detection did not scan the `@judotech/ui` package, so `apps/athlete` rendered with no styling on any `@judotech/ui` class (sidebar, header, `Button`, layout). | MVP-002 Phase 0 smoke test (TC-12) | Fixed — added `@source "../"` to `packages/ui/src/styles/index.css`; built CSS 45 kB → 76 kB, `bg-brand-500` / `min-h-screen` / `lg:ml-[290px]` etc. now generated. | – | – |
 | TD-048 | ~8 open Dependabot PRs on `main` (transitive security bumps in the legacy static sites) predate MVP-001 and its CI | MVP-001 Phase 7 addendum | Backlog — triage per `docs/development/dependency-updates.md` after MVP-001 merges (they gain `ci-web-legacy` coverage then) | medium | unassigned |
 | TD-049 | Stale remote branches: `feature/containerapp`, `feature/saveprofile`, `features/react` | MVP-001 Phase 7 addendum | Backlog — delete after confirming they hold nothing wanted | low | unassigned |
 
@@ -77,6 +78,8 @@ Owner `unassigned` means no one has picked it up yet.
 | TD-045 | `DbUser` is a superset of the pre- and post-`f0b94b4` models (both the address-book fields and `First`/`Lastname`/`Started`/`BirthDate`/`Total`/`ShouldHaveGrade`). One coherent model needs to be chosen, along with the Cosmos partition-key implications. | TD-040 fix | Backlog | medium | unassigned |
 | TD-050 | `judotech.api` produces ~13 nullable-reference warnings (`CS8600/CS8602/CS8603`) in `UserApi` / `CompetitionApi` / `AuthenticatorApi`; blocks turning on `TreatWarningsAsErrors` | Dependabot dotnet-group PR #42 (clean CI build) | Backlog | low | unassigned |
 | TD-051 | `Microsoft.Azure.Cosmos` >= 3.32 requires an explicit `Newtonsoft.Json` reference; Dependabot's dotnet-group bump (Cosmos 3.34→3.62) failed CI until it was added | Dependabot PR #42 | Fixed — explicit `Newtonsoft.Json` 13.0.3 added to `judotech.core` and `judotech.api` (both use it directly anyway) | – | – |
+| TD-052 | Dependabot bumped `Microsoft.ApplicationInsights.WorkerService` to 3.1.2 — incompatible with `Microsoft.Azure.Functions.Worker.ApplicationInsights` 2.x. `dotnet build` + `dotnet test` stay green but `func start` crashes with `TypeLoadException: ITelemetryInitializer`. CI never runs the host, so it was missed until the MVP-002 Phase 0 smoke test (TC-03). | MVP-002 Phase 0 smoke test | Fixed — pinned `Microsoft.ApplicationInsights.WorkerService` to 2.23.0; Dependabot `ignore` for `Microsoft.ApplicationInsights*` major bumps. Unblock when the Functions worker AI package supports AI 3.x. | – | – |
+| TD-053 | `ci-dotnet` builds and unit-tests but never starts the Functions host, so a package/runtime incompatibility (TD-052) is invisible to CI | MVP-002 Phase 0 | Backlog — a smoke job that runs `func start` and hits `HashPassword`, or the `ci-dotnet-integration` job (MVP-002 Phase 6), would catch it | medium | unassigned |
 
 ## Authentication (`decisions/0007-source-auth-review.md`)
 
@@ -102,7 +105,7 @@ The backlog groups naturally into a few scoped increments:
 
 | Candidate MVP | Rows | Notes |
 |---------------|------|-------|
-| **[MVP-002 — `judotech.api` security hardening](../mvp/MVP-002-api-security-hardening.md)** | TD-032…TD-039, TD-045, TD-002 (min) | Written up. Prerequisite before the portal ships any authenticated end-user feature (ADR-0001, ADR-0007). |
+| **[MVP-002 — `judotech.api` security hardening](../mvp/002-api-security-hardening.md)** ([plan](../plans/002-api-security-hardening.plan.md)) | TD-032…TD-039, TD-045, TD-002 (min) | Planned. Prerequisite before the portal ships any authenticated end-user feature (ADR-0001, ADR-0007). |
 | **MVP-003 — `judotech.api` structure** | TD-002, TD-003, TD-045 | DI everywhere + repository boundary; remove the in-memory caches. May fold into MVP-002. |
 | **`@judotech/ui` adoption** | TD-020, TD-021, TD-041 | Establish the template's licence, then export/type/test components as they are actually used. |
 | **Portal tidy-up** (small, opportunistic) | TD-042, TD-043, TD-044 | Prune unused devDeps, address audit advisories. |
