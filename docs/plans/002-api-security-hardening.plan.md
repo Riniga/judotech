@@ -141,7 +141,7 @@ deviations, lives in the phase checklists in section 4.
 
 ---
 
-### Phase 0 — Baseline runbook & smoke test
+### Phase 0 — Baseline runbook & smoke test — DONE (branch commit `b3fa78e`)
 
 Commit message: `Add startup runbook and smoke-test cases`
 
@@ -149,25 +149,26 @@ Establish "how to run and verify the whole system" **before** touching auth, so
 there is a known-good baseline and a repeatable check to run after every later
 phase.
 
-- [ ] 0.1 Write `docs/development/smoke-test.md`: a "what runs where" table
-      (API on 7071, Cosmos emulator on 8081, portal on 5173, static sites on
-      8080), a copy-paste "start everything" block, and a numbered test-case
-      table (TC-01…TC-14) covering `dotnet build` / `dotnet test`, `func start`
-      + a no-Cosmos endpoint, the Cosmos emulator, a user create/read/login/
-      delete round-trip, `npm ci` + portal checks, the athlete dev server, and
-      each static site build + serve. Each TC has explicit steps, an expected
-      result, and whether it needs Cosmos.
-- [ ] 0.2 Link it from `docs/development/README.md` ("See also") and
+- [x] 0.1 `docs/development/smoke-test.md` written — "what runs where" table,
+      "start everything" block, TC-01…TC-14, prerequisites section for the
+      Cosmos cases.
+- [x] 0.2 Linked from `docs/development/README.md` ("See also") and the top of
       `docs/development/setup.md`.
-- [ ] 0.3 **Run the smoke test on the current `main` state** and record the
-      results (date, commit SHA, OS, pass/fail per TC) at the bottom of
-      `smoke-test.md` or in the PR description. Fix or file anything that fails
-      that is not already tracked (it becomes a `TD-0xx`, not MVP-002 scope
-      unless it blocks the auth work).
-- [ ] **Verify**: every TC-01…TC-14 has been executed once; TC-01, TC-02,
-      TC-10, TC-11 pass (these have no external dependency); the Cosmos-backed
-      TCs pass if an emulator is available, otherwise are recorded as `skip`
-      with the reason.
+- [x] 0.3 Full run on 2026-09-03 (Windows 11), **all 14 pass**. Two issues found
+      and fixed during the run (both invisible to `dotnet build` / `dotnet test`
+      / portal CI):
+      - **TD-052** — `func start` crashed: `TypeLoadException: ITelemetryInitializer`.
+        `Microsoft.ApplicationInsights.WorkerService` 3.1.2 (Dependabot) is
+        incompatible with the 2.x Functions worker AI package. Pinned to 2.23.0
+        + Dependabot `ignore` for AI major bumps. **TD-053** filed (CI never
+        starts the host).
+      - **TD-055** — `apps/athlete` rendered unstyled: Tailwind v4 does not scan
+        imported workspace packages. Added `@source "../"` to
+        `packages/ui/src/styles/index.css`.
+      Also: `local.settings_sample.json` kept as a placeholder (no key committed);
+      `.gitleaks.toml` no longer allowlists it.
+- [x] **Verify**: all 14 TCs executed; TC-01/02/10/11 green; TC-05–09 green
+      against the Cosmos emulator; baseline recorded in `smoke-test.md`.
 
 ---
 
