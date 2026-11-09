@@ -7,7 +7,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="10.0.14" />
-    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.63.3" />
+    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.64.0" />
     <!-- Used directly (Newtonsoft [JsonProperty] on the Db* models) and required
          explicitly by Microsoft.Azure.Cosmos >= 3.32. -->
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
